@@ -8,7 +8,7 @@
             <div class="card-body text-center">
               <h5 class="card-title fw-bold">{{ card.title }}</h5>
               <p class="card-text text-muted">{{ card.description }}</p>
-              <button class="btn btn-outline-primary mt-3">View Details</button>
+              <button class="btn">View Details</button>
             </div>
           </div>
         </div>
@@ -21,21 +21,18 @@
 import AdminHeader from './AdminHeader.vue'
 
 const cards = [
-  { title: "TOTAL USERS", description: "Manage and view all registered users." },
-  { title: "REGISTERED COMPANIES", description: "Track and approve service bookings." },
-  { title: "BOOKING SERVICES", description: "Check recent earnings and revenue data." },
-  { title: "Messages", description: "Respond to user queries and messages." }
+  { title: "TOTAL USERS", description: "Manage all Accounts of Registred users in this platform ." },
+  { title: "REGISTERED COMPANIES", description: "These are the Registered Companies that deal with cleaning services in different Regions at Tanzania" },
+  { title: "BOOKING SERVICES", description: "Check and Manage booking available in different companies" },
+  { title: "MESSAGES", description: "Check Message sends by the users" }
 ];
 </script>
 
 <style scoped>
 .dashboard-wrapper {
-  background-image: url('/src/assets/images/wonaclean.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  min-height: 100vh;
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -43,10 +40,18 @@ const cards = [
 
 .card {
   border-radius: 2px;
-  background-color: rgba(255, 255, 255, 0.9); /* Optional: for better contrast */
 }
 .card-title {
   font-size: 1.25rem;
   color: #FE4F2D;
+}
+
+.btn {
+    background-color: #FE4F2D;
+    border-radius: 2px;
+}
+
+.btn:hover {
+    background-color: #FE4F2D;
 }
 </style>
