@@ -53,7 +53,7 @@
                 />
               </div>
 
-              <button type="submit" class="btn btn-primary w-100 fw-bold">
+              <button type="submit" class="btn w-100 fw-bold" style="background-color: #FE4F2D; border-color: #FE4F2D;">
                 Register
               </button>
             </form>
@@ -148,6 +148,10 @@ input.form-control:focus {
   height: 100vh;
   position: relative;
   z-index: 1;
+}
+
+.btn {
+  border-radius: 2px;
 }
 
 </style>
