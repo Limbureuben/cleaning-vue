@@ -48,14 +48,13 @@ const goToSignup =() => {
   overflow: hidden; /* 👈 This is important for clipping the background */
   display: flex;
   align-items: center;
-  border-radius: 30px; /* 👈 Add border radius here */
+  border-radius: 0; /* 👈 Add border radius here */
 }
 
 .bg-image {
   background-image: url('../assets/images/wonaclean.jpg');
   background-size: cover;
   background-position: center;
-  opacity: 0.5; /* faint */
   position: absolute;
   top: 0;
   left: 0;
@@ -87,7 +86,7 @@ const goToSignup =() => {
     transform: scale(1.1);
   }
   100% {
-    opacity: 0.3;
+    opacity: 0.4;
     transform: scale(1);
   }
 }
