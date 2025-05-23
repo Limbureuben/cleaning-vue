@@ -1,6 +1,6 @@
 <template>
   <button @click="goBack" class="back-button">
-    ← Back
+    Back
   </button>
 </template>
 
@@ -8,7 +8,7 @@
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const goBack = () => router.back()
+const goBack = () => router.push('/');
 </script>
 
 <style scoped>
