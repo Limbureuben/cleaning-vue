@@ -25,7 +25,7 @@ const cards = [
 
 <style scoped>
 .card {
-  border-radius: 1rem;
+  border-radius: 2px;
 }
 .card-title {
   font-size: 1.25rem;
