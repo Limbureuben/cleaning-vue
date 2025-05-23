@@ -41,8 +41,9 @@
                 <i class="bi bi-person-circle fs-4"></i>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
-                <li><router-link class="dropdown-item" to="/admin/profile">Profile</router-link></li>
-                <li><router-link class="dropdown-item" to="/admin/settings">Settings</router-link></li>
+                <li><router-link class="dropdown-item">Profile</router-link></li>
+                <li><router-link class="dropdown-item" >Register Company</router-link></li>
+                <li><router-link class="dropdown-item">Users</router-link></li>
                 <li><hr class="dropdown-divider" /></li>
                 <li><a class="dropdown-item" @click="logout">Logout</a></li>
             </ul>
