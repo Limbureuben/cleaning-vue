@@ -5,6 +5,7 @@ import App from './App.vue'
 import { MotionPlugin } from '@vueuse/motion'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap'
+import 'bootstrap/dist/js/bootstrap.bundle'
 
 createApp(App)
   .use(router)
