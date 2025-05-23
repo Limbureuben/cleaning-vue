@@ -11,7 +11,7 @@
             class="col-12 col-md-8 col-lg-6 col-xl-5 bg-white p-5 rounded shadow"
             style="min-width: 450px;"
           >
-            <h4 class="mb-4 text-center text-primary fw-bold">REGISTRATION</h4>
+            <h4 class="mb-4 text-center fw-bold" style="color: #FE4F2D;">REGISTRATION</h4>
             <form @submit.prevent="submitForm">
               <div class="mb-4">
                 <input
@@ -60,7 +60,7 @@
 
             <p class="mt-3 text-center">
               Already have an account?
-              <router-link to="/login" class="text-primary fw-bold">Login</router-link>
+              <router-link to="/login" class="fw-bold" style="color: #FE4F2D;">Login</router-link>
             </p>
           </div>
         </transition>
