@@ -1,4 +1,5 @@
 <template>
+    <AdminHeader />
   <div class="container mt-4">
     <div class="row">
       <div class="col-md-6 mb-4" v-for="(card, index) in cards" :key="index">
@@ -15,6 +16,11 @@
 </template>
 
 <script setup>
+
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import AdminHeader from './AdminHeader.vue';
+
 const cards = [
   { title: "Total Users", description: "Manage and view all registered users." },
   { title: "Bookings", description: "Track and approve service bookings." },
