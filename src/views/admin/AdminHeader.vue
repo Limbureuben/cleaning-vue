@@ -30,17 +30,23 @@
           </button>
 
           <!-- Profile Dropdown -->
-          <div class="dropdown">
-            <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown">
-              <i class="bi bi-person-circle fs-4"></i>
+            <div class="dropdown">
+            <a
+                class="nav-link dropdown-toggle text-white"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+            >
+                <i class="bi bi-person-circle fs-4"></i>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
-              <li><router-link class="dropdown-item" to="/admin/profile">Profile</router-link></li>
-              <li><router-link class="dropdown-item" to="/admin/settings">Settings</router-link></li>
-              <li><hr class="dropdown-divider" /></li>
-              <li><a class="dropdown-item" @click="logout">Logout</a></li>
+                <li><router-link class="dropdown-item" to="/admin/profile">Profile</router-link></li>
+                <li><router-link class="dropdown-item" to="/admin/settings">Settings</router-link></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" @click="logout">Logout</a></li>
             </ul>
-          </div>
+            </div>
         </div>
       </div>
     </div>
