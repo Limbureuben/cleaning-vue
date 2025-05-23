@@ -1,5 +1,6 @@
 <template>
   <div class="bg-cover">
+  <BackButton />
     <div class="d-flex justify-content-center align-items-center full-screen">
       <div class="container position-relative z-1">
         <div class="row justify-content-center">
@@ -56,6 +57,7 @@
 import { reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Background from './Background.vue'
+import BackButton from './BackButton.vue'
 
 const form = reactive({
   username: '',
