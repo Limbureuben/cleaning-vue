@@ -1,6 +1,5 @@
 <template>
     <UserHeader />
-    <Background>
   <div class="container mt-4">
     <div class="row">
       <div
@@ -55,7 +54,6 @@
       </ul>
     </nav>
   </div>
-  </Background>
 </template>
 
 
@@ -71,7 +69,7 @@ import Background from '@/sharing/Background.vue'
 const rooms = ref([
   {
     id: 1,
-    name: 'Room A',
+    name: 'COMPANY 1',
     location: 'Dar es Salaam',
     price: 100000,
     available_date: '2025-06-01',
@@ -80,7 +78,7 @@ const rooms = ref([
   },
   {
     id: 2,
-    name: 'Room B',
+    name: 'COMPANY 2',
     location: 'Arusha',
     price: 120000,
     available_date: '2025-06-05',
@@ -89,7 +87,7 @@ const rooms = ref([
   },
   {
     id: 3,
-    name: 'Room C',
+    name: 'COMPANY 3',
     location: 'Dodoma',
     price: 90000,
     available_date: '2025-06-10',
@@ -98,7 +96,7 @@ const rooms = ref([
   },
   {
     id: 4,
-    name: 'Room D',
+    name: 'COMPANY 4',
     location: 'Mwanza',
     price: 110000,
     available_date: '2025-06-15',
@@ -107,7 +105,7 @@ const rooms = ref([
   },
   {
     id: 5,
-    name: 'Room E',
+    name: 'COMPANY 5',
     location: 'Mbeya',
     price: 95000,
     available_date: '2025-06-20',
@@ -116,7 +114,7 @@ const rooms = ref([
   },
   {
     id: 6,
-    name: 'Room F',
+    name: 'COMPANY 6',
     location: 'Morogoro',
     price: 105000,
     available_date: '2025-06-25',
