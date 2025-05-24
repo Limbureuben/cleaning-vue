@@ -3,7 +3,7 @@ import HomepageVue from '@/views/Homepage.vue'
 import Register from '@/sharing/Register.vue'
 import Login from '@/sharing/Login.vue'
 import AdminDashboard from '@/views/admin/AdminDashboard.vue'
-import UserHeader from '@/views/user/UserHeader.vue'
+import UserDashboard from '@/views/user/UserDashboard.vue'
 
 
 const routes = [
@@ -11,7 +11,7 @@ const routes = [
   { path: '/register', name: 'Register', component: Register },
   { path: '/login', name: 'Login', component: Login },
   { path: '/admin-dashboard', name: 'AdminDashboard', component: AdminDashboard },
-  { path: '/user', name: 'UserDashboard', component: UserHeader}
+  { path: '/user', name: 'UserDashboard', component: UserDashboard}
   
 ]
 const router = createRouter({
