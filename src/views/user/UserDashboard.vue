@@ -1,5 +1,4 @@
 <template>
-
   <div class="container mt-4">
     <div class="row">
       <div
@@ -8,8 +7,8 @@
         class="col-md-4 mb-4"
       >
         <div class="card shadow">
-          <div class="card-body">
-            <h5 class="card-title">{{ room.name }}</h5>
+          <div class="card-body text-start"> <!-- 🟢 Align text to start -->
+            <h5 class="card-title text-uppercase">{{ room.name }}</h5> <!-- 🟢 Uppercase heading -->
             <p class="card-text">
               <strong>Location:</strong> {{ room.location }}
             </p>
@@ -19,9 +18,9 @@
             <p class="card-text">
               <strong>Available Date:</strong> {{ formatDate(room.available_date) }}
             </p>
-            <div class="d-flex justify-content-between mt-3">
+            <div class="d-flex justify-content-start mt-3"> <!-- 🟢 Align buttons to start -->
               <button
-                class="btn btn-outline-secondary btn-sm"
+                class="btn btn-outline-secondary btn-sm me-2"
                 @click="viewImage(room.image)"
               >
                 View Image
@@ -55,6 +54,7 @@
     </nav>
   </div>
 </template>
+
 
 
 
@@ -197,15 +197,17 @@ const goToPage = (page) => {
   transform: translateY(-3px);
 }
 
-/* 🟢 Reduced default padding even more */
 .card-body {
   padding: 0.5rem;
+  text-align: start; /* 🟢 Make sure everything inside card-body is left-aligned */
 }
 
 .card-title {
   font-size: 1rem;
   margin-bottom: 0.2rem;
+  text-transform: uppercase; /* 🟢 Uppercase heading */
 }
+
 .card-text {
   font-size: 0.9rem;
   margin-bottom: 0.2rem;
@@ -215,4 +217,5 @@ const goToPage = (page) => {
   background-color: #ccc !important;
   cursor: not-allowed;
 }
+
 </style>
