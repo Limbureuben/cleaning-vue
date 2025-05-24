@@ -27,10 +27,10 @@
                 <div class="mb-4">
                   <input
                     v-model="form.password"
-                    type="email"
+                    type="password"
                     id="email"
                     class="form-control"
-                    placeholder="Enter your email"
+                    placeholder="Enter your password"
                     required
                   />
                 </div>
