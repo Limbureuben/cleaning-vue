@@ -17,6 +17,6 @@ createApp(App)
   .use(MotionPlugin)
   .use(Vue3Toastify, {
     position: 'top-right',
-    autoClose: 3000,
+    autoClose: 3000
   })
   .mount('#app')
