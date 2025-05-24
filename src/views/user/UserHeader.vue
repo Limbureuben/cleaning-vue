@@ -46,7 +46,7 @@ const logout = () => {
 
 <style scoped>
 .navbar {
-  z-index: 1050; /* ensure it stays on top */
+  z-index: 1050;
 }
 
 .navbar-brand {
