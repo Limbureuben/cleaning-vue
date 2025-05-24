@@ -119,25 +119,7 @@ const rooms = ref([
     available_date: '2025-06-25',
     is_available: true,
     image: '/images/room-f.jpg',
-  },
-  {
-    id: 7,
-    name: 'Room G',
-    location: 'Tanga',
-    price: 98000,
-    available_date: '2025-06-30',
-    is_available: true,
-    image: '/images/room-g.jpg',
-  },
-  {
-    id: 8,
-    name: 'Room H',
-    location: 'Zanzibar',
-    price: 115000,
-    available_date: '2025-07-05',
-    is_available: false,
-    image: '/images/room-h.jpg',
-  },
+  }
 ])
 
 const formatDate = (date) => {
