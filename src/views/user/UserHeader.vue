@@ -3,7 +3,9 @@
     <div class="container-fluid">
       <router-link to="/" class="navbar-brand fw-bold">User Dashboard</router-link>
 
-      
+      <button class="navbar-toggler" type="button" @click="toggleMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
       <div :class="['collapse navbar-collapse', { show: isMenuOpen }]">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
