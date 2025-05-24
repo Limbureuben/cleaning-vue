@@ -71,25 +71,38 @@ export default {
 
 .dashboard-background {
   position: relative;
-  background-image: url('../../assets/images/woman.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
   padding: 2rem;
+  overflow: hidden; /* Ensure pseudo-element stays inside */
 }
 
+/* Use ::before for the background image */
 .dashboard-background::before {
   content: "";
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.4);
+  background-image: url('../../assets/images/woman.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.3;
   z-index: 1;
+}
+
+
+.dashboard-background::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 2;
 }
 
 .dashboard-background > .row {
   position: relative;
-  z-index: 2;
+  z-index: 3;
 }
+
 
 </style>
