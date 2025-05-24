@@ -1,7 +1,6 @@
 <template>
   <UserHeader />
-  <div class="dashboard-background">
-  <div class="container mt-4">
+  <div class="container mt-4 dashboard-background">
     <div class="row">
       <div v-for="(service, index) in cleaningServices" :key="index" class="col-md-3">
         <div class="card mb-4 shadow-sm">
@@ -17,7 +16,6 @@
         </div>
       </div>
     </div>
-  </div>
   </div>
 </template>
 
