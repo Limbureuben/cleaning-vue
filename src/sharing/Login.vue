@@ -60,6 +60,7 @@ import { reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Background from './Background.vue'
 import BackButton from './BackButton.vue'
+import { toast } from 'vue3-toastify'
 
 const form = reactive({
   username: '',
@@ -70,10 +71,9 @@ const form = reactive({
 
 function submitForm() {
   if (form.password !== form.confirmPassword) {
-    alert("Passwords don't match!")
+    toast.error("Passwords don't match!")
     return
   }
-  // Handle your form submission logic here
   alert(`Registered with username: ${form.username}, email: ${form.email}`)
 }
 

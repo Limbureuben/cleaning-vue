@@ -45,10 +45,10 @@ const goToSignup =() => {
   position: relative;
   min-height: 77vh;
   z-index: 1;
-  overflow: hidden; /* 👈 This is important for clipping the background */
+  overflow: hidden;
   display: flex;
   align-items: center;
-  border-radius: 0; /* 👈 Add border radius here */
+  border-radius: 0;
 }
 
 .bg-image {
@@ -98,7 +98,7 @@ const goToSignup =() => {
   background-color: #FE4F2D;
   border-radius: 2px;
   border: none;
-  color: white;
+  color: rgb(218, 206, 204);
   cursor: pointer;
 }
 </style>
