@@ -197,23 +197,22 @@ const goToPage = (page) => {
   transform: translateY(-3px);
 }
 
-/* Reduce overall card margins and paddings */
+/* 🟢 Reduced default padding even more */
 .card-body {
-  padding: 0.5rem; /* even tighter! */
+  padding: 0.5rem;
 }
+
 .card-title {
-  font-size: 1rem; /* smaller title */
-}
-.card-text {
-  font-size: 0.9rem; /* smaller text */
+  font-size: 1rem;
   margin-bottom: 0.2rem;
 }
+.card-text {
+  font-size: 0.9rem;
+  margin-bottom: 0.2rem;
+}
+
 .page-link:disabled {
   background-color: #ccc !important;
   cursor: not-allowed;
 }
 </style>
-
-
-
-
