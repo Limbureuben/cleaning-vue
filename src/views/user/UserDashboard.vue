@@ -1,5 +1,5 @@
 <template>
-    <UserHeader />
+    <Header />
   <div class="container mt-4">
     <div class="row">
       <div
@@ -32,7 +32,7 @@
 <script>
 
 import { ref } from 'vue';
-import UserHeader from '../user/UserHeader.vue'
+import Header from './UserHeader.vue'
 export default {
   data() {
     return {
