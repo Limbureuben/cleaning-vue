@@ -1,6 +1,6 @@
 <template>
   <UserHeader />
-  <div class="container mt-4" dashboard-background>
+  <div class="container mt-4 dashboard-background">
     <div class="row">
       <div v-for="(service, index) in cleaningServices" :key="index" class="col-md-3">
         <div class="card mb-4 shadow-sm">
@@ -58,7 +58,6 @@ export default {
   },
   methods: {
     bookService(service) {
-      // Replace with actual booking logic or navigation!
       alert(`Booking: ${service.name}`);
     },
   },
@@ -84,7 +83,7 @@ export default {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.4); /* Dark overlay */
+  background: rgba(0, 0, 0, 0.4);
   z-index: 1;
 }
 
