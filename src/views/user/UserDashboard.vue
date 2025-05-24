@@ -1,6 +1,6 @@
 <template>
   <UserHeader />
-  <div class="container mt-4">
+  <div class="container mt-4" dashboard-background>
     <div class="row">
       <div v-for="(service, index) in cleaningServices" :key="index" class="col-md-3">
         <div class="card mb-4 shadow-sm">
@@ -69,4 +69,28 @@ export default {
   height: 120px;
   object-fit: cover;
 }
+
+.dashboard-background {
+  position: relative;
+  background-image: url('../../assets/images/woman.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 2rem;
+}
+
+.dashboard-background::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.4); /* Dark overlay */
+  z-index: 1;
+}
+
+.dashboard-background > .row {
+  position: relative;
+  z-index: 2;
+}
+
 </style>
