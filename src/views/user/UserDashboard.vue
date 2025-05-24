@@ -1,4 +1,5 @@
 <template>
+    <UserHeader />
   <div class="container mt-4">
     <div class="row">
       <div
@@ -7,8 +8,8 @@
         class="col-md-4 mb-4"
       >
         <div class="card shadow">
-          <div class="card-body text-start"> <!-- 🟢 Align text to start -->
-            <h5 class="card-title text-uppercase">{{ room.name }}</h5> <!-- 🟢 Uppercase heading -->
+          <div class="card-body text-start">
+            <h5 class="card-title text-uppercase">{{ room.name }}</h5>
             <p class="card-text">
               <strong>Location:</strong> {{ room.location }}
             </p>
@@ -18,7 +19,7 @@
             <p class="card-text">
               <strong>Available Date:</strong> {{ formatDate(room.available_date) }}
             </p>
-            <div class="d-flex justify-content-start mt-2"> <!-- 🟢 Align buttons to start -->
+            <div class="d-flex justify-content-start mt-2">
               <button
                 class="btn btn-outline-secondary btn-sm me-2"
                 @click="viewImage(room.image)"
@@ -61,6 +62,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import Swal from 'sweetalert2'
+import UserHeader from './UserHeader.vue'
 
 // Static rooms data (replace with your actual data)
 const rooms = ref([
