@@ -23,6 +23,9 @@
 import { ref } from "vue";
 import UserHeader from './UserHeader.vue'
 export default {
+    components: {
+        UserHeader,
+    },
   data() {
     return {
       cleaningServices: [
