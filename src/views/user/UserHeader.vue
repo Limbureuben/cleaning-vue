@@ -9,9 +9,7 @@
 
       <div :class="['collapse navbar-collapse', { show: isMenuOpen }]">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <router-link to="/admin/dashboard" class="nav-link">Companies</router-link>
-          </li>
+          
           <li class="nav-item">
             <router-link to="/admin/users" class="nav-link">Users</router-link>
           </li>
