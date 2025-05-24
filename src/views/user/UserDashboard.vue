@@ -18,7 +18,7 @@
             <p class="card-text">
               <strong>Available Date:</strong> {{ formatDate(room.available_date) }}
             </p>
-            <div class="d-flex justify-content-start mt-3"> <!-- 🟢 Align buttons to start -->
+            <div class="d-flex justify-content-start mt-2"> <!-- 🟢 Align buttons to start -->
               <button
                 class="btn btn-outline-secondary btn-sm me-2"
                 @click="viewImage(room.image)"
