@@ -85,7 +85,7 @@ export default {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  opacity: 0.3;
+  opacity: 0.2;
   z-index: 1;
 }
 
