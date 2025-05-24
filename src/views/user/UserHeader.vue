@@ -15,9 +15,7 @@
           <li class="nav-item">
             <router-link to="/admin/users" class="nav-link">Users</router-link>
           </li>
-          <li class="nav-item">
-            <router-link to="/admin/settings" class="nav-link">Settings</router-link>
-          </li>
+          
         </ul>
         <button class="btn btn-outline-light" @click="logout">
           <i class="bi bi-box-arrow-right me-1"></i> Logout
