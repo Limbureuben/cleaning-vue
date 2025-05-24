@@ -1,11 +1,12 @@
 <template>
     <UserHeader />
+    <Background>
   <div class="container mt-4">
     <div class="row">
       <div
         v-for="room in paginatedRooms"
         :key="room.id"
-        class="col-md-4 mb-4"
+        class="col-md-4 mb-2"
       >
         <div class="card shadow">
           <div class="card-body text-start">
@@ -54,6 +55,7 @@
       </ul>
     </nav>
   </div>
+  </Background>
 </template>
 
 
@@ -63,6 +65,7 @@
 import { ref, computed } from 'vue'
 import Swal from 'sweetalert2'
 import UserHeader from './UserHeader.vue'
+import Background from '@/sharing/Background.vue'
 
 // Static rooms data (replace with your actual data)
 const rooms = ref([
@@ -183,13 +186,13 @@ const goToPage = (page) => {
 
 .card-body {
   padding: 0.5rem;
-  text-align: start; /* 🟢 Make sure everything inside card-body is left-aligned */
+  text-align: start;
 }
 
 .card-title {
   font-size: 1rem;
   margin-bottom: 0.2rem;
-  text-transform: uppercase; /* 🟢 Uppercase heading */
+  text-transform: uppercase;
 }
 
 .card-text {
@@ -200,6 +203,15 @@ const goToPage = (page) => {
 .page-link:disabled {
   background-color: #ccc !important;
   cursor: not-allowed;
+}
+
+.bg-image-container {
+  background-image: url('../../assets/images/wonaclean.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 1rem;
+  border-radius: 0.5rem;
 }
 
 </style>
