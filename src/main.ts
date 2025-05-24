@@ -11,7 +11,6 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import Vue3Toastify from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 
-
 createApp(App)
   .use(router)
   .use(MotionPlugin)
