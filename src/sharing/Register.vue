@@ -72,17 +72,9 @@
 import { reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Background from './Background.vue'
-import REGISTER_MUTATION from ''
+import REGISTER_MUTATION from '@/graphql/registerUser.graphql'
 import BackButton from './BackButton.vue'
 import { toast } from 'vue3-toastify'
-
-const httpLink = createHttpLink({
-  uri: 'http://localhost:8000/graphql/',
-})
-
-
-
-
 
 const form = ref({
   username: '',
