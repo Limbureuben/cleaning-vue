@@ -64,6 +64,8 @@ import swal from 'sweetalert2'
 import { useMutation } from '@vue/apollo-composable';
 import LoginUser from '@/graphql/loginUser.graphql'
 
+const router = useRouter();
+
 const form = ref({
   username: '',
   password: '',
