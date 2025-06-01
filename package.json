@@ -9,10 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@apollo/client": "^3.13.8",
     "@popperjs/core": "^2.11.8",
+    "@vue/apollo-composable": "^4.2.2",
     "@vueuse/motion": "^3.0.3",
     "bootstrap": "^5.3.6",
     "bootstrap-icons": "^1.13.1",
+    "graphql": "^16.11.0",
     "sweetalert2": "^11.21.2",
     "vue": "^3.5.14",
     "vue-router": "^4.5.1",
