@@ -75,10 +75,7 @@ import Background from './Background.vue'
 import BackButton from './BackButton.vue'
 import { toast } from 'vue3-toastify'
 
-// example usage:
-toast.success("Registration successful!")
-toast.error("Passwords do not match!")
-
+// Form state
 const form = reactive({
   username: '',
   email: '',
@@ -90,52 +87,72 @@ const form = reactive({
 const showForm = ref(false)
 const router = useRouter()
 
+// Get CSRF token from cookies
+function getCookie(name) {
+  let cookieValue = null
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';')
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim()
+      if (cookie.startsWith(name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1))
+        break
+      }
+    }
+  }
+  return cookieValue
+}
+
+// Submit form
 async function submitForm() {
   if (form.password !== form.confirmPassword) {
-    toast.error("Password do not match")
-    return;
+    toast.error("Passwords do not match!")
+    return
   }
-  
+
+  const csrfToken = getCookie('csrftoken')
   const payload = {
     username: form.username,
     email: form.email,
     password: form.password,
     password_confirm: form.confirmPassword,
     role: form.role || 'user'
-  };
+  }
 
   try {
     const response = await fetch('http://localhost:8000/api/v1/register/', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include', // send cookies
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken // include CSRF token
+      },
       body: JSON.stringify(payload)
-    });
+    })
 
-    const data = await response.json();
+    const data = await response.json()
 
     if (response.ok) {
       toast.success(data.message || "Registered successfully!")
-      router.push('/login');
+      router.push('/login')
     } else {
       if (data.errors) {
         for (const [field, errors] of Object.entries(data.errors)) {
           errors.forEach(error => toast.error(`${field}: ${error}`))
         }
       } else {
-        toast.error("Registration failed. Please check your inputs.")
+        toast.error(data.detail || "Registration failed. Please check your inputs.")
       }
     }
   } catch (error) {
-    console.error('Registration failed:', error);
+    console.error('Registration failed:', error)
     toast.error("Registration failed. Please try again.")
   }
-
 }
 
 onMounted(() => {
   showForm.value = true
 })
-
 </script>
 
 <style scoped>
