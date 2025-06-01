@@ -64,7 +64,7 @@ import swal from 'sweetalert2'
 import { useMutation } from '@apollo/client'
 import LoginUser from '@/graphql/loginUser.graphql'
 
-const form = reactive({
+const form = ref({
   username: '',
   password: '',
 })
@@ -114,8 +114,6 @@ const showForm = ref(false)
 onMounted(() => {
   showForm.value = true
 })
-
-
 </script>
 
 <style scoped>
