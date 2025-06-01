@@ -61,7 +61,7 @@ import { useRouter } from 'vue-router'
 import Background from './Background.vue'
 import BackButton from './BackButton.vue'
 import swal from 'sweetalert2'
-import { useMutation } from '@apollo/client'
+import { useMutation } from '@vue/apollo-composable';
 import LoginUser from '@/graphql/loginUser.graphql'
 
 const form = ref({
