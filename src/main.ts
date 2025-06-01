@@ -10,6 +10,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import Vue3Toastify from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
+import 'vue-toastification/dist/index.css'
 
 createApp(App)
   .use(router)

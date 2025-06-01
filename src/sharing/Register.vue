@@ -52,7 +52,6 @@
                   required
                 />
               </div>
-
               <button type="submit" class="btn w-100 fw-bold" style="background-color: #FE4F2D; border-color: #FE4F2D;">
                 Register
               </button>
@@ -82,9 +81,9 @@ const form = reactive({
   confirmPassword: ''
 })
 
-function submitForm() {
+async function submitForm() {
   if (form.password !== form.confirmPassword) {
-    alert("Passwords don't match!")
+    
     return
   }
   alert(`Registered with username: ${form.username}, email: ${form.email}`)
