@@ -72,8 +72,8 @@
 import { reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Background from './Background.vue';
-import { gql, useMutation } from '@vue/apollo-composable';
-import REGISTER_USER from '@/graphql/registerUser.graphql';
+import { useMutation } from '@vue/apollo-composable';
+import REGISTER_USER from '@/graphql/registerUser.graphql'
 import BackButton from './BackButton.vue'
 import { toast } from 'vue3-toastify'
 import router from '@/router';
@@ -84,6 +84,9 @@ const form = ref({
   password: '',
   confirmPassword: ''
 });
+
+
+const showForm = ref(false)
 
 const { mutate: registerUser, onDone, onError } = useMutation(REGISTER_USER);
 
@@ -115,8 +118,6 @@ const onSubmit = async () => {
   onError((error) => {
     toast.error('Registration failed: ' + error.message);
   });
-
-  const showForm = ref(false);
 }
 onMounted(() => {
   showForm.value = true

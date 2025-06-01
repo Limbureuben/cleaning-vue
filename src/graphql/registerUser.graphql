@@ -1,5 +1,5 @@
 
-  mutation REGISTER_USER($username: String!, $password: String!, $confirmPassword: String!, $role: String) {
+  mutation RegisterUser($username: String!, $password: String!, $confirmPassword: String!, $role: String) {
     registerUser(username: $username, password: $password, confirmPassword: $confirmPassword, role: $role) {
       success
       message

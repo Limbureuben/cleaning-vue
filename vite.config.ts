@@ -1,21 +1,32 @@
+
 // import { defineConfig } from 'vite'
 // import vue from '@vitejs/plugin-vue'
+// import path from 'path'
 
-// // https://vite.dev/config/
+// // https://vitejs.dev/config/
 // export default defineConfig({
 //   plugins: [vue()],
+//   resolve: {
+//     alias: {
+//       '@': path.resolve(__dirname, 'src'),
+//     },
+//   },
 // })
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
+import graphql from '@rollup/plugin-graphql'  // Import the GraphQL plugin
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [
+    vue(),
+    graphql()  // Add this plugin
+  ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },
   },
 })
+
