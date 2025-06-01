@@ -88,11 +88,11 @@ onDone( async ({ data }) => {
       timer: 1500
     }).then(() => {
       if (role === 'superuser') {
-        router.push('/admin/dashboard');
+        router.push('/admin-dashboard');
       } else if (role === 'staff') {
         router.push('/staff/dashboard');
       } else {
-        router.push('/user/dashboard');
+        router.push('/user-dashboard');
       }
     });
   } else {
