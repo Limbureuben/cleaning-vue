@@ -73,7 +73,11 @@ import { reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Background from './Background.vue'
 import BackButton from './BackButton.vue'
-import { useToast } from 'vue3-toastify'
+import { toast } from 'vue3-toastify'
+
+// example usage:
+toast.success("Registration successful!")
+toast.error("Passwords do not match!")
 
 const form = reactive({
   username: '',
