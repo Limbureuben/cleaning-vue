@@ -172,34 +172,75 @@ const goToPage = (page) => {
   }
 }
 </script>
-
-
 <style scoped>
+.container {
+  background-color: #f8f9fa;
+  padding: 2rem;
+  border-radius: 0.5rem;
+}
+
 .card {
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: none;
+  border-radius: 0.5rem;
+  overflow: hidden;
 }
 .card:hover {
   transform: translateY(-3px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .card-body {
-  padding: 0.5rem;
+  padding: 1rem;
   text-align: start;
+  background-color: #ffffff;
 }
 
 .card-title {
-  font-size: 1rem;
-  margin-bottom: 0.2rem;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
   text-transform: uppercase;
+  color: #343a40;
 }
 
 .card-text {
-  font-size: 0.9rem;
-  margin-bottom: 0.2rem;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #6c757d;
 }
 
-.page-link:disabled {
-  background-color: #ccc !important;
+.btn-outline-secondary {
+  border-color: #6c757d;
+  color: #6c757d;
+}
+.btn-outline-secondary:hover {
+  background-color: #6c757d;
+  color: #ffffff;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+.btn-primary:disabled {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.pagination {
+  margin-top: 2rem;
+}
+
+.page-link {
+  color: #007bff;
+}
+.page-link:hover {
+  color: #0056b3;
+}
+
+.page-item.disabled .page-link {
+  background-color: #e9ecef;
+  color: #6c757d;
   cursor: not-allowed;
 }
 
@@ -211,5 +252,4 @@ const goToPage = (page) => {
   padding: 1rem;
   border-radius: 0.5rem;
 }
-
 </style>
