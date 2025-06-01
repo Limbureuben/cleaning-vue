@@ -71,44 +71,45 @@ const form = ref({
 
 const { mutate: loginUser, onDone, onError } = useMutation(LoginUser);
 
-onDone( async ({ data }) => {
-  const result = data.loginUser;
+const submitForm = async () => {
+  loginUser({
+    username: form.value.username,
+    password: form.value.password
+  });
 
-  if (result.success && result.token) {
-    localStorage.setItem('token', result.token);
+  onDone( ({ data }) => {
+    const result = data.loginUser;
+    
+    if (data.success && result.token) {
+      localStorage.setItem('token', result.token);
 
-    const role = result.user.isSuperuser ? 'superuser' : result.user.isStaff ? 'staff' : 'user';
-    localStorage.setItem('role', role);
+      const role = result.user.isSuperuser ? 'superuser' : result.user.isStaff ? 'staff' : 'user';
+      localStorage.setItem('role', role);
 
-    swal.fire({
-      position: "top-end",
-      icon: "success",
-      title: "Registration successful",
-      showConfirmButton: false,
-      timer: 1500
-    }).then(() => {
-      if (role === 'superuser') {
-        router.push('/admin-dashboard');
-      } else if (role === 'staff') {
-        router.push('/staff/dashboard');
-      } else {
-        router.push('/user-dashboard');
-      }
-    });
-  } else {
-    swal.fire({
-      icon: 'error',
-      title: 'Login failed',
-      text: result.message || 'Please check your credentials and try again.'
-    });
-  }
-})
-
-function submitForm() {
-
+      swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Registration successful",
+        showConfirmButton: false,
+        timer: 1500
+      }).then(() => {
+        if (role === 'superuser') {
+          router.push('/admin-dashboard');
+        } else if (role === 'staff') {
+          router.push('/staff/dashboard');
+        } else {
+          router.push('/user-dashboard');
+        }
+      });
+    } else {
+      swal.fire({
+        icon: 'error',
+        title: 'Login failed',
+        text: result.message || 'Please check your credentials and try again.'
+      });
+    }
+  })
 }
-  
-
 const showForm = ref(false)
 
 onMounted(() => {
