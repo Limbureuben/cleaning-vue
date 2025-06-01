@@ -60,22 +60,54 @@ import { reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Background from './Background.vue'
 import BackButton from './BackButton.vue'
-import { toast } from 'vue3-toastify'
+import swal from 'sweetalert2'
+import { useMutation } from '@apollo/client'
+import LoginUser from '@/graphql/loginUser.graphql'
 
 const form = reactive({
   username: '',
-  email: '',
   password: '',
-  confirmPassword: ''
+})
+
+const { mutate: loginUser, onDone, onError } = useMutation(LoginUser);
+
+onDone( async ({ data }) => {
+  const result = data.loginUser;
+
+  if (result.success && result.token) {
+    localStorage.setItem('token', result.token);
+
+    const role = result.user.isSuperuser ? 'superuser' : result.user.isStaff ? 'staff' : 'user';
+    localStorage.setItem('role', role);
+
+    swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Registration successful",
+      showConfirmButton: false,
+      timer: 1500
+    }).then(() => {
+      if (role === 'superuser') {
+        router.push('/admin/dashboard');
+      } else if (role === 'staff') {
+        router.push('/staff/dashboard');
+      } else {
+        router.push('/user/dashboard');
+      }
+    });
+  } else {
+    swal.fire({
+      icon: 'error',
+      title: 'Login failed',
+      text: result.message || 'Please check your credentials and try again.'
+    });
+  }
 })
 
 function submitForm() {
-  if (form.password !== form.confirmPassword) {
-    toast.error("Passwords don't match!")
-    return
-  }
-  alert(`Registered with username: ${form.username}, email: ${form.email}`)
+
 }
+  
 
 const showForm = ref(false)
 
