@@ -87,7 +87,6 @@ function submitForm() {
     alert("Passwords don't match!")
     return
   }
-  // Handle your form submission logic here
   alert(`Registered with username: ${form.username}, email: ${form.email}`)
 }
 
