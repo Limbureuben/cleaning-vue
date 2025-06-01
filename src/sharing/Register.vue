@@ -79,8 +79,11 @@ const form = reactive({
   username: '',
   email: '',
   password: '',
-  confirmPassword: ''
+  confirmPassword: '',
+  role: ''
 })
+
+const toast = useToast()
 
 async function submitForm() {
   if (form.password !== form.confirmPassword) {
