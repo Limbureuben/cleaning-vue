@@ -12,7 +12,7 @@
             style="min-width: 450px;"
           >
             <h4 class="mb-4 text-center fw-bold" style="color: #FE4F2D;">REGISTRATION</h4>
-            <form @submit.prevent="submitForm">
+            <form @submit.prevent="onSubmit">
               <div class="mb-4">
                 <input
                   v-model="form.username"
