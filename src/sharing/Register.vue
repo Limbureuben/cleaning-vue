@@ -84,16 +84,26 @@ const form = reactive({
 })
 
 const toast = useToast()
+const showForm = ref(false)
+const router = useRouter()
 
 async function submitForm() {
   if (form.password !== form.confirmPassword) {
-    
-    return
+    toast.error("Password do not match")
+    return;
   }
-  alert(`Registered with username: ${form.username}, email: ${form.email}`)
+  
+  const payload = {
+    username: form.username,
+    email: form.email,
+    password: form.password,
+    password_confirm: form.confirmPassword,
+    role: form.role || 'user'
+  };
+
+  
 }
 
-const showForm = ref(false)
 
 onMounted(() => {
   showForm.value = true
