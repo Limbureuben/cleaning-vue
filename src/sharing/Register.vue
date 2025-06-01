@@ -71,10 +71,12 @@
 <script setup>
 import { reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import Background from './Background.vue'
-import REGISTER_MUTATION from '@/graphql/registerUser.graphql'
+import Background from './Background.vue';
+import { gql, useMutation } from '@vue/apollo-composable';
+import REGISTER_USER from '@/graphql/registerUser.graphql';
 import BackButton from './BackButton.vue'
 import { toast } from 'vue3-toastify'
+import router from '@/router';
 
 const form = ref({
   username: '',
@@ -83,10 +85,39 @@ const form = ref({
   confirmPassword: ''
 });
 
-const { mutate: registerUser, onDone, onError } = useMutation()
+const { mutate: registerUser, onDone, onError } = useMutation(REGISTER_USER);
 
+const onSubmit = async () => {
+  registerUser({
+    username: form.value.username,
+    email: form.value.email,
+    password: form.value.password,
+    confirmPassword: form.value.confirmPassword
+  });
 
+  onDone(({ data }) => {
+    if (data.registerUser.success) {
+      toast.success('Registeration sucessful')
 
+      form.value.username = '';
+      form.value.email = '';
+      form.value.password = '';
+      form.value.confirmPassword = '';
+
+      setTimeout(() => {
+        router.push('/login');
+      }, 200);
+    } else {
+      toast.error('Registration failed: ' + data.registerUser.message);
+    }
+  });
+
+  onError((error) => {
+    toast.error('Registration failed: ' + error.message);
+  });
+
+  const showForm = ref(false);
+}
 onMounted(() => {
   showForm.value = true
 })
