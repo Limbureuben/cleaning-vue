@@ -75,7 +75,7 @@ import Background from './Background.vue';
 import { useMutation } from '@vue/apollo-composable';
 import REGISTER_USER from '@/graphql/registerUser.graphql'
 import BackButton from './BackButton.vue'
-import { toast } from 'vue3-toastify'
+import Swal from 'sweetalert2'
 import router from '@/router';
 
 const form = ref({
@@ -100,7 +100,13 @@ const onSubmit = async () => {
 
   onDone(({ data }) => {
     if (data.registerUser.success) {
-      toast.success('Registeration sucessful')
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Registration successful",
+        showConfirmButton: false,
+        timer: 1500
+      });
 
       form.value.username = '';
       form.value.email = '';
@@ -111,12 +117,20 @@ const onSubmit = async () => {
         router.push('/login');
       }, 200);
     } else {
-      toast.error('Registration failed: ' + data.registerUser.message);
+      Swal.fire({
+        icon: "error",
+        title: "Registration failed",
+        text: data.registerUser.message
+      });
     }
   });
 
   onError((error) => {
-    toast.error('Registration failed: ' + error.message);
+    Swal.fire({
+      icon: "error",
+      title: "Registration failed",
+      text: error.message
+    });
   });
 }
 onMounted(() => {
