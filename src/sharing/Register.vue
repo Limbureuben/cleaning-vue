@@ -87,22 +87,6 @@ const form = reactive({
 const showForm = ref(false)
 const router = useRouter()
 
-// Get CSRF token from cookies
-function getCookie(name) {
-  let cookieValue = null
-  if (document.cookie && document.cookie !== '') {
-    const cookies = document.cookie.split(';')
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim()
-      if (cookie.startsWith(name + '=')) {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1))
-        break
-      }
-    }
-  }
-  return cookieValue
-}
-
 // Submit form
 async function submitForm() {
   if (form.password !== form.confirmPassword) {
@@ -110,7 +94,6 @@ async function submitForm() {
     return
   }
 
-  const csrfToken = getCookie('csrftoken')
   const payload = {
     username: form.username,
     email: form.email,
@@ -122,10 +105,8 @@ async function submitForm() {
   try {
     const response = await fetch('http://localhost:8000/api/v1/register/', {
       method: 'POST',
-      credentials: 'include', // send cookies
       headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrfToken // include CSRF token
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(payload)
     })
