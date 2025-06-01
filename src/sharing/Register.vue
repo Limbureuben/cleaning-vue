@@ -87,7 +87,6 @@ const form = reactive({
   role: ''
 })
 
-const toast = useToast()
 const showForm = ref(false)
 const router = useRouter()
 
