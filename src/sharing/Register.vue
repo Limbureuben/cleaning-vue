@@ -75,61 +75,14 @@ import Background from './Background.vue'
 import BackButton from './BackButton.vue'
 import { toast } from 'vue3-toastify'
 
-// Form state
-const form = reactive({
+const form = ref({
   username: '',
   email: '',
   password: '',
-  confirmPassword: '',
-  role: ''
+  confirmPassword: ''
 })
 
-const showForm = ref(false)
-const router = useRouter()
 
-// Submit form
-async function submitForm() {
-  if (form.password !== form.confirmPassword) {
-    toast.error("Passwords do not match!")
-    return
-  }
-
-  const payload = {
-    username: form.username,
-    email: form.email,
-    password: form.password,
-    password_confirm: form.confirmPassword,
-    role: form.role || 'user'
-  }
-
-  try {
-    const response = await fetch('http://localhost:8000/api/v1/register/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
-
-    const data = await response.json()
-
-    if (response.ok) {
-      toast.success(data.message || "Registered successfully!")
-      router.push('/login')
-    } else {
-      if (data.errors) {
-        for (const [field, errors] of Object.entries(data.errors)) {
-          errors.forEach(error => toast.error(`${field}: ${error}`))
-        }
-      } else {
-        toast.error(data.detail || "Registration failed. Please check your inputs.")
-      }
-    }
-  } catch (error) {
-    console.error('Registration failed:', error)
-    toast.error("Registration failed. Please try again.")
-  }
-}
 
 onMounted(() => {
   showForm.value = true
