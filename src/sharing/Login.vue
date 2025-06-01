@@ -80,7 +80,7 @@ const submitForm = async () => {
   onDone( ({ data }) => {
     const result = data.loginUser;
     
-    if (data.success && result.token) {
+    if (result.success && result.token) {
       localStorage.setItem('token', result.token);
 
       const role = result.user.isSuperuser ? 'superuser' : result.user.isStaff ? 'staff' : 'user';
@@ -89,7 +89,7 @@ const submitForm = async () => {
       swal.fire({
         position: "top-end",
         icon: "success",
-        title: "Registration successful",
+        title: "Login successful",
         showConfirmButton: false,
         timer: 1500
       }).then(() => {
