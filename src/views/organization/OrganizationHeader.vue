@@ -6,6 +6,7 @@
         <li><a href="#dashboard">Dashboard</a></li>
         <li><a href="#members">Members</a></li>
         <li><a href="#settings">Settings</a></li>
+        <li><button @click="logout" class="logout-button">Logout</button></li>
       </ul>
     </nav>
   </header>
@@ -17,6 +18,12 @@ export default {
   data() {
     return {
       organizationName: 'BNB Cleaning Services',
+    }
+  },
+  methods: {
+    logout() {
+      // Add your logout logic here
+      console.log('User logged out');
     }
   }
 }
@@ -59,5 +66,20 @@ nav ul li a {
 
 nav ul li a:hover {
   color: #ffcccb;
+}
+
+.logout-button {
+  background-color: #FE4F2D;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #e63e1c;
 }
 </style>
