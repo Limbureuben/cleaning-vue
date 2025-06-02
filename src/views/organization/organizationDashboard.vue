@@ -2,10 +2,9 @@
   <OrganizationHeader />
   <div class="dashboard-wrapper">
     <div class="container py-5">
-      <h2 class="text-center mb-5">Organization Dashboard</h2>
       <div class="row">
         <div class="col-md-6 mb-4" v-for="(card, index) in cards" :key="index">
-          <div class="card shadow border-0 h-100 hover-effect">
+          <div class="card shadow border-0 hover-effect">
             <div class="card-body text-center d-flex flex-column justify-content-between">
               <div>
                 <i :class="card.icon" class="card-icon mb-3"></i>
@@ -27,7 +26,7 @@ import OrganizationHeader from './OrganizationHeader.vue';
 
 const cards = [
   { title: "TOTAL CLEANER", description: "Manage all Accounts of Registered users in this platform.", icon: "fas fa-users" },
-  { title: "AVAILABLE BOOKING", description: "These are the Registered Companies that deal with cleaning services in different Regions of Tanzania", icon: "fas fa-building" },
+  { title: "AVAILABLE BOOKING", description: "These are the Registered Companies that", icon: "fas fa-building" },
   { title: "BOOKING SERVICES", description: "Check and Manage bookings available in different companies", icon: "fas fa-calendar-check" },
   { title: "MESSAGES", description: "Check Messages sent by the users", icon: "fas fa-envelope" }
 ];
@@ -39,7 +38,7 @@ const cards = [
   background-image: url('../../assets/images/wonaclean.jpg');
   background-size: cover;
   background-position: center;
-  min-height: 80vh;
+  min-height: 60vh;
   display: flex;
   align-items: center;
 }
@@ -80,10 +79,4 @@ const cards = [
   transform: scale(1.05);
 }
 
-h2 {
-  color: #333;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
 </style>
