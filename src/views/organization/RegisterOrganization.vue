@@ -121,7 +121,6 @@ const submitForm = async () => {
 <style scoped>
 .register-organization {
   max-width: 700px;
-  background-color: #FFFFFFFF;
   border-radius: 4px;
   position: relative;
   align-items: center;
@@ -175,7 +174,7 @@ h4 {
   background-image: url('../../assets/images/wonaclean.jpg');
   background-size: cover;
   background-position: center;
-  min-height: 100vh;
+  min-height: 88vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -187,13 +186,15 @@ h4 {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 90%;
   background: rgba(253, 253, 253, 0.985);
-  z-index: 2;
+  z-index: -1;
+
 }
 
 .container-dashboard > * {
   position: relative;
-  z-index: 3;
+  z-index: 1;
+
 }
 </style>
