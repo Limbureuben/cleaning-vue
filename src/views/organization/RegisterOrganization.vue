@@ -7,11 +7,11 @@
         <div class="row">
           <div class="col-md-6 mb-3">
             <label for="organizationName" class="form-label">Organization Name</label>
-            <input type="text" class="form-control" v-model="form.organization_name" id="organizationName" required>
+            <input type="text" placeholder="DEBORA COMPANY" class="form-control" v-model="form.organization_name" id="organizationName" required>
           </div>
 
           <div class="col-md-6 mb-3">
-            <label for="location" class="form-label">Organization Location</label>
+            <label for="location" class="form-label">Organization Region</label>
             <select id="location" v-model="form.location" class="form-control" required>
               <option value="">Select a location</option>
               <option value="Dar-es-salaam">Dar-es-salaam</option>
@@ -27,13 +27,11 @@
           </div>
 
           <div class="col-md-6 mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" v-model="form.email" id="email" required>
+            <input type="email" class="form-control" v-model="form.email" placeholder="eg.debora@gmail.com" id="email" required>
           </div>
 
           <div class="col-md-6 mb-3">
-            <label for="address" class="form-label">Address</label>
-            <input type="text" class="form-control" v-model="form.address" id="address" required>
+            <input type="text" class="form-control" placeholder="Mwenge, P.O.BOX 28" v-model="form.address" id="address" required>
           </div>
 
           <!-- Multiple services checkboxes - now horizontal -->
@@ -93,18 +91,22 @@ const router = useRouter()
 
 const submitForm = async () => {
   try {
+    // Get the token from localStorage
+    const token = localStorage.getItem('token');
+
     const response = await fetch('http://localhost:8000/api/organizations-registration/', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify(form.value)
-    })
+    });
 
-    if (!response.ok) throw new Error('Network response was not ok')
+    if (!response.ok) throw new Error('Network response was not ok');
 
-    const data = await response.json()
-    console.log('Registered:', data)
+    const data = await response.json();
+    console.log('Registered:', data);
 
     Swal.fire({
       icon: 'success',
@@ -112,7 +114,7 @@ const submitForm = async () => {
       text: 'Organization registered successfully!',
       confirmButtonColor: '#3085d6',
       confirmButtonText: 'OK'
-    })
+    });
 
     // Clear form
     form.value = {
@@ -121,21 +123,22 @@ const submitForm = async () => {
       email: '',
       address: '',
       services: []
-    }
+    };
 
-    // Optionally redirect
-    // router.push('/some-route')
+    // Optional redirect
+    // router.push('/some-route');
   } catch (error) {
-    console.error('Error registering:', error)
+    console.error('Error registering:', error);
     Swal.fire({
       icon: 'error',
       title: 'Error!',
       text: 'Error registering organization. Please try again.',
       confirmButtonColor: '#d33',
       confirmButtonText: 'OK'
-    })
+    });
   }
 }
+
 </script>
 
 
