@@ -1,5 +1,6 @@
 <template>
   <AdminHeader />
+  <div class="container-dashboard">
   <div class="register-organization container">
     <h4 class="text-center mb-4">Register Organization</h4>
     <form>
@@ -47,6 +48,7 @@
       </div>
     </form>
   </div>
+  </div>
 </template>
 
 <script setup>
@@ -61,8 +63,8 @@ import AdminHeader from './AdminHeader.vue'
   border-radius: 4px;
   position: relative;
   align-items: center;
-  top: 100px;
-  min-height: 500px;
+  top: 40px;
+  min-height: 470px;
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
@@ -105,5 +107,31 @@ h4 {
 .btn-primary:hover {
   background-color: #1C70E6FF;
   transform: scale(1.05);
+}
+
+.container-dashboard {
+  background-image: url('../../assets/images/tools.png');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-dashboard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(237, 232, 232, 0.4);
+  z-index: 1;
+}
+
+.container-dashboard > * {
+  position: relative;
+  z-index: 2;
 }
 </style>
