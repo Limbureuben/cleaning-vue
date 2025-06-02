@@ -84,6 +84,7 @@ const submitForm = async () => {
     
     if (result.success && result.token) {
       localStorage.setItem('token', result.token);
+      console.log('Token saved:', result.token);
 
       const role = result.user.isSuperuser ? 'superuser' : result.user.isStaff ? 'staff' : 'user';
       localStorage.setItem('role', role);

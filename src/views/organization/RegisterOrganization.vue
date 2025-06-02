@@ -96,11 +96,11 @@ const submitForm = async () => {
 
     const response = await fetch('http://localhost:8000/api/organizations-registration/', {
       method: 'POST',
+      body: JSON.stringify(form.value),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
-      body: JSON.stringify(form.value)
     });
 
     if (!response.ok) throw new Error('Network response was not ok');
@@ -115,6 +115,8 @@ const submitForm = async () => {
       confirmButtonColor: '#3085d6',
       confirmButtonText: 'OK'
     });
+
+    router.push('/organization');
 
     // Clear form
     form.value = {
