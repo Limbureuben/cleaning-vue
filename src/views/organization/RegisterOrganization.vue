@@ -1,5 +1,5 @@
 <template>
-  <AdminHeader />
+  <OrganizationHeader />
   <div class="container-dashboard">
   <div class="register-organization container">
     <h4 class="text-center mb-4">Register Organization</h4>
@@ -36,7 +36,6 @@
           <input type="text" class="form-control" v-model="form.address" id="address" required>
         </div>
 
-        <!-- Services Offered (single row full width) -->
         <div class="col-12 mb-3">
           <label for="services" class="form-label">Services Offered</label>
           <textarea class="form-control" id="services" rows="3" v-model="form.service" required></textarea>
@@ -52,10 +51,11 @@
 </template>
 
 <script setup>
-import AdminHeader from './AdminHeader.vue'
-import { ref, reactive, onMounted } from 'vue'
-import { useRouter } from 'vue-router';
-import swal from 'sweetalert2';
+
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import Swal from 'sweetalert2'
+import OrganizationHeader from './OrganizationHeader.vue';
 
 const form = ref({
   organization_name: '',
@@ -63,9 +63,9 @@ const form = ref({
   email: '',
   address: '',
   service: ''
-});
+})
 
-const router = useRouter();
+const router = useRouter()
 
 const submitForm = async () => {
   try {
@@ -77,20 +77,46 @@ const submitForm = async () => {
       body: JSON.stringify(form.value)
     })
 
-    if(!response.ok) throw new Error('Network response was not ok');
+    if (!response.ok) throw new Error('Network response was not ok')
 
     const data = await response.json()
-    console.log('Registred:', data)
-    alert('Organization registered successfully!')
+    console.log('Registered:', data)
+
+    // Use SweetAlert2 success alert
+    Swal.fire({
+      icon: 'success',
+      title: 'Success!',
+      text: 'Organization registered successfully!',
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'OK'
+    })
+
+    // Optionally, clear the form after registration
+    form.value = {
+      organization_name: '',
+      location: '',
+      email: '',
+      address: '',
+      service: ''
+    }
+
+    // Optionally redirect
+    // router.push('/some-route')
   } catch (error) {
     console.error('Error registering:', error)
-    alert('Error registering organization.')
+
+    // Use SweetAlert2 error alert
+    Swal.fire({
+      icon: 'error',
+      title: 'Error!',
+      text: 'Error registering organization. Please try again.',
+      confirmButtonColor: '#d33',
+      confirmButtonText: 'OK'
+    })
   }
 }
-
-
-
 </script>
+
 
 <style scoped>
 .register-organization {
@@ -99,7 +125,7 @@ const submitForm = async () => {
   border-radius: 4px;
   position: relative;
   align-items: center;
-  top: 40px;
+  top: 0px;
   min-height: 470px;
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
@@ -146,7 +172,7 @@ h4 {
 }
 
 .container-dashboard {
-  background-image: url('../../assets/images/tools.png');
+  background-image: url('../../assets/images/wonaclean.jpg');
   background-size: cover;
   background-position: center;
   min-height: 100vh;
@@ -162,12 +188,12 @@ h4 {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(237, 232, 232, 0.4);
-  z-index: 1;
+  background: rgba(253, 253, 253, 0.985);
+  z-index: 2;
 }
 
 .container-dashboard > * {
   position: relative;
-  z-index: 2;
+  z-index: 3;
 }
 </style>

@@ -4,6 +4,7 @@
     <nav>
       <ul>
         <li><a href="#dashboard">Dashboard</a></li>
+        <li><router-link to="/register-organization">RegisterCompany</router-link></li>
         <li><a href="#members">Members</a></li>
         <li><a href="#settings">Settings</a></li>
         <li><button @click="logout" class="logout-button">Logout</button></li>

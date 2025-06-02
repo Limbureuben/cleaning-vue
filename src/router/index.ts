@@ -5,7 +5,7 @@ import Login from '@/sharing/Login.vue'
 import AdminDashboard from '@/views/admin/AdminDashboard.vue'
 import UserDashboard from '@/views/user/UserDashboard.vue'
 import OrganizationDashboard from '@/views/organization/organizationDashboard.vue'
-import RegisterOrganization from '@/views/admin/RegisterOrganization.vue'
+import RegisterOrganization from '@/views/organization/RegisterOrganization.vue'
 
 
 const routes = [
