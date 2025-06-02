@@ -1,4 +1,5 @@
 <template>
+  <OrganizationHeader />
   <div class="dashboard-wrapper">
     <div class="container py-5">
       <h2 class="text-center mb-5">Organization Dashboard</h2>
@@ -21,6 +22,9 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
+import OrganizationHeader from './OrganizationHeader.vue';
+
 const cards = [
   { title: "TOTAL CLEANER", description: "Manage all Accounts of Registered users in this platform.", icon: "fas fa-users" },
   { title: "AVAILABLE BOOKING", description: "These are the Registered Companies that deal with cleaning services in different Regions of Tanzania", icon: "fas fa-building" },
