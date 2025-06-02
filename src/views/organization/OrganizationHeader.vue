@@ -27,21 +27,37 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
-  background-color: #f0f0f0;
+  padding: 1rem 2rem;
+  background-color: #FE4F2D;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.organization-header h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
 nav ul {
   display: flex;
   list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 nav ul li {
-  margin-left: 1rem;
+  margin-left: 1.5rem;
 }
 
 nav ul li a {
   text-decoration: none;
-  color: #333;
+  color: white;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+  color: #ffcccb;
 }
 </style>

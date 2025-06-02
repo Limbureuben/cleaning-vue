@@ -22,8 +22,8 @@
 
 <script setup>
 const cards = [
-  { title: "TOTAL USERS", description: "Manage all Accounts of Registered users in this platform.", icon: "fas fa-users" },
-  { title: "REGISTERED COMPANIES", description: "These are the Registered Companies that deal with cleaning services in different Regions of Tanzania", icon: "fas fa-building" },
+  { title: "TOTAL CLEANER", description: "Manage all Accounts of Registered users in this platform.", icon: "fas fa-users" },
+  { title: "AVAILABLE BOOKING", description: "These are the Registered Companies that deal with cleaning services in different Regions of Tanzania", icon: "fas fa-building" },
   { title: "BOOKING SERVICES", description: "Check and Manage bookings available in different companies", icon: "fas fa-calendar-check" },
   { title: "MESSAGES", description: "Check Messages sent by the users", icon: "fas fa-envelope" }
 ];
