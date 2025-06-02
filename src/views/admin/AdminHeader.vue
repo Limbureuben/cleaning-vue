@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow" style="background-color: #1C70E6FF;">
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow" style="background-color: #6A80B9;">
     <div class="container-fluid">
       <!-- Brand -->
       <router-link to="/" class="navbar-brand fw-bold">Admin Dashboard</router-link>
@@ -105,7 +105,7 @@ const logout = () => {
 }
 
 .dropdown-menu {
-  background-color: #287FD5FF;
+  background-color: #6A80B9;
   border: none;
 }
 
@@ -115,7 +115,7 @@ const logout = () => {
 }
 
 .dropdown-item:hover {
-  background-color: #1C70E6FF;
+  background-color: #6A80B9;
 }
 
 .dropdown-divider {

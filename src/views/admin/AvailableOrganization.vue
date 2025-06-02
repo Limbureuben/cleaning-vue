@@ -1,7 +1,7 @@
 <template>
   <AdminHeader />
   <div class="available-organization container my-5 p-4 bg-light rounded shadow">
-    <h2 class="text-center mb-4 text-primary fw-bold">Available Organizations</h2>
+    <h3 class="text-center mb-4 fw-bold">ORGANIZATIONS</h3>
     <div class="table-responsive">
       <table class="table table-bordered table-hover align-middle">
         <thead class="table-primary">
@@ -116,7 +116,7 @@ export default {
   vertical-align: middle !important;
 }
 .table thead th {
-  background-color: #0d6efd !important;
+  background-color: #6A80B9 !important;
   color: #ffffff;
 }
 .table tbody tr:hover {
@@ -126,5 +126,9 @@ export default {
 }
 .badge {
   font-size: 0.85rem;
+}
+
+h3 {
+  color: #6A80B9;
 }
 </style>
