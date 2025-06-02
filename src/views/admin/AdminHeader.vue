@@ -101,12 +101,11 @@ const logout = () => {
 }
 
 .btn-outline-light:hover {
-  background-color: white;
-  color: #1C70E6FF;
+  color: #EC3D3DFF;
 }
 
 .dropdown-menu {
-  background-color: #1C70E6FF;
+  background-color: #287FD5FF;
   border: none;
 }
 
