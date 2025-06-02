@@ -13,7 +13,8 @@ const routes = [
   { path: '/login', name: 'Login', component: Login },
   { path: '/admin-dashboard', name: 'AdminDashboard', component: AdminDashboard },
   { path: '/user-dashboard', name: 'UserDashboard', component: UserDashboard},
-  { path: '/organization', name: 'Organization', component: OrganizationDashboard}
+  { path: '/organization', name: 'Organization', component: OrganizationDashboard },
+  { path: '/organization', name: 'OrganizationDashboard', component: OrganizationDashboard }
   
 ]
 const router = createRouter({
