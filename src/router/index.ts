@@ -5,6 +5,7 @@ import Login from '@/sharing/Login.vue'
 import AdminDashboard from '@/views/admin/AdminDashboard.vue'
 import UserDashboard from '@/views/user/UserDashboard.vue'
 import OrganizationDashboard from '@/views/organization/organizationDashboard.vue'
+import RegisterOrganization from '@/views/admin/RegisterOrganization.vue'
 
 
 const routes = [
@@ -14,6 +15,7 @@ const routes = [
   { path: '/admin-dashboard', name: 'AdminDashboard', component: AdminDashboard },
   { path: '/user-dashboard', name: 'UserDashboard', component: UserDashboard},
   { path: '/organization', name: 'Organization', component: OrganizationDashboard },
+  { path: 'register-organization', name: 'Register organization', component: RegisterOrganization },
   
 ]
 const router = createRouter({
