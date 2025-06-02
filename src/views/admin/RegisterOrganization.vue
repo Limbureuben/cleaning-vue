@@ -23,7 +23,6 @@
             <option value="Location 7">Morogoro</option>
             <option value="Location 8">Iringa</option>
             <option value="Location 9">Kagera</option>
-            <!-- Add more options as needed -->
           </select>
         </div>
 

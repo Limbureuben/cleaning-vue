@@ -34,6 +34,7 @@ const cards = [
 
 <style scoped>
 .dashboard-wrapper {
+  position: relative;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   background-image: url('../../assets/images/tools.png');
   background-size: cover;
@@ -44,6 +45,23 @@ const cards = [
   display: flex;
   align-items: center;
 }
+
+.dashboard-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.4); /* white overlay, 0.4 opacity */
+  z-index: 1;
+}
+
+.dashboard-wrapper > * {
+  position: relative;
+  z-index: 2; /* ensures content is above the overlay */
+}
+
 
 .card {
   top: 20px;
