@@ -1,69 +1,93 @@
 <template>
   <OrganizationHeader />
   <div class="container-dashboard">
-  <div class="register-organization container">
-    <h4 class="text-center mb-4">Register Organization</h4>
-    <form @submit.prevent="submitForm">
-      <div class="row">
-        <!-- First row: Organization Name and Location Dropdown -->
-        <div class="col-md-6 mb-3">
-          <label for="organizationName" class="form-label">Organization Name</label>
-          <input type="text" class="form-control" v-model="form.organization_name" id="organizationName" required>
+    <div class="register-organization container">
+      <h4 class="text-center mb-4">Register Organization</h4>
+      <form @submit.prevent="submitForm">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="organizationName" class="form-label">Organization Name</label>
+            <input type="text" class="form-control" v-model="form.organization_name" id="organizationName" required>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="location" class="form-label">Organization Location</label>
+            <select id="location" v-model="form.location" class="form-control" required>
+              <option value="">Select a location</option>
+              <option value="Dar-es-salaam">Dar-es-salaam</option>
+              <option value="Dodoma">Dodoma</option>
+              <option value="Mwanza">Mwanza</option>
+              <option value="Arusha">Arusha</option>
+              <option value="Mbeya">Mbeya</option>
+              <option value="Tanga">Tanga</option>
+              <option value="Morogoro">Morogoro</option>
+              <option value="Iringa">Iringa</option>
+              <option value="Kagera">Kagera</option>
+            </select>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" v-model="form.email" id="email" required>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" class="form-control" v-model="form.address" id="address" required>
+          </div>
+
+          <!-- Multiple services checkboxes - now horizontal -->
+          <div class="col-12 mb-3">
+            <label class="form-label">Services Offered</label>
+            <div class="services-checkboxes">
+              <div class="form-check" v-for="service in availableServices" :key="service">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  :value="service"
+                  v-model="form.services"
+                  :id="`service-${service}`"
+                />
+                <label class="form-check-label" :for="`service-${service}`">{{ service }}</label>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="col-md-6 mb-3">
-          <label for="location" class="form-label">Organization Location</label>
-          <select id="location" v-model="form.location" class="form-control" required>
-            <option value="">Select a location</option>
-            <option value="Location 1">Dar-es-salaam</option>
-            <option value="Location 2">Dodoma</option>
-            <option value="Location 3">Mwanza</option>
-            <option value="Location 4">Arusha</option>
-            <option value="Location 5">Mbeya</option>
-            <option value="Location 6">Tanga</option>
-            <option value="Location 7">Morogoro</option>
-            <option value="Location 8">Iringa</option>
-            <option value="Location 9">Kagera</option>
-          </select>
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary">Register</button>
         </div>
-
-        <div class="col-md-6 mb-3">
-          <label for="phone" class="form-label">Email</label>
-          <input type="tel" class="form-control" v-model="form.email" id="email" required>
-        </div>
-        <div class="col-md-6 mb-3">
-          <label for="address" class="form-label">Address</label>
-          <input type="text" class="form-control" v-model="form.address" id="address" required>
-        </div>
-
-        <div class="col-12 mb-3">
-          <label for="services" class="form-label">Services Offered</label>
-          <textarea class="form-control" id="services" rows="3" v-model="form.service" required></textarea>
-        </div>
-      </div>
-
-      <div class="text-center">
-        <button type="submit" class="btn btn-primary">Register</button>
-      </div>
-    </form>
-  </div>
+      </form>
+    </div>
   </div>
 </template>
 
-<script setup>
 
+<script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import Swal from 'sweetalert2'
-import OrganizationHeader from './OrganizationHeader.vue';
+import OrganizationHeader from './OrganizationHeader.vue'
 
 const form = ref({
   organization_name: '',
   location: '',
   email: '',
   address: '',
-  service: ''
+  services: [] // This is now an array for selected services
 })
+
+// Example of available services
+const availableServices = [
+  'Cleaning',
+  'Laundry',
+  'Gardening',
+  'Pest Control',
+  'Security',
+  'Waste Management',
+  'Catering',
+  'Other'
+]
 
 const router = useRouter()
 
@@ -82,7 +106,6 @@ const submitForm = async () => {
     const data = await response.json()
     console.log('Registered:', data)
 
-    // Use SweetAlert2 success alert
     Swal.fire({
       icon: 'success',
       title: 'Success!',
@@ -91,21 +114,19 @@ const submitForm = async () => {
       confirmButtonText: 'OK'
     })
 
-    // Optionally, clear the form after registration
+    // Clear form
     form.value = {
       organization_name: '',
       location: '',
       email: '',
       address: '',
-      service: ''
+      services: []
     }
 
     // Optionally redirect
     // router.push('/some-route')
   } catch (error) {
     console.error('Error registering:', error)
-
-    // Use SweetAlert2 error alert
     Swal.fire({
       icon: 'error',
       title: 'Error!',
@@ -116,6 +137,7 @@ const submitForm = async () => {
   }
 }
 </script>
+
 
 
 <style scoped>
@@ -197,5 +219,20 @@ h4 {
   position: relative;
   z-index: 1;
 
+}
+
+.services-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem; /* Space between checkboxes */
+}
+
+.services-checkboxes .form-check {
+  display: flex;
+  align-items: center;
+}
+
+.services-checkboxes .form-check-label {
+  margin-left: 0.3rem;
 }
 </style>
