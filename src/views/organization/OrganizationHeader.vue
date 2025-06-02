@@ -14,18 +14,32 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2';
 export default {
   name: 'OrganizationHeader',
   data() {
     return {
-      organizationName: 'BNB Cleaning Services',
+      organizationName: 'AIR BNB',
     }
   },
   methods: {
     logout() {
-      // Add your logout logic here
-      console.log('User logged out');
+      localStorage.removeItem('token');
+      localStorage.removeItem('role');
+
+        Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Logout successful",
+        showConfirmButton: false,
+        timer: 1500
+      });
+      setTimeout(() => {
+        this.$router.push('/');
+      }, 1500);
     }
+
+    
   }
 }
 </script>

@@ -19,7 +19,7 @@
             <router-link to="/register-staff" class="nav-link">RegisterStaff</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/admin/settings" class="nav-link">Settings</router-link>
+            <router-link to="/available-organization" class="nav-link">Organizations</router-link>
           </li>
         </ul>
 
