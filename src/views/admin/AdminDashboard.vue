@@ -53,7 +53,7 @@ const cards = [
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.4); /* white overlay, 0.4 opacity */
+  background: rgba(237, 232, 232, 0.4); /* white overlay, 0.4 opacity */
   z-index: 1;
 }
 
