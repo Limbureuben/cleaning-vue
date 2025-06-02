@@ -1,39 +1,47 @@
 <template>
   <AdminHeader />
-  <div class="available-organization container">
-    <h2 class="text-center mb-5">Available Organizations</h2>
-    <table class="table table-striped table-hover">
-      <thead class="table-dark">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Organization Name</th>
-          <th scope="col">Email</th>
-          <th scope="col">Phone</th>
-          <th scope="col">Address</th>
-          <th scope="col">Services</th>
-          <th scope="col">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(organization, index) in organizations" :key="organization.id">
-          <th scope="row">{{ index + 1 }}</th>
-          <td>{{ organization.name }}</td>
-          <td>{{ organization.email }}</td>
-          <td>{{ organization.phone }}</td>
-          <td>{{ organization.address }}</td>
-          <td>{{ organization.services }}</td>
-          <td>
-            <button class="btn btn-success me-2" @click="acceptOrganization(organization.id)">Accept</button>
-            <button class="btn btn-danger" @click="rejectOrganization(organization.id)">Reject</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="available-organization container my-5 p-4 bg-light rounded shadow">
+    <h2 class="text-center mb-4 text-primary fw-bold">Available Organizations</h2>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover align-middle">
+        <thead class="table-primary">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Organization Name</th>
+            <th scope="col">Region</th>
+            <th scope="col">Email</th>
+            <th scope="col">Address</th>
+            <th scope="col">Services</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(organization, index) in organizations" :key="organization.id">
+            <th scope="row">{{ index + 1 }}</th>
+            <td class="fw-semibold text-dark">{{ organization.organization_name }}</td>
+            <td>{{ organization.location }}</td>
+            <td>{{ organization.email }}</td>
+            <td>{{ organization.address }}</td>
+            <td>
+              <span class="badge bg-secondary">{{ organization.services }}</span>
+            </td>
+            <td>
+              <button class="btn btn-success btn-sm me-2" @click="acceptOrganization(organization.id)">
+                <i class="bi bi-check-circle me-1"></i> Accept
+              </button>
+              <button class="btn btn-danger btn-sm" @click="rejectOrganization(organization.id)">
+                <i class="bi bi-x-circle me-1"></i> Reject
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import swal from 'sweetalert2';
 import AdminHeader from './AdminHeader.vue';
 export default {
@@ -41,23 +49,55 @@ export default {
   components: {
     AdminHeader
   },
-  data() {
-    return {
-      organizations: [
-        { id: 1, name: 'CleanCo', email: 'contact@cleanco.com', phone: '123-456-7890', address: '123 Clean St', services: 'Residential Cleaning' },
-        { id: 2, name: 'Sparkle Services', email: 'info@sparkleservices.com', phone: '987-654-3210', address: '456 Sparkle Ave', services: 'Commercial Cleaning' },
-        // Add more organizations as needed
-      ]
+ setup() {
+  const organizations = ref([]);
+
+  const fetchOrganizations = async () => {
+    try {
+      const token = localStorage.getItem('token');
+
+      const response = await fetch('http://localhost:8000/api/organizations-list/', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
     }
-  },
-  methods: {
-    acceptOrganization(id) {
-      // Add your accept logic here
+
+    const data = await response.json();
+    console.log('Organizations fetched:', data);
+    organizations.value = data;
+  } catch (error) {
+      console.error('Error fetching organizations:', error);
+      swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Could not fetch organizations. Please try again later.'
+      });
+    }
+ }
+
+ const acceptOrganization = (id) => {
       console.log('Accepted organization with ID:', id);
-    },
-    rejectOrganization(id) {
-      // Add your reject logic here
+      // TODO: Call backend to update status
+    };
+
+    const rejectOrganization = (id) => {
       console.log('Rejected organization with ID:', id);
+      // TODO: Call backend to update status
+    };
+
+    onMounted(() => {
+      fetchOrganizations();
+    });
+
+    return {
+      organizations,
+      acceptOrganization,
+      rejectOrganization
     }
   }
 }
@@ -65,57 +105,26 @@ export default {
 
 <style scoped>
 .available-organization {
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 2rem;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  border-radius: 8px;
 }
-
-h2 {
-  color: #333;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+.available-organization h2 {
+  font-size: 1.8rem;
 }
-
-.table {
-  width: 100%;
-  margin-bottom: 1rem;
-  color: #212529;
+.table th,
+.table td {
+  vertical-align: middle !important;
 }
-
-.table-hover tbody tr:hover {
-  background-color: rgba(254, 79, 45, 0.1);
+.table thead th {
+  background-color: #0d6efd !important;
+  color: #ffffff;
 }
-
-.table-striped tbody tr:nth-of-type(odd) {
-  background-color: rgba(0, 0, 0, 0.05);
+.table tbody tr:hover {
+  background-color: #f0f8ff;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
 }
-
-.table-dark {
-  background-color: #FE4F2D;
-  color: white;
-}
-
-.btn-success {
-  background-color: #28a745;
-  border: none;
-  transition: background-color 0.3s ease;
-}
-
-.btn-success:hover {
-  background-color: #218838;
-}
-
-.btn-danger {
-  background-color: #dc3545;
-  border: none;
-  transition: background-color 0.3s ease;
-}
-
-.btn-danger:hover {
-  background-color: #c82333;
+.badge {
+  font-size: 0.85rem;
 }
 </style>
