@@ -2,7 +2,7 @@
   <AdminHeader />
   <div class="dashboard-wrapper">
     <div class="container py-5">
-      <div class="row">
+      <transition-group name="fade-slide" tag="div" class="row">
         <div class="col-md-6 mb-4" v-for="(card, index) in cards" :key="index">
           <div class="card shadow border-0 h-100 hover-effect">
             <div class="card-body text-center d-flex flex-column justify-content-between">
@@ -15,10 +15,11 @@
             </div>
           </div>
         </div>
-      </div>
+      </transition-group>
     </div>
   </div>
 </template>
+
 
 <script setup>
 import AdminHeader from './AdminHeader.vue'
@@ -87,4 +88,20 @@ h2 {
   text-transform: uppercase;
   letter-spacing: 2px;
 }
+
+/* Animation for fade-slide-in */
+.fade-slide-enter-from {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.fade-slide-enter-active {
+  transition: all 0.6s ease;
+}
+
+.fade-slide-enter-to {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 </style>
