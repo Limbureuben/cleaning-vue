@@ -16,7 +16,7 @@ export default {
   name: 'OrganizationHeader',
   data() {
     return {
-      organizationName: 'My Organization'
+      organizationName: 'BNB Cleaning Services',
     }
   }
 }
@@ -28,7 +28,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #FE4F2D;
+  background-color: #1C70E6FF;
   color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
