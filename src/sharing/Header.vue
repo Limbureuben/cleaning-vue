@@ -104,7 +104,7 @@ const toggleMobileNav = () => {
 
 
 .custom-signup-btn {
-  background-color: #FE4F2D !important; /* override Bootstrap's btn-primary */
+  background-color: #1C70E6FF !important; /* override Bootstrap's btn-primary */
   border-radius: 4px !important;
   border: none !important;
   color: white !important;
@@ -112,7 +112,7 @@ const toggleMobileNav = () => {
 
 /* Optional: on hover slightly darker */
 .custom-signup-btn:hover {
-  background-color: #e6441d !important;
+  background-color: #1C70E6FF !important;
   color: white !important;
 }
 

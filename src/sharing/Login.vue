@@ -10,7 +10,7 @@
               style="min-width: 450px;"
               v-show="showForm"
             >
-              <h4 class="mb-4 text-center fw-bold" style="color: #FE4F2D;">LOGIN</h4>
+              <h4 class="mb-4 text-center fw-bold" style="color: #1C70E6FF;">LOGIN</h4>
 
               <form @submit.prevent="submitForm">
                 <div class="mb-4">
@@ -35,13 +35,13 @@
                   />
                 </div>
 
-                <button type="submit" class="btn w-100 fw-bold" style="background-color: #FE4F2D; border-color: #FE4F2D;">
+                <button type="submit" class="btn w-100 fw-bold" style="background-color: #1C70E6FF; border-color: #FE4F2D;">
                   Login
                 </button>
               </form>
               <p class="mt-3 text-center">
                 Don't have an account?
-                <router-link to="/register" class="fw-bold" style="color: #FE4F2D;">
+                <router-link to="/register" class="fw-bold" style="color: #1C70E6FF;">
                   Register
                 </router-link>
               </p>

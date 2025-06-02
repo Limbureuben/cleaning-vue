@@ -8,7 +8,7 @@
             BOOK CLEANING SERVICES
           </h1>
           <p class="lead mt-4 text-center text-lg-start text-muted">
-            A clean and simple interface to organize your favourite websites. Open a new browser tab and see your sites load instantly. Try it for free.
+            A clean and simple interface to organize your favorite websites. Open a new browser tab and see your sites load instantly. Try it for free.
           </p>
           <div class="d-flex justify-content-center justify-content-lg-start mt-0">
             <button class="btn custom-btn btn-lg" @click="goToSignup">
@@ -33,22 +33,22 @@ const router = useRouter()
 onMounted(() => {
   animate.value = true
 })
-const goToSignup =() => {
+const goToSignup = () => {
   console.log('Navigating to signup page');
   router.push('/login');
-
 }
 </script>
 
 <style scoped>
 .hero-section {
   position: relative;
-  min-height: 77vh;
+  min-height: 89vh;
   z-index: 1;
   overflow: hidden;
   display: flex;
   align-items: center;
   border-radius: 0;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
 
 .bg-image {
@@ -62,6 +62,7 @@ const goToSignup =() => {
   height: 100%;
   z-index: 0;
   pointer-events: none;
+  opacity: 0.4;
 }
 
 /* Text + Button animation */
@@ -95,10 +96,28 @@ const goToSignup =() => {
 }
 
 .custom-btn {
-  background-color: #FE4F2D;
-  border-radius: 2px;
+  background-color: #1C70E6FF;
+  border-radius: 8px;
   border: none;
-  color: rgb(218, 206, 204);
   cursor: pointer;
+  color: white;
+  font-weight: bold;
+  padding: 0.5rem 1.5rem;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.custom-btn:hover {
+  background-color: #1C70E6FF;
+  transform: scale(1.05);
+}
+
+.display-8 {
+  font-size: 2.5rem;
+  color: #333;
+}
+
+.lead {
+  font-size: 1.25rem;
+  color: #666;
 }
 </style>
