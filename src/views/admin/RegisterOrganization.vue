@@ -1,4 +1,5 @@
 <template>
+  <AdminHeader />
   <div class="register-organization container">
     <h2 class="text-center mb-5">Register Organization</h2>
     <form @submit.prevent="registerOrganization">
@@ -38,6 +39,7 @@
 </template>
 
 <script>
+import AdminHeader from './AdminHeader.vue'
 export default {
   name: 'RegisterOrganization',
   data() {
