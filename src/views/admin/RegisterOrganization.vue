@@ -4,14 +4,21 @@
     <h4 class="text-center mb-4">Register Organization</h4>
     <form>
       <div class="row">
-        <!-- First row: Organization Name and Email -->
+        <!-- First row: Organization Name and Location Dropdown -->
         <div class="col-md-6 mb-3">
           <label for="organizationName" class="form-label">Organization Name</label>
           <input type="text" class="form-control" id="organizationName" required>
         </div>
+
         <div class="col-md-6 mb-3">
-          <label for="email" class="form-label">Organization Email</label>
-          <input type="email" class="form-control" id="email" required>
+          <label for="location" class="form-label">Organization Location</label>
+          <select id="location" class="form-control" required>
+            <option value="">Select a location</option>
+            <option value="Location 1">Location 1</option>
+            <option value="Location 2">Location 2</option>
+            <option value="Location 3">Location 3</option>
+            <!-- Add more options as needed -->
+          </select>
         </div>
 
         <!-- Second row: Phone and Address -->
