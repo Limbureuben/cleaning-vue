@@ -49,6 +49,20 @@
                   required
                 />
               </div>
+              <div class="mb-3">
+                <label for="role" class="form-label fw-bold text-dark">Select Role</label>
+                <select
+                  v-model="form.role"
+                  id="role"
+                  class="form-select"
+                  style="padding: 10px; border-radius: 8px; border: 2px solid #1C70E6FF; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);"
+                  required
+                >
+                  <option disabled value="">-- Select role --</option>
+                  <option value="staff">Staff</option>
+                  <option value="user">User</option>
+                </select>
+              </div>
               <button type="submit" class="btn w-100 fw-bold" style="background-color: #1C70E6FF; border-color: #1C70E6FF;">
                 Register
               </button>
