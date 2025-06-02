@@ -1,79 +1,55 @@
 <template>
-  <div class="organization-dashboard">
-    <h2>Organization Dashboard</h2>
-    <div class="dashboard-stats">
-      <div class="stat-card">
-        <h3>Total Members</h3>
-        <p>{{ totalMembers }}</p>
+  <div class="dashboard-wrapper">
+    <div class="container py-5">
+      <div class="row">
+        <div class="col-md-6 mb-4" v-for="(card, index) in cards" :key="index">
+          <div class="card shadow border-0 h-100">
+            <div class="card-body text-center">
+              <h5 class="card-title fw-bold">{{ card.title }}</h5>
+              <p class="card-text text-muted">{{ card.description }}</p>
+              <button class="btn">View Details</button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="stat-card">
-        <h3>Active Projects</h3>
-        <p>{{ activeProjects }}</p>
-      </div>
-      <div class="stat-card">
-        <h3>Completed Tasks</h3>
-        <p>{{ completedTasks }}</p>
-      </div>
-    </div>
-    <div class="recent-activity">
-      <h3>Recent Activity</h3>
-      <ul>
-        <li v-for="activity in recentActivities" :key="activity.id">
-          {{ activity.description }}
-        </li>
-      </ul>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'OrganizationDashboard',
-  data() {
-    return {
-      totalMembers: 25,
-      activeProjects: 5,
-      completedTasks: 150,
-      recentActivities: [
-        { id: 1, description: 'New member joined: John Doe' },
-        { id: 2, description: 'Project "Website Redesign" completed' },
-        { id: 3, description: '10 new tasks added to "Mobile App Development"' }
-      ]
-    }
-  }
-}
+<script setup>
+
+const cards = [
+  { title: "TOTAL USERS", description: "Manage all Accounts of Registred users in this platform ." },
+  { title: "REGISTERED COMPANIES", description: "These are the Registered Companies that deal with cleaning services in different Regions at Tanzania" },
+  { title: "BOOKING SERVICES", description: "Check and Manage booking available in different companies" },
+  { title: "MESSAGES", description: "Check Message sends by the users" }
+];
 </script>
 
 <style scoped>
-.organization-dashboard {
-  padding: 1rem;
-}
-
-.dashboard-stats {
+.dashboard-wrapper {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 2rem;
+  align-items: center;
+  justify-content: center;
 }
 
-.stat-card {
-  background-color: #f0f0f0;
-  padding: 1rem;
-  border-radius: 4px;
-  text-align: center;
+.card {
+  border-radius: 2px;
+}
+.card-title {
+  font-size: 1.25rem;
+  color: #FE4F2D;
 }
 
-.recent-activity {
-  background-color: #f0f0f0;
-  padding: 1rem;
-  border-radius: 4px;
+.btn {
+    background-color: #FE4F2D;
+    border-radius: 2px;
 }
 
-.recent-activity ul {
-  list-style-type: none;
-  padding-left: 0;
-}
-
-.recent-activity li {
-  margin-bottom: 0.5rem;
+.btn:hover {
+    background-color: #FE4F2D;
 }
 </style>
