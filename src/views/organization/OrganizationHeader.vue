@@ -3,7 +3,7 @@
     <h1>{{ organizationName }}</h1>
     <nav>
       <ul>
-        <li><a href="#dashboard">Dashboard</a></li>
+        <li><router-link to="/organization">Dashboard</router-link></li>
         <li><router-link to="/register-organization">RegisterCompany</router-link></li>
         <li><a href="#members">Members</a></li>
         <li><a href="#settings">Settings</a></li>

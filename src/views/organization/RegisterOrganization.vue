@@ -125,6 +125,7 @@ const submitForm = async () => {
   position: relative;
   align-items: center;
   top: 0px;
+  background: rgba(253, 253, 253, 0.985);
   min-height: 470px;
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
