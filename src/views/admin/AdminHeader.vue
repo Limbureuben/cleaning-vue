@@ -16,9 +16,6 @@
             <router-link to="/admin-dashboard" class="nav-link">Dashboard</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/admin/users" class="nav-link">Users</router-link>
-          </li>
-          <li class="nav-item">
             <router-link to="/register-staff" class="nav-link">RegisterStaff</router-link>
           </li>
           <li class="nav-item">

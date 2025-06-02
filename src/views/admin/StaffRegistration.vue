@@ -1,4 +1,5 @@
 <template>
+  <AdminHeader />
     <div class="bg-cover">
   <div class="d-flex justify-content-center align-items-center full-screen">
 
@@ -10,7 +11,6 @@
             class="col-12 col-md-8 col-lg-6 col-xl-5 bg-white p-5 rounded shadow"
             style="min-width: 450px;"
           >
-            <h4 class="mb-4 text-center fw-bold" style="color: #1C70E6FF;">REGISTRATION</h4>
             <form>
               <div class="mb-4">
                 <input
@@ -72,6 +72,7 @@ import { useMutation } from '@vue/apollo-composable';
 import REGISTER_USER from '@/graphql/registerUser.graphql'
 import Swal from 'sweetalert2'
 import router from '@/router';
+import AdminHeader from './AdminHeader.vue';
 
 const form = ref({
   username: '',
@@ -166,7 +167,7 @@ input.form-control:focus {
 }
 
 .bg-cover {
-  background-image: url('../assets/images/woman.png'); /* Replace with actual path */
+  background-image: url('../../assets/images/tools.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
