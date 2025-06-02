@@ -11,7 +11,7 @@
             <th scope="col">Region</th>
             <th scope="col">Email</th>
             <th scope="col">Address</th>
-            <th scope="col">Services</th>
+            <th scope="col">Status</th>
             <th scope="col">Actions</th>
           </tr>
         </thead>
