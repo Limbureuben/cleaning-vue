@@ -40,6 +40,7 @@ const cards = [
 }
 
 .card {
+  top: 20px;
   border-radius: 2px;
   transition: all 0.3s ease;
   overflow: hidden;
@@ -52,17 +53,17 @@ const cards = [
 
 .card-title {
   font-size: 1.25rem;
-  color: #FE4F2D;
+  color: #1C70E6FF;
   margin-bottom: 1rem;
 }
 
 .card-icon {
   font-size: 3rem;
-  color: #FE4F2D;
+  color: #1C70E6FF;
 }
 
 .btn {
-  background-color: #FE4F2D;
+  background-color: #1C70E6FF;
   border-radius: 4px;
   color: white;
   font-weight: bold;
@@ -71,7 +72,7 @@ const cards = [
 }
 
 .btn:hover {
-  background-color: #e63e1c;
+  background-color: #1C70E6FF;
   transform: scale(1.05);
 }
 

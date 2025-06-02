@@ -30,30 +30,29 @@
           </button>
 
           <!-- Profile Dropdown -->
-            <div class="dropdown">
+          <div class="dropdown">
             <a
-                class="nav-link dropdown-toggle text-white"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
+              class="nav-link dropdown-toggle text-white"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
             >
-                <i class="bi bi-person-circle fs-4"></i>
+              <i class="bi bi-person-circle fs-4"></i>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
-                <li><router-link class="dropdown-item">Profile</router-link></li>
-                <li><router-link class="dropdown-item" >Register Company</router-link></li>
-                <li><router-link class="dropdown-item">Users</router-link></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li><a class="dropdown-item" @click="logout">Logout</a></li>
+              <li><router-link class="dropdown-item">Profile</router-link></li>
+              <li><router-link class="dropdown-item">Register Company</router-link></li>
+              <li><router-link class="dropdown-item">Users</router-link></li>
+              <li><hr class="dropdown-divider" /></li>
+              <li><a class="dropdown-item" @click="logout">Logout</a></li>
             </ul>
-            </div>
+          </div>
         </div>
       </div>
     </div>
   </nav>
 </template>
-
 
 <script setup>
 import { ref } from 'vue'
@@ -72,18 +71,33 @@ const logout = () => {
 }
 </script>
 
-
 <style scoped>
 .navbar {
   z-index: 1050; /* ensure it stays on top */
 }
 
 .navbar-brand {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 .nav-link {
   font-weight: 500;
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #ffcccb;
+}
+
+.btn-outline-light {
+  border: 2px solid white;
+  color: white;
+  font-weight: bold;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .btn-outline-light:hover {
@@ -91,12 +105,21 @@ const logout = () => {
   color: #FE4F2D;
 }
 
-.navbar {
-  z-index: 1050;
+.dropdown-menu {
+  background-color: #FE4F2D;
+  border: none;
 }
 
-.navbar .dropdown-menu {
-  z-index: 2000;
+.dropdown-item {
+  color: white;
+  transition: background-color 0.3s ease;
 }
 
+.dropdown-item:hover {
+  background-color: #e63e1c;
+}
+
+.dropdown-divider {
+  border-color: white;
+}
 </style>
