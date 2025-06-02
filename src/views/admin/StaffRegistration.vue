@@ -11,10 +11,11 @@
             class="col-12 col-md-8 col-lg-6 col-xl-5 bg-white p-5 rounded shadow"
             style="min-width: 450px;"
           >
-            <form>
+            <form @submit.prevent="onSubmit">
               <div class="mb-4">
                 <input
                   type="text"
+                  v-model="form.username"
                   class="form-control"
                   placeholder="Enter Staff name"
                   required
@@ -24,6 +25,7 @@
               <div class="mb-4">
                 <input
                   type="email"
+                  v-model="form.email"
                   class="form-control"
                   placeholder="Comapny email"
                   required
@@ -32,8 +34,8 @@
 
               <div class="mb-4">
                 <input
-
                   type="password"
+                  v-model="form.password"
                   class="form-control"
                   placeholder="Enter default password"
                   required
@@ -42,19 +44,18 @@
 
               <div class="mb-4">
                 <input
-
                   type="password"
+                  v-model="form.confirmPassword"
                   class="form-control"
                   placeholder="Confirm default password"
                   required
                 />
               </div>
               <div class="mb-3">
-                <label for="role" class="form-label fw-bold text-dark">Select Role</label>
                 <select
                   v-model="form.role"
                   id="role"
-                  class="form-select py-2 border border-primary rounded-3 shadow-sm"
+                  class="form-select py-2 border border-primary rounded-1 shadow-sm"
                   style="color: #6c757d;"
                   required
                 >
@@ -67,11 +68,6 @@
                 Register
               </button>
             </form>
-
-            <p class="mt-3 text-center">
-              Already have an account?
-              <router-link to="/login" class="fw-bold" style="color: #1C70E6FF;">Login</router-link>
-            </p>
           </div>
         </transition>
       </div>
@@ -92,7 +88,8 @@ const form = ref({
   username: '',
   email: '',
   password: '',
-  confirmPassword: ''
+  confirmPassword: '',
+  role: ''
 });
 
 
@@ -105,7 +102,8 @@ const onSubmit = async () => {
     username: form.value.username,
     email: form.value.email,
     password: form.value.password,
-    confirmPassword: form.value.confirmPassword
+    confirmPassword: form.value.confirmPassword,
+    role: form.value.role
   });
 
   onDone(({ data }) => {
@@ -122,9 +120,10 @@ const onSubmit = async () => {
       form.value.email = '';
       form.value.password = '';
       form.value.confirmPassword = '';
+      form.value.role = '';
 
       setTimeout(() => {
-        router.push('/login');
+        router.push('/admin-dashboard');
       }, 200);
     } else {
       Swal.fire({

@@ -98,7 +98,7 @@ const submitForm = async () => {
         if (role === 'superuser') {
           router.push('/admin-dashboard');
         } else if (role === 'staff') {
-          router.push('/staff/dashboard');
+          router.push('/organization');
         } else {
           router.push('/user-dashboard');
         }
