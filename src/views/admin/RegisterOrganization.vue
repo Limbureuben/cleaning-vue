@@ -3,17 +3,17 @@
   <div class="container-dashboard">
   <div class="register-organization container">
     <h4 class="text-center mb-4">Register Organization</h4>
-    <form>
+    <form @submit.prevent="submitForm">
       <div class="row">
         <!-- First row: Organization Name and Location Dropdown -->
         <div class="col-md-6 mb-3">
           <label for="organizationName" class="form-label">Organization Name</label>
-          <input type="text" class="form-control" id="organizationName" required>
+          <input type="text" class="form-control" v-model="form.organization_name" id="organizationName" required>
         </div>
 
         <div class="col-md-6 mb-3">
           <label for="location" class="form-label">Organization Location</label>
-          <select id="location" class="form-control" required>
+          <select id="location" v-model="form.location" class="form-control" required>
             <option value="">Select a location</option>
             <option value="Location 1">Dar-es-salaam</option>
             <option value="Location 2">Dodoma</option>
@@ -29,17 +29,17 @@
 
         <div class="col-md-6 mb-3">
           <label for="phone" class="form-label">Email</label>
-          <input type="tel" class="form-control" id="email" required>
+          <input type="tel" class="form-control" v-model="form.email" id="email" required>
         </div>
         <div class="col-md-6 mb-3">
           <label for="address" class="form-label">Address</label>
-          <input type="text" class="form-control" id="address" required>
+          <input type="text" class="form-control" v-model="form.address" id="address" required>
         </div>
 
         <!-- Services Offered (single row full width) -->
         <div class="col-12 mb-3">
           <label for="services" class="form-label">Services Offered</label>
-          <textarea class="form-control" id="services" rows="3" required></textarea>
+          <textarea class="form-control" id="services" rows="3" v-model="form.service" required></textarea>
         </div>
       </div>
 
@@ -56,6 +56,39 @@ import AdminHeader from './AdminHeader.vue'
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router';
 import swal from 'sweetalert2';
+
+const form = ref({
+  organization_name: '',
+  location: '',
+  email: '',
+  address: '',
+  service: ''
+});
+
+const router = useRouter();
+
+const submitForm = async () => {
+  try {
+    const response = await fetch('http://localhost:8000/api/organizations-registration/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(form.value)
+    })
+
+    if(!response.ok) throw new Error('Network response was not ok');
+
+    const data = await response.json()
+    console.log('Registred:', data)
+    alert('Organization registered successfully!')
+  } catch (error) {
+    console.error('Error registering:', error)
+    alert('Error registering organization.')
+  }
+}
+
+
 
 </script>
 
