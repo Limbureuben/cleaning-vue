@@ -2,32 +2,32 @@
   <AdminHeader />
   <div class="register-organization container">
     <h2 class="text-center mb-5">Register Organization</h2>
-    <form @submit.prevent="registerOrganization">
+    <form>
       <div class="row">
         <!-- First row: Organization Name and Email -->
         <div class="col-md-6 mb-3">
           <label for="organizationName" class="form-label">Organization Name</label>
-          <input type="text" class="form-control" id="organizationName" v-model="organizationName" required>
+          <input type="text" class="form-control" id="organizationName" required>
         </div>
         <div class="col-md-6 mb-3">
           <label for="email" class="form-label">Organization Email</label>
-          <input type="email" class="form-control" id="email" v-model="email" required>
+          <input type="email" class="form-control" id="email" required>
         </div>
 
         <!-- Second row: Phone and Address -->
         <div class="col-md-6 mb-3">
           <label for="phone" class="form-label">Phone</label>
-          <input type="tel" class="form-control" id="phone" v-model="phone" required>
+          <input type="tel" class="form-control" id="phone" required>
         </div>
         <div class="col-md-6 mb-3">
           <label for="address" class="form-label">Address</label>
-          <input type="text" class="form-control" id="address" v-model="address" required>
+          <input type="text" class="form-control" id="address" required>
         </div>
 
         <!-- Services Offered (single row full width) -->
         <div class="col-12 mb-3">
           <label for="services" class="form-label">Services Offered</label>
-          <textarea class="form-control" id="services" v-model="services" rows="3" required></textarea>
+          <textarea class="form-control" id="services" rows="3" required></textarea>
         </div>
       </div>
 
@@ -38,38 +38,9 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import AdminHeader from './AdminHeader.vue'
-export default {
-  name: 'RegisterOrganization',
-  data() {
-    return {
-      organizationName: '',
-      email: '',
-      phone: '',
-      address: '',
-      services: ''
-    }
-  },
-  methods: {
-    registerOrganization() {
-      // Add your registration logic here
-      console.log('Organization Registered:', {
-        organizationName: this.organizationName,
-        email: this.email,
-        phone: this.phone,
-        address: this.address,
-        services: this.services
-      });
-      // Reset form fields
-      this.organizationName = '';
-      this.email = '';
-      this.phone = '';
-      this.address = '';
-      this.services = '';
-    }
-  }
-}
+
 </script>
 
 <style scoped>
@@ -79,7 +50,7 @@ export default {
   padding: 2rem;
   background-color: #ffffff;
   border-radius: 10px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
 h2 {
