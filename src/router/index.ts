@@ -15,7 +15,7 @@ const routes = [
   { path: '/admin-dashboard', name: 'AdminDashboard', component: AdminDashboard },
   { path: '/user-dashboard', name: 'UserDashboard', component: UserDashboard},
   { path: '/organization', name: 'Organization', component: OrganizationDashboard },
-  { path: 'register-organization', name: 'Register organization', component: RegisterOrganization },
+  { path: '/register-organization', name: 'Register organization', component: RegisterOrganization },
   
 ]
 const router = createRouter({
