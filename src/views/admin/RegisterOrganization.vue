@@ -1,7 +1,7 @@
 <template>
   <AdminHeader />
   <div class="register-organization container">
-    <h2 class="text-center mb-5">Register Organization</h2>
+    <h4 class="text-center mb-4">Register Organization</h4>
     <form>
       <div class="row">
         <!-- First row: Organization Name and Email -->
@@ -32,7 +32,7 @@
       </div>
 
       <div class="text-center">
-        <button type="submit" class="btn btn-primary px-4 py-2">Register</button>
+        <button type="submit" class="btn btn-primary">Register</button>
       </div>
     </form>
   </div>
@@ -45,18 +45,22 @@ import AdminHeader from './AdminHeader.vue'
 
 <style scoped>
 .register-organization {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
-  background-color: #ffffff;
-  border-radius: 10px;
+  max-width: 700px;
+  background-color: #FFFFFFFF;
+  border-radius: 4px;
+  position: relative;
+  align-items: center;
+  top: 100px;
+  min-height: 500px;
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
-h2 {
+h4 {
   color: #333;
   font-weight: bold;
+  padding-top: 10px;
   text-transform: uppercase;
+  color: #1C70E6FF;
   letter-spacing: 2px;
 }
 
@@ -78,17 +82,17 @@ h2 {
 }
 
 .btn-primary {
-  background-color: #FE4F2D;
+  background-color: #1C70E6FF;
   border: none;
-  border-radius: 25px;
-  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  padding: 0.75rem 4.5rem;
   font-size: 1rem;
   font-weight: bold;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .btn-primary:hover {
-  background-color: #e63e1c;
+  background-color: #1C70E6FF;
   transform: scale(1.05);
 }
 </style>
