@@ -80,14 +80,49 @@ export default {
     }
  }
 
- const acceptOrganization = (id) => {
-      console.log('Accepted organization with ID:', id);
-      // TODO: Call backend to update status
+ const updateOrganizationStatus = async (id, status) => {
+  try {
+    const token = localStorage.getItem('token');
+
+    const response = await fetch('http://localhost:8000/api/organization/${id}/update-status/', {
+      method: 'PATCH',
+      headers: {
+         'Content-Type': 'application/json',
+         Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ status })
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
+    }
+
+    const updatedOrganization = await response.json();
+    console.log(`Organization ${id} status updated to ${status}:`, updatedOrganization);
+
+    swal.fire({
+      icon: 'success',
+      title: 'Success!',
+      text: `Organization has been ${status === 'approved' ? 'accepted' : 'rejected'} successfully.`
+    });
+
+    fetchOrganizations();
+  } catch (error) {
+      console.error('Error updating organization status:', error);
+      swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Could not update status. Please try again later.'
+      });
+    }
+ }
+
+    const acceptOrganization = (id) => {
+      updateOrganizationStatus(id, 'approved');
     };
 
     const rejectOrganization = (id) => {
-      console.log('Rejected organization with ID:', id);
-      // TODO: Call backend to update status
+      updateOrganizationStatus(id, 'rejected');
     };
 
     onMounted(() => {
