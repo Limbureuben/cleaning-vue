@@ -54,13 +54,13 @@
                 <select
                   v-model="form.role"
                   id="role"
-                  class="form-select"
-                  style="padding: 10px; border-radius: 8px; border: 2px solid #1C70E6FF; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);"
+                  class="form-select py-2 border border-primary rounded-3 shadow-sm"
+                  style="color: #6c757d;"
                   required
                 >
-                  <option disabled value="">-- Select role --</option>
-                  <option value="staff">Staff</option>
-                  <option value="user">User</option>
+                  <option value="" disabled selected hidden>-- Select role --</option>
+                  <option value="staff" style="color: #000;">Staff</option>
+                  <option value="user" style="color: #000;">User</option>
                 </select>
               </div>
               <button type="submit" class="btn w-100 fw-bold" style="background-color: #1C70E6FF; border-color: #1C70E6FF;">
