@@ -14,17 +14,22 @@
           <label for="location" class="form-label">Organization Location</label>
           <select id="location" class="form-control" required>
             <option value="">Select a location</option>
-            <option value="Location 1">Location 1</option>
-            <option value="Location 2">Location 2</option>
-            <option value="Location 3">Location 3</option>
+            <option value="Location 1">Dar-es-salaam</option>
+            <option value="Location 2">Dodoma</option>
+            <option value="Location 3">Mwanza</option>
+            <option value="Location 4">Arusha</option>
+            <option value="Location 5">Mbeya</option>
+            <option value="Location 6">Tanga</option>
+            <option value="Location 7">Morogoro</option>
+            <option value="Location 8">Iringa</option>
+            <option value="Location 9">Kagera</option>
             <!-- Add more options as needed -->
           </select>
         </div>
 
-        <!-- Second row: Phone and Address -->
         <div class="col-md-6 mb-3">
-          <label for="phone" class="form-label">Phone</label>
-          <input type="tel" class="form-control" id="phone" required>
+          <label for="phone" class="form-label">Email</label>
+          <input type="tel" class="form-control" id="email" required>
         </div>
         <div class="col-md-6 mb-3">
           <label for="address" class="form-label">Address</label>
