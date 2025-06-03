@@ -1,7 +1,7 @@
 <template>
     <OrganizationHeader />
   <div class="organization-background">
-    <div class="available-organization container my-5 p-4 bg-light rounded shadow">
+    <div class="available-organization container p-4 bg-light rounded shadow">
       <h4 class="text-center mb-4 fw-bold">ORGANIZATIONS STATUS</h4>
       <div class="table-responsive">
         <table class="table table-bordered table-hover align-middle">
@@ -23,7 +23,13 @@
                 {{ organization.organization_name }}
               </td>
               <td>{{ organization.email }}</td>
-              <td>{{ organization.status }}</td>
+              <td :class="{
+  'status-accepted': organization.status?.trim().toLowerCase() === 'rejected',
+  'status-rejected': organization.status?.trim().toLowerCase() === 'approved'
+}">
+  {{ organization.status }}
+</td>
+
             </tr>
           </transition-group>
         </table>
@@ -86,7 +92,7 @@ export default {
 <style scoped>
 .available-organization {
   background: #ffffff;
-  border-radius: 4px;
+  border-radius: 0px;
 }
 .available-organization h2 {
   font-size: 1.8rem;
@@ -119,7 +125,7 @@ h3 {
   background-position: center;
   background-repeat: no-repeat;
   padding: 3rem 0;
-  height: 650px;
+  height: 575px;
 }
 
 .fade-slide-enter-active,
@@ -133,5 +139,14 @@ h3 {
   transform: translateY(10px);
 }
 
+.status-accepted {
+  color: green !important;
+  font-weight: bold !important;
+}
+
+.status-rejected {
+  color: red !important;
+  font-weight: bold !important;
+}
 
 </style>
