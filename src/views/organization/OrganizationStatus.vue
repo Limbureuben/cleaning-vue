@@ -9,6 +9,7 @@
             <tr>
               <th scope="col">#</th>
               <th scope="col">Organization Name</th>
+              <th scope="col">Region</th>
               <th scope="col">Email</th>
               <th scope="col">Status</th>
             </tr>
@@ -22,14 +23,14 @@
               <td class="fw-semibold text-dark">
                 {{ organization.organization_name }}
               </td>
-              <td>{{ organization.email }}</td>
+              <td>{{ organization.location }}</td>
+               <td>{{ organization.email }}</td>
               <td :class="{
-  'status-accepted': organization.status?.trim().toLowerCase() === 'rejected',
-  'status-rejected': organization.status?.trim().toLowerCase() === 'approved'
-}">
-  {{ organization.status }}
-</td>
-
+                'status-accepted': organization.status?.trim().toLowerCase() === 'rejected',
+                'status-rejected': organization.status?.trim().toLowerCase() === 'approved'
+                }">
+                {{ organization.status }}
+                </td>
             </tr>
           </transition-group>
         </table>
@@ -114,7 +115,7 @@ export default {
   font-size: 0.85rem;
 }
 
-h3 {
+h4 {
   color: #6A80B9;
 }
 
