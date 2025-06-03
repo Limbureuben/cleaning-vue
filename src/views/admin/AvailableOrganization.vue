@@ -22,16 +22,37 @@
             <td>{{ organization.location }}</td>
             <td>{{ organization.email }}</td>
             <td>{{ organization.address }}</td>
+            
             <td>
-              <span class="badge bg-secondary">{{ organization.services }}</span>
+              <span
+                class="badge"
+                :class="{
+                  'bg-success': organization.status === 'approved',
+                  'bg-danger': organization.status === 'rejected',
+                  'bg-warning': organization.status === 'suspended',
+                  'bg-secondary': organization.status === 'pending'
+                }"
+              >
+                {{ organization.status.toUpperCase() }}
+              </span>
             </td>
+
             <td>
-              <button class="btn btn-success btn-sm me-2" @click="acceptOrganization(organization.id)">
-                <i class="bi bi-check-circle me-1"></i> Accept
-              </button>
-              <button class="btn btn-danger btn-sm" @click="rejectOrganization(organization.id)">
-                <i class="bi bi-x-circle me-1"></i> Reject
-              </button>
+              <button
+                  class="btn btn-success btn-sm me-2"
+                  @click="acceptOrganization(organization.id)"
+                  :disabled="organization.status !== 'pending'"
+                >
+                  <i class="bi bi-check-circle me-1"></i> Accept
+                </button>
+
+                <button
+                  class="btn btn-danger btn-sm"
+                  @click="rejectOrganization(organization.id)"
+                  :disabled="organization.status !== 'pending'"
+                >
+                  <i class="bi bi-x-circle me-1"></i> Reject
+                </button>
             </td>
           </tr>
         </tbody>
@@ -106,7 +127,10 @@ export default {
       text: `Organization has been ${status === 'approved' ? 'accepted' : 'rejected'} successfully.`
     });
 
-    fetchOrganizations();
+    const orgIndex = organizations.value.findIndex(org => org.id === id);
+      if (orgIndex !== -1) {
+        organizations.value[orgIndex].status = status;
+      }
   } catch (error) {
       console.error('Error updating organization status:', error);
       swal.fire({
@@ -123,7 +147,7 @@ export default {
         text: 'Do you want to accept this organization?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
+        confirmButtonColor: '#6A80B9',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, accept it!'
       }).then((result) => {
@@ -139,7 +163,7 @@ export default {
         text: 'Do you want to reject this organization?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
+        confirmButtonColor: '#6A80B9',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, reject it!'
       }).then((result) => {
