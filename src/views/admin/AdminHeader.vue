@@ -55,6 +55,7 @@
 </template>
 
 <script setup>
+import Swal from 'sweetalert2'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -66,8 +67,19 @@ const toggleMenu = () => {
 }
 
 const logout = () => {
-  console.log('Logging out...')
-  router.push('/login')
+  localStorage.removeItem('token');
+  localStorage.removeItem('role');
+
+  Swal.fire ({
+    position: 'top-end',
+    icon: 'success',
+    title: 'Logout successful',
+    showConfirmButton: false,
+    timer: 1500
+  });
+  setTimeout(() => {
+    router.push('/')
+  }, 1500);
 }
 </script>
 

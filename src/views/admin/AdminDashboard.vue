@@ -77,17 +77,17 @@ const cards = [
 
 .card-title {
   font-size: 1.25rem;
-  color: #1C70E6FF;
+  color: #6A80B9;
   margin-bottom: 1rem;
 }
 
 .card-icon {
   font-size: 3rem;
-  color: #1C70E6FF;
+  color: #6A80B9;
 }
 
 .btn {
-  background-color: #1C70E6FF;
+  background-color: #6A80B9;
   border-radius: 4px;
   color: white;
   font-weight: bold;
@@ -96,7 +96,7 @@ const cards = [
 }
 
 .btn:hover {
-  background-color: #1C70E6FF;
+  background-color: #6A80B9;
   transform: scale(1.05);
 }
 

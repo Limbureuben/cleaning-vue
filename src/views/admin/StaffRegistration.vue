@@ -64,7 +64,7 @@
                   <option value="user" style="color: #000;">User</option>
                 </select>
               </div>
-              <button type="submit" class="btn w-100 fw-bold" style="background-color: #1C70E6FF; border-color: #1C70E6FF;">
+              <button type="submit" class="btn w-100 fw-bold" style="background-color: #6A80B9; border-color: #6A80B9;">
                 Register
               </button>
             </form>

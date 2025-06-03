@@ -11,7 +11,7 @@
             class="col-12 col-md-8 col-lg-6 col-xl-5 bg-white p-5 rounded shadow"
             style="min-width: 450px;"
           >
-            <h4 class="mb-4 text-center fw-bold" style="color: #1C70E6FF;">REGISTRATION</h4>
+            <h4 class="mb-4 text-center fw-bold" style="color: #6A80B9;">REGISTRATION</h4>
             <form @submit.prevent="onSubmit">
               <div class="mb-4">
                 <input
@@ -52,14 +52,14 @@
                   required
                 />
               </div>
-              <button type="submit" class="btn w-100 fw-bold" style="background-color: #1C70E6FF; border-color: #1C70E6FF;">
+              <button type="submit" class="btn w-100 fw-bold" style="background-color: #6A80B9; border-color: #6A80B9;">
                 Register
               </button>
             </form>
 
             <p class="mt-3 text-center">
               Already have an account?
-              <router-link to="/login" class="fw-bold" style="color: #1C70E6FF;">Login</router-link>
+              <router-link to="/login" class="fw-bold" style="color: #6A80B9;">Login</router-link>
             </p>
           </div>
         </transition>

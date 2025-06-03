@@ -5,7 +5,7 @@
       <section class="row align-items-center">
         <div :class="['col-lg-6 order-lg-1 order-2', { 'fade-slide-in': animate }]">
           <h1 class="display-8 fw-bold text-center text-lg-start">
-            BOOK CLEANING SERVICES
+            AIR BNB SYSTEM
           </h1>
           <p class="lead mt-4 text-center text-lg-start text-muted">
             A clean and simple interface to organize your favorite websites. Open a new browser tab and see your sites load instantly. Try it for free.
@@ -96,7 +96,7 @@ const goToSignup = () => {
 }
 
 .custom-btn {
-  background-color: #1C70E6FF;
+  background-color: #6A80B9;
   border-radius: 8px;
   border: none;
   cursor: pointer;
@@ -107,7 +107,7 @@ const goToSignup = () => {
 }
 
 .custom-btn:hover {
-  background-color: #1C70E6FF;
+  background-color: #6A80B9;
   transform: scale(1.05);
 }
 
