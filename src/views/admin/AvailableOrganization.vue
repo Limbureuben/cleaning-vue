@@ -33,26 +33,17 @@
                   'bg-secondary': organization.status === 'pending'
                 }"
               >
-                {{ organization.status.toUpperCase() }}
+                {{ organization.status }}
               </span>
             </td>
 
             <td>
-              <button
-                  class="btn btn-success btn-sm me-2"
-                  @click="acceptOrganization(organization.id)"
-                  :disabled="organization.status !== 'pending'"
-                >
-                  <i class="bi bi-check-circle me-1"></i> Accept
-                </button>
-
-                <button
-                  class="btn btn-danger btn-sm"
-                  @click="rejectOrganization(organization.id)"
-                  :disabled="organization.status !== 'pending'"
-                >
-                  <i class="bi bi-x-circle me-1"></i> Reject
-                </button>
+              <button class="btn btn-success btn-sm me-2" @click="acceptOrganization(organization.id)">
+                <i class="bi bi-check-circle me-1"></i> Accept
+              </button>
+              <button class="btn btn-danger btn-sm" @click="rejectOrganization(organization.id)">
+                <i class="bi bi-x-circle me-1"></i> Reject
+              </button>
             </td>
           </tr>
         </tbody>
