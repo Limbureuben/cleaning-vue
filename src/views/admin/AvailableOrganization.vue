@@ -1,57 +1,68 @@
 <template>
   <AdminHeader />
   <div class="organization-background">
-  <div class="available-organization container my-5 p-4 bg-light rounded shadow">
-    <h3 class="text-center mb-4 fw-bold">ORGANIZATIONS</h3>
-    <div class="table-responsive">
-      <table class="table table-bordered table-hover align-middle">
-        <thead class="table-primary">
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Organization Name</th>
-            <th scope="col">Region</th>
-            <th scope="col">Email</th>
-            <th scope="col">Address</th>
-            <th scope="col">Status</th>
-            <th scope="col">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(organization, index) in organizations" :key="organization.id">
-            <th scope="row">{{ index + 1 }}</th>
-            <td class="fw-semibold text-dark">{{ organization.organization_name }}</td>
-            <td>{{ organization.location }}</td>
-            <td>{{ organization.email }}</td>
-            <td>{{ organization.address }}</td>
-            
-            <td>
-              <span
-                class="badge"
-                :class="{
-                  'bg-success': organization.status === 'approved',
-                  'bg-danger': organization.status === 'rejected',
-                  'bg-warning': organization.status === 'suspended',
-                  'bg-secondary': organization.status === 'pending'
-                }"
-              >
-                {{ organization.status }}
-              </span>
-            </td>
-            <td>
-              <button class="btn btn-success btn-sm me-2" @click="acceptOrganization(organization.id)">
-                <i class="bi bi-check-circle me-1"></i> Accept
-              </button>
-              <button class="btn btn-danger btn-sm" @click="rejectOrganization(organization.id)">
-                <i class="bi bi-x-circle me-1"></i> Reject
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="available-organization container my-5 p-4 bg-light rounded shadow">
+      <h3 class="text-center mb-4 fw-bold">ORGANIZATIONS</h3>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+          <thead class="table-primary">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Organization Name</th>
+              <th scope="col">Region</th>
+              <th scope="col">Email</th>
+              <th scope="col">Address</th>
+              <th scope="col">Status</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <transition-group tag="tbody" name="fade-slide" appear>
+            <tr
+              v-for="(organization, index) in organizations"
+              :key="organization.id"
+            >
+              <th scope="row">{{ index + 1 }}</th>
+              <td class="fw-semibold text-dark">
+                {{ organization.organization_name }}
+              </td>
+              <td>{{ organization.location }}</td>
+              <td>{{ organization.email }}</td>
+              <td>{{ organization.address }}</td>
+              <td>
+                <span
+                  class="badge"
+                  :class="{
+                    'bg-success': organization.status === 'approved',
+                    'bg-danger': organization.status === 'rejected',
+                    'bg-warning': organization.status === 'suspended',
+                    'bg-secondary': organization.status === 'pending'
+                  }"
+                >
+                  {{ organization.status }}
+                </span>
+              </td>
+              <td>
+                <button
+                  class="btn btn-success btn-sm me-2"
+                  @click="acceptOrganization(organization.id)"
+                >
+                  <i class="bi bi-check-circle me-1"></i> Accept
+                </button>
+                <button
+                  class="btn btn-danger btn-sm"
+                  @click="rejectOrganization(organization.id)"
+                >
+                  <i class="bi bi-x-circle me-1"></i> Reject
+                </button>
+              </td>
+            </tr>
+          </transition-group>
+        </table>
+      </div>
     </div>
   </div>
-  </div>
 </template>
+
 
 <script>
 import { ref, onMounted } from 'vue';
@@ -216,4 +227,16 @@ h3 {
   padding: 3rem 0;
   height: 650px;
 }
+
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: all 0.5s ease;
+}
+
+.fade-slide-enter-from,
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
 </style>
