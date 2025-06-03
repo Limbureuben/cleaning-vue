@@ -35,11 +35,11 @@
 <script>
 import { ref, onMounted } from 'vue';
 import swal from 'sweetalert2';
-import AdminHeader from './AdminHeader.vue';
+import OrganizationHeader from './OrganizationHeader.vue';
 export default {
   name: 'AvailableOrganization',
   components: {
-    AdminHeader
+    OrganizationHeader
   },
  setup() {
   const organizations = ref([]);

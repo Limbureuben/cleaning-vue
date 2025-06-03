@@ -8,6 +8,7 @@ import OrganizationDashboard from '@/views/organization/organizationDashboard.vu
 import RegisterOrganization from '@/views/organization/RegisterOrganization.vue'
 import StaffRegistration from '@/views/admin/StaffRegistration.vue'
 import AvailableOrganization from '@/views/admin/AvailableOrganization.vue'
+import OrganizationStatus from '@/views/organization/OrganizationStatus.vue'
 
 
 const routes = [
@@ -19,7 +20,8 @@ const routes = [
   { path: '/organization', name: 'Organization', component: OrganizationDashboard },
   { path: '/register-organization', name: 'Register organization', component: RegisterOrganization },
   { path: '/register-staff', name: 'Register staff', component: StaffRegistration },
-  { path: '/available-organization', name: 'Available organization', component: AvailableOrganization }
+  { path: '/available-organization', name: 'Available organization', component: AvailableOrganization },
+  { path: '/organization-status', name: 'Organization status', component: OrganizationStatus }
   
 ]
 const router = createRouter({
