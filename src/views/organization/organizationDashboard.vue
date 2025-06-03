@@ -15,7 +15,7 @@
                 <h5 class="card-title fw-bold">{{ card.title }}</h5>
                 <p class="card-text text-muted">{{ card.description }}</p>
               </div>
-              <button class="btn mt-3">View Details</button>
+              <button class="btn mt-3 animated-btn">View Details</button>
             </div>
           </div>
         </div>
@@ -48,11 +48,6 @@ const cards = [
   align-items: center;
 }
 
-.card {
-  border-radius: 4px;
-  transition: all 0.3s ease;
-  overflow: hidden;
-}
 
 .hover-effect:hover {
   transform: translateY(-5px);
@@ -77,11 +72,13 @@ const cards = [
   font-weight: bold;
   padding: 0.5rem 1.5rem;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .btn:hover {
-  background-color: #6A80B9;
-  transform: scale(1.05);
+  background-color: #5A70A9;
+  transform: translateY(-2px);
 }
 
 .card-fade-slide-enter-active,
@@ -94,5 +91,63 @@ const cards = [
   opacity: 0;
   transform: translateY(20px);
 }
+
+.animated-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%);
+  transform-origin: 50% 50%;
+}
+
+.animated-btn:hover::after {
+  animation: ripple 1s ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0);
+    opacity: 0.5;
+  }
+  20% {
+    transform: scale(25, 25);
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(40, 40);
+  }
+}
+
+.card {
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  animation: cardAppear 0.5s ease-out;
+}
+
+@keyframes cardAppear {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hover-effect:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+
 
 </style>
