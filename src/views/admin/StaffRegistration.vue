@@ -180,7 +180,8 @@ input.form-control:focus {
 }
 
 .bg-cover {
-  background-image: url('../../assets/images/tools.png');
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background-image: url('../../assets/images/wonaclean.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

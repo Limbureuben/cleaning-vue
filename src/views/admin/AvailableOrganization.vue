@@ -1,5 +1,6 @@
 <template>
   <AdminHeader />
+  <div class="organization-background">
   <div class="available-organization container my-5 p-4 bg-light rounded shadow">
     <h3 class="text-center mb-4 fw-bold">ORGANIZATIONS</h3>
     <div class="table-responsive">
@@ -48,6 +49,7 @@
         </tbody>
       </table>
     </div>
+  </div>
   </div>
 </template>
 
@@ -203,5 +205,15 @@ export default {
 
 h3 {
   color: #6A80B9;
+}
+
+.organization-background {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background-image: url('../../assets/images/wonaclean.jpg'); /* Example: '/images/admin-bg.jpg' */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 3rem 0;
+  height: 650px;
 }
 </style>
