@@ -48,7 +48,7 @@ export default {
     try {
       const token = localStorage.getItem('token');
 
-      const response = await fetch('http://localhost:8000/api/my-organization/', {
+      const response = await fetch('http://localhost:8000/api/organization-status/', {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${token}`,
