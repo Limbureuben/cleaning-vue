@@ -2,7 +2,7 @@
     <OrganizationHeader />
   <div class="organization-background">
     <div class="available-organization container my-5 p-4 bg-light rounded shadow">
-      <h3 class="text-center mb-4 fw-bold">ORGANIZATIONS</h3>
+      <h4 class="text-center mb-4 fw-bold">ORGANIZATIONS STATUS</h4>
       <div class="table-responsive">
         <table class="table table-bordered table-hover align-middle">
           <thead class="table-primary">
@@ -110,7 +110,6 @@ h4 {
   text-transform: uppercase;
   letter-spacing: 2px;
   margin-bottom: 25px;
-  font-size: 1.8rem;
 }
 
 .form-label {
@@ -215,4 +214,11 @@ h4 {
 .register-organization {
   animation: fadeIn 0.5s ease-out;
 }
+
+table.table > thead.table-primary {
+  background-color: #5A70A9 !important;
+  color: #fff !important;
+}
+
+
 </style>
