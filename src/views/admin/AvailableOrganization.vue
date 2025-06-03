@@ -36,7 +36,6 @@
                 {{ organization.status }}
               </span>
             </td>
-
             <td>
               <button class="btn btn-success btn-sm me-2" @click="acceptOrganization(organization.id)">
                 <i class="bi bi-check-circle me-1"></i> Accept
@@ -180,7 +179,7 @@ export default {
 <style scoped>
 .available-organization {
   background: #ffffff;
-  border-radius: 8px;
+  border-radius: 4px;
 }
 .available-organization h2 {
   font-size: 1.8rem;
