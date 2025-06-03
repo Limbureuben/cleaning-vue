@@ -118,11 +118,35 @@ export default {
  }
 
     const acceptOrganization = (id) => {
-      updateOrganizationStatus(id, 'approved');
+      swal.fire({
+        title: 'Are you sure?',
+        text: 'Do you want to accept this organization?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, accept it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          updateOrganizationStatus(id, 'approved');
+        }
+      });
     };
 
     const rejectOrganization = (id) => {
-      updateOrganizationStatus(id, 'rejected');
+      swal.fire({
+        title: 'Are you sure?',
+        text: 'Do you want to reject this organization?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, reject it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          updateOrganizationStatus(id, 'rejected');
+        }
+      });
     };
 
     onMounted(() => {
