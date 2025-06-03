@@ -230,7 +230,7 @@ h3 {
 
 .fade-slide-enter-active,
 .fade-slide-leave-active {
-  transition: all 0.5s ease;
+  transition: all 1.5s ease;
 }
 
 .fade-slide-enter-from,

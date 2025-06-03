@@ -112,7 +112,7 @@ const submitForm = async () => {
       icon: 'success',
       title: 'Success!',
       text: 'Organization registered successfully!',
-      confirmButtonColor: '#3085d6',
+      confirmButtonColor: '#6A80B9',
       confirmButtonText: 'OK'
     });
 
@@ -142,9 +142,6 @@ const submitForm = async () => {
 }
 
 </script>
-
-
-
 <style scoped>
 .register-organization {
   max-width: 700px;
@@ -162,7 +159,7 @@ h4 {
   font-weight: bold;
   padding-top: 10px;
   text-transform: uppercase;
-  color: #1C70E6FF;
+  color: #6A80B9;
   letter-spacing: 2px;
 }
 
@@ -184,7 +181,7 @@ h4 {
 }
 
 .btn-primary {
-  background-color: #1C70E6FF;
+  background-color: #6A80B9;
   border: none;
   border-radius: 4px;
   padding: 0.75rem 4.5rem;
@@ -194,7 +191,7 @@ h4 {
 }
 
 .btn-primary:hover {
-  background-color: #1C70E6FF;
+  background-color: #6A80B9;
   transform: scale(1.05);
 }
 

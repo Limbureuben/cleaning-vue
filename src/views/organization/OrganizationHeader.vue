@@ -50,7 +50,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #1C70E6FF;
+  background-color: #6A80B9;
   color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
