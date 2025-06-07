@@ -137,6 +137,7 @@ const requestService = async (org) => {
 
 
 onMounted(() => {
+  fetchUserInfo();
   fetchApprovedOrganizations();
 })
 </script>
