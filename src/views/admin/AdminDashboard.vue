@@ -11,7 +11,7 @@
                 <h5 class="card-title fw-bold">{{ card.title }}</h5>
                 <p class="card-text text-muted">{{ card.description }}</p>
               </div>
-              <button class="btn mt-3">View Details</button>
+              <button class="btn mt-3" @click="router.push(card.route)">View Details</button>
             </div>
           </div>
         </div>
@@ -23,10 +23,12 @@
 
 <script setup>
 import AdminHeader from './AdminHeader.vue'
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const cards = [
   { title: "TOTAL USERS", description: "Manage all Accounts of Registered users in this platform.", icon: "fas fa-users" },
-  { title: "REGISTERED COMPANIES", description: "These are the Registered Companies that deal with cleaning services in different Regions of Tanzania", icon: "fas fa-building" },
+  { title: "REGISTERED COMPANIES", route: "/available-organization", description: "These are the Registered Companies that deal with cleaning services in different Regions of Tanzania", icon: "fas fa-building" },
   { title: "BOOKING SERVICES", description: "Check and Manage bookings available in different companies", icon: "fas fa-calendar-check" },
   { title: "MESSAGES", description: "Check Messages sent by the users", icon: "fas fa-envelope" }
 ];
