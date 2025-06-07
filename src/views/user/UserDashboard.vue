@@ -46,6 +46,7 @@ const fetchApprovedOrganizations = async () => {
 const userInfo = ref({
   username: '',
   email: '',
+  phone: '',
 });
 
 const fetchUserInfo = async () => {
@@ -61,11 +62,11 @@ const fetchUserInfo = async () => {
     const data = await response.json();
     userInfo.value.username = data.username;
     userInfo.value.email = data.email;
-
+    userInfo.value.phone = ''; // Empty - user will enter it
   } catch (error) {
     console.error('Error fetching user info:', error);
   }
-};
+}
 
 
 
@@ -73,23 +74,24 @@ const requestService = async (org) => {
   const { value: formValues } = await swal.fire({
     title: `Request Cleaning Service from ${org.organization_name}`,
     html:
-      `<input id="swal-username" class="swal2-input" placeholder="Your Username" value="${userInfo.value.username}">` +
-      `<input id="swal-email" type="email" class="swal2-input" placeholder="Your Email" value="${userInfo.value.email}">` +
+      `<input id="swal-username" class="swal2-input" placeholder="Your Username" value="${userInfo.value.username}" readonly>` +
+      `<input id="swal-email" type="email" class="swal2-input" placeholder="Your Email" value="${userInfo.value.email}" readonly>` +
       `<input id="swal-phone" type="tel" class="swal2-input" placeholder="Your Phone Number">`,
     focusConfirm: false,
     showCancelButton: true,
     confirmButtonText: "Submit Request",
     preConfirm: () => {
-      const username = document.getElementById('swal-username').value;
-      const email = document.getElementById('swal-email').value;
       const phone = document.getElementById('swal-phone').value;
-
-      if (!username || !email || !phone) {
-        swal.showValidationMessage('All fields are required');
+      if (!phone) {
+        swal.showValidationMessage('Phone number is required');
         return false;
       }
 
-      return { username, email, phone };
+      return {
+        username: userInfo.value.username,
+        email: userInfo.value.email,
+        phone: phone
+      };
     }
   });
 
@@ -105,30 +107,29 @@ const requestService = async (org) => {
           organization_id: org.id,
           username: formValues.username,
           email: formValues.email,
-          phone: formValues.phone,
-          message: `User ${formValues.username} is requesting services from ${org.organization_name}`
+          phone: formValues.phone
         })
       });
 
       if (response.ok) {
         swal.fire({
           icon: 'success',
-          title: 'Request Submitted',
-          text: 'The organization will contact you soon.',
+          title: 'Request Sent!',
+          text: `${formValues.username}, your request has been submitted.`
         });
       } else {
         const data = await response.json();
         swal.fire({
           icon: 'error',
-          title: 'Error',
-          text: data.error || 'Something went wrong.'
+          title: 'Request Failed',
+          text: data.detail || 'Something went wrong.'
         });
       }
     } catch (err) {
       swal.fire({
         icon: 'error',
         title: 'Network Error',
-        text: 'Unable to send request.'
+        text: 'Could not send request.'
       });
     }
   }
