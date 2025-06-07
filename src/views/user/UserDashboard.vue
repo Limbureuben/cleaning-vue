@@ -43,17 +43,72 @@ const fetchApprovedOrganizations = async () => {
   }
 }
 
-const requestService = (org) => {
-  swal.fire({
-    icon: 'success',
-    title: `Request sent to ${org.organization_name}`,
-    text: 'They will contact you soon.',
-    timer: 2000,
-    showConfirmButton: false,
-    position: 'top-end',
+const requestService = async (org) => {
+  const { value: formValues } = await swal.fire({
+    title: `Request Cleaning Service from ${org.organization_name}`,
+    html:
+      `<input id="swal-username" class="swal2-input" placeholder="Your Username">` +
+      `<input id="swal-email" type="email" class="swal2-input" placeholder="Your Email">` +
+      `<input id="swal-phone" type="tel" class="swal2-input" placeholder="Your Phone Number">`,
+    focusConfirm: false,
+    showCancelButton: true,
+    confirmButtonText: "Submit Request",
+    preConfirm: () => {
+      const username = document.getElementById('swal-username').value;
+      const email = document.getElementById('swal-email').value;
+      const phone = document.getElementById('swal-phone').value;
+
+      if (!username || !email || !phone) {
+        swal.showValidationMessage('All fields are required');
+        return false;
+      }
+
+      return { username, email, phone };
+    }
   });
 
-}
+  if (formValues) {
+    try {
+      const response = await fetch('http://localhost:8000/api/send-service-request/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+          organization_id: org.id,
+          username: formValues.username,
+          email: formValues.email,
+          phone: formValues.phone,
+          message: `User ${formValues.username} is requesting services from ${org.organization_name}`
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        swal.fire({
+          icon: 'success',
+          title: 'Request Submitted',
+          text: 'The organization will contact you soon.',
+        });
+      } else {
+        swal.fire({
+          icon: 'error',
+          title: 'Failed to Submit',
+          text: data.error || 'Please try again later.',
+        });
+      }
+    } catch (err) {
+      swal.fire({
+        icon: 'error',
+        title: 'Network Error',
+        text: 'Unable to send request. Check your connection.',
+      });
+    }
+  }
+};
+
 
 onMounted(() => {
   fetchApprovedOrganizations();
