@@ -30,15 +30,6 @@
                     required
                   />
                 </div>
-                <div class="mb-4">
-                  <select class="form-select" v-model="cleaner.status" required>
-                    <option value="">Select Status</option>
-                    <option value="available">Available</option>
-                    <option value="assigned">Assigned</option>
-                    <option value="inactive">Inactive</option>
-                    <option value="busy">Busy</option>
-                  </select>
-                </div>
 
                 <button type="submit" class="btn w-100 fw-bold text-white" style="background-color: #6A80B9;">
                   Register Cleaner
@@ -59,8 +50,7 @@ const showForm = ref(false)
 
 const cleaner = ref({
   full_name: '',
-  contact: '',
-  status: 'available'
+  contact: ''
 })
 
 const registerCleaner = async () => {
@@ -79,8 +69,7 @@ const registerCleaner = async () => {
     alert('Cleaner registered successfully!');
     cleaner.value = {
       full_name: '',
-      contact: '',
-      status: 'available'
+      contact: ''
     };
   } catch (error) {
     console.error(error);
