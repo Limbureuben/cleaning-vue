@@ -105,7 +105,7 @@ const requestService = async (org) => {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
-          organization_id: org.id,
+          organization: org.id,
           username: formValues.username,
           email: formValues.email,
           phone: formValues.phone
