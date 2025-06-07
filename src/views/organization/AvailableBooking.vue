@@ -1,4 +1,5 @@
 <template>
+    <OrganizationHeader />
   <div class="container">
     <h2>Cleaning Service Requests for Your Organization(s)</h2>
     <div v-if="requests.length === 0">No service requests found.</div>
@@ -16,6 +17,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import OrganizationHeader from './OrganizationHeader.vue'
 
 const requests = ref([])
 
