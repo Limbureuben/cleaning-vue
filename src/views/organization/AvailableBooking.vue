@@ -70,20 +70,39 @@ const fetchMyOrgRequests = async () => {
 }
 
 const assignCleaner = async (request) => {
-  const { value: cleaner } = await swal.fire({
-    title: `Assign Cleaner to ${request.username}`,
-    input: 'text',
-    inputLabel: 'Cleaner Name or ID',
-    inputPlaceholder: 'Enter cleaner name or ID',
-    showCancelButton: true,
-    confirmButtonText: 'Assign',
-    inputValidator: (value) => {
-      if (!value) return 'Cleaner name is required';
-    }
-  });
+  try {
+    // 1. Fetch available cleaners
+    const cleanerRes = await fetch('http://localhost:8000/api/available-cleaners/', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    });
 
-  if (cleaner) {
-    try {
+    if (!cleanerRes.ok) throw new Error('Failed to fetch cleaners');
+
+    const cleaners = await cleanerRes.json();
+
+    // 2. Prepare options for dropdown
+    const options = cleaners.reduce((acc, cleaner) => {
+      acc[cleaner.id] = `${cleaner.full_name} - ${cleaner.location} (${cleaner.status})`;
+      return acc;
+    }, {});
+
+    // 3. Show SweetAlert2 dropdown
+    const { value: selectedCleanerId } = await swal.fire({
+      title: `Assign Cleaner to ${request.username}`,
+      input: 'select',
+      inputOptions: options,
+      inputPlaceholder: 'Select a cleaner',
+      showCancelButton: true,
+      confirmButtonText: 'Assign',
+      inputValidator: (value) => {
+        if (!value) return 'Please select a cleaner';
+      }
+    });
+
+    // 4. Send assign request
+    if (selectedCleanerId) {
       const response = await fetch(`http://localhost:8000/api/assign-cleaner/`, {
         method: 'POST',
         headers: {
@@ -92,21 +111,25 @@ const assignCleaner = async (request) => {
         },
         body: JSON.stringify({
           request_id: request.id,
-          cleaner: cleaner
+          cleaner_id: parseInt(selectedCleanerId)
         })
       });
 
       if (response.ok) {
         swal.fire('Success', `Cleaner assigned to ${request.username}`, 'success');
+        fetchMyOrgRequests(); // optionally refresh list
       } else {
         const data = await response.json();
         swal.fire('Error', data.detail || 'Failed to assign cleaner', 'error');
       }
-    } catch (error) {
-      swal.fire('Error', 'Server error', 'error');
     }
+
+  } catch (error) {
+    console.error(error);
+    swal.fire('Error', 'Something went wrong', 'error');
   }
 }
+
 
 onMounted(() => {
   fetchMyOrgRequests()
