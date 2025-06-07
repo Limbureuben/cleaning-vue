@@ -61,6 +61,7 @@ const showForm = ref(false)
 
 const cleaner = ref({
   full_name: '',
+  location: '',
   contact: ''
 })
 
@@ -80,6 +81,7 @@ const registerCleaner = async () => {
     alert('Cleaner registered successfully!');
     cleaner.value = {
       full_name: '',
+      location: '',
       contact: ''
     };
   } catch (error) {
