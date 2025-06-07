@@ -11,35 +11,38 @@
           <label for="lastName" class="form-label">Last Name</label>
           <input type="text" class="form-control" id="lastName" v-model="cleaner.lastName" required>
         </div>
+
+        <div class="col-md-6 mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" v-model="cleaner.email" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="phone" class="form-label">Phone Number</label>
+          <input type="tel" class="form-control" id="phone" v-model="cleaner.phone" required>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label for="skills" class="form-label">Skills</label>
+          <input type="text" class="form-control" id="skills" v-model="cleaner.skills" placeholder="e.g. Carpet cleaning, Window washing">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="availability" class="form-label">Availability</label>
+          <select class="form-select" id="availability" v-model="cleaner.availability" required>
+            <option value="">Select availability</option>
+            <option value="full-time">Full Time</option>
+            <option value="part-time">Part Time</option>
+            <option value="weekends">Weekends Only</option>
+          </select>
+        </div>
       </div>
-      <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" v-model="cleaner.email" required>
-      </div>
-      <div class="mb-3">
-        <label for="phone" class="form-label">Phone Number</label>
-        <input type="tel" class="form-control" id="phone" v-model="cleaner.phone" required>
-      </div>
+
       <div class="mb-3">
         <label for="address" class="form-label">Address</label>
         <textarea class="form-control" id="address" v-model="cleaner.address" rows="3" required></textarea>
       </div>
-      <div class="mb-3">
-        <label for="skills" class="form-label">Skills</label>
-        <input type="text" class="form-control" id="skills" v-model="cleaner.skills" placeholder="e.g. Carpet cleaning, Window washing">
-      </div>
-      <div class="mb-4">
-        <label for="availability" class="form-label">Availability</label>
-        <select class="form-select" id="availability" v-model="cleaner.availability" required>
-          <option value="">Select availability</option>
-          <option value="full-time">Full Time</option>
-          <option value="part-time">Part Time</option>
-          <option value="weekends">Weekends Only</option>
-        </select>
-      </div>
 
-      <h3 class="mb-3">Assign to Booking</h3>
-      <div class="mb-3">
+      <h3 class="mb-3 mt-4">Assign to Booking</h3>
+      <div class="mb-4">
         <label for="booking" class="form-label">Select Booking</label>
         <select class="form-select" id="booking" v-model="selectedBooking">
           <option value="">Select a booking</option>
@@ -49,10 +52,11 @@
         </select>
       </div>
 
-      <button type="submit" class="btn btn-primary">Register Cleaner</button>
+      <button type="submit" class="btn btn-primary w-100">Register Cleaner</button>
     </form>
   </div>
 </template>
+
 
 <script setup>
 import { ref } from 'vue';
@@ -127,7 +131,7 @@ h2, h3 {
 .btn-primary {
   background-color: #007bff;
   border: none;
-  padding: 0.5rem 1.5rem;
+  padding: 0.6rem 1.5rem;
   font-size: 1.1rem;
 }
 
