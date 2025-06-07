@@ -1,66 +1,87 @@
 <template>
-  <div class="register-cleaner-container">
-    <h2 class="mb-4">Register New Cleaner</h2>
-    <form @submit.prevent="registerCleaner">
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <label for="firstName" class="form-label">First Name</label>
-          <input type="text" class="form-control" id="firstName" v-model="cleaner.firstName" required>
-        </div>
-        <div class="col-md-6 mb-3">
-          <label for="lastName" class="form-label">Last Name</label>
-          <input type="text" class="form-control" id="lastName" v-model="cleaner.lastName" required>
-        </div>
+  <div class="bg-cover">
+    <div class="d-flex justify-content-center align-items-center full-screen">
+      <div class="container position-relative z-1">
+        <div class="row justify-content-center">
+          <transition name="fade-slide">
+            <div
+              class="col-12 col-md-10 col-lg-8 bg-white p-5 rounded shadow"
+              style="min-width: 450px;"
+              v-show="showForm"
+            >
+              <h4 class="mb-4 text-center fw-bold" style="color: #6A80B9;">Register New Cleaner</h4>
 
-        <div class="col-md-6 mb-3">
-          <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email" v-model="cleaner.email" required>
-        </div>
-        <div class="col-md-6 mb-3">
-          <label for="phone" class="form-label">Phone Number</label>
-          <input type="tel" class="form-control" id="phone" v-model="cleaner.phone" required>
-        </div>
+              <form @submit.prevent="registerCleaner">
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    <input type="text" class="form-control" placeholder="First Name" v-model="cleaner.firstName" required />
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <input type="text" class="form-control" placeholder="Last Name" v-model="cleaner.lastName" required />
+                  </div>
+                </div>
 
-        <div class="col-md-6 mb-3">
-          <label for="skills" class="form-label">Skills</label>
-          <input type="text" class="form-control" id="skills" v-model="cleaner.skills" placeholder="e.g. Carpet cleaning, Window washing">
-        </div>
-        <div class="col-md-6 mb-3">
-          <label for="availability" class="form-label">Availability</label>
-          <select class="form-select" id="availability" v-model="cleaner.availability" required>
-            <option value="">Select availability</option>
-            <option value="full-time">Full Time</option>
-            <option value="part-time">Part Time</option>
-            <option value="weekends">Weekends Only</option>
-          </select>
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    <input type="email" class="form-control" placeholder="Email" v-model="cleaner.email" required />
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <input type="tel" class="form-control" placeholder="Phone Number" v-model="cleaner.phone" required />
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <textarea class="form-control" placeholder="Address" rows="3" v-model="cleaner.address" required></textarea>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Skills (e.g. Carpet cleaning)"
+                        v-model="cleaner.skills"
+                        />
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <select class="form-select" v-model="cleaner.availability" required>
+                        <option value="">Select Availability</option>
+                        <option value="full-time">Full Time</option>
+                        <option value="part-time">Part Time</option>
+                        <option value="weekends">Weekends Only</option>
+                        </select>
+                    </div>
+                    </div>
+                <h5 class="mb-3 text-center text-primary">Assign to Booking</h5>
+                <div class="mb-4">
+                  <select class="form-select" v-model="selectedBooking">
+                    <option value="">Select a booking</option>
+                    <option v-for="booking in availableBookings" :key="booking.id" :value="booking.id">
+                      {{ booking.customerName }} - {{ booking.date }} - {{ booking.service }}
+                    </option>
+                  </select>
+                </div>
+
+                <button type="submit" class="btn w-100 fw-bold" style="background-color: #6A80B9; border-color: #FE4F2D;">
+                  Register Cleaner
+                </button>
+              </form>
+            </div>
+          </transition>
         </div>
       </div>
-
-      <div class="mb-3">
-        <label for="address" class="form-label">Address</label>
-        <textarea class="form-control" id="address" v-model="cleaner.address" rows="3" required></textarea>
-      </div>
-
-      <h3 class="mb-3 mt-4">Assign to Booking</h3>
-      <div class="mb-4">
-        <label for="booking" class="form-label">Select Booking</label>
-        <select class="form-select" id="booking" v-model="selectedBooking">
-          <option value="">Select a booking</option>
-          <option v-for="booking in availableBookings" :key="booking.id" :value="booking.id">
-            {{ booking.customerName }} - {{ booking.date }} - {{ booking.service }}
-          </option>
-        </select>
-      </div>
-
-      <button type="submit" class="btn btn-primary w-100">Register Cleaner</button>
-    </form>
+    </div>
   </div>
 </template>
 
-
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue'
 
+const showForm = ref(false)
+
+onMounted(() => {
+  showForm.value = true
+})
 
 const cleaner = ref({
   firstName: '',
@@ -70,72 +91,81 @@ const cleaner = ref({
   address: '',
   skills: '',
   availability: ''
-});
+})
 
-const selectedBooking = ref('');
-
-// Mock data for available bookings
+const selectedBooking = ref('')
 const availableBookings = ref([
   { id: 1, customerName: 'John Doe', date: '2025-06-10', service: 'House Cleaning' },
   { id: 2, customerName: 'Jane Smith', date: '2025-06-11', service: 'Office Cleaning' },
-  // Add more bookings as needed
-]);
+])
 
 const registerCleaner = async () => {
-  try {
-    // Here you would typically make an API call to register the cleaner
-    console.log('Registering cleaner:', cleaner.value);
-    
-    if (selectedBooking.value) {
-      console.log('Assigning cleaner to booking:', selectedBooking.value);
-      // Here you would make another API call to assign the cleaner to the booking
-    }
-
-    // Show success message
-
-    // Reset form
-    cleaner.value = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      address: '',
-      skills: '',
-      availability: ''
-    };
-    selectedBooking.value = '';
-  } catch (error) {
-    console.error('Error registering cleaner:', error);
+  console.log('Registering cleaner:', cleaner.value)
+  if (selectedBooking.value) {
+    console.log('Assigning cleaner to booking:', selectedBooking.value)
   }
-};
+
+  cleaner.value = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    address: '',
+    skills: '',
+    availability: ''
+  }
+  selectedBooking.value = ''
+}
 </script>
 
 <style scoped>
-.register-cleaner-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
-  background-color: #f8f9fa;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+input.form-control,
+textarea.form-control,
+select.form-select {
+  height: 50px;
+  border-radius: 0;
+  font-size: 1rem;
+  padding: 0.375rem 0.75rem;
+  margin-bottom: 0;
 }
 
-h2, h3 {
-  color: #333;
+textarea.form-control {
+  height: auto;
 }
 
-.form-label {
-  font-weight: bold;
+.bg-cover {
+  background-image: url('../assets/images/woman.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  opacity: 0.8;
 }
 
-.btn-primary {
-  background-color: #007bff;
-  border: none;
-  padding: 0.6rem 1.5rem;
-  font-size: 1.1rem;
+.full-screen {
+  height: 100vh;
+  position: relative;
+  z-index: 1;
 }
 
-.btn-primary:hover {
-  background-color: #0056b3;
+.fade-slide-enter-from {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.fade-slide-enter-active {
+  transition: all 0.6s ease;
+}
+.fade-slide-enter-to {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.btn {
+  border-radius: 2px;
 }
 </style>
