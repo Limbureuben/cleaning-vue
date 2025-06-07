@@ -128,10 +128,15 @@ onMounted(() => {
 
 .content-wrapper {
   position: relative;
+  top: 50px;
   z-index: 1; /* above background */
   background: rgba(255, 255, 255, 0.85); /* optional: white transparent overlay for readability */
   padding: 20px;
   border-radius: 8px;
 }
+
+
+
+
 </style>
 
