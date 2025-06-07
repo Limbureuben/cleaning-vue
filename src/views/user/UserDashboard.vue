@@ -1,15 +1,15 @@
 <!-- ApprovedOrganizations.vue -->
 <template>
+  <UserHeader />
   <div class="container mt-5">
-    <h3 class="text-center mb-4" style="color: #6A80B9;">Approved Cleaning Organizations</h3>
     <div class="row">
       <div v-for="org in organizations" :key="org.id" class="col-md-6 col-lg-4 mb-4">
-        <div class="card shadow rounded p-3">
+        <div class="card shadow rounded p-2">
           <h5 class="fw-bold">{{ org.organization_name }}</h5>
           <p><strong>Location:</strong> {{ org.location }}</p>
           <p><strong>Email:</strong> {{ org.email }}</p>
           <p><strong>Services:</strong> {{ org.services }}</p>
-          <button class="btn btn-primary w-100" @click="requestService(org)">
+          <button class="btn w-100" @click="requestService(org)">
             Request Cleaning Service
           </button>
         </div>
@@ -21,6 +21,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import swal from 'sweetalert2'
+import UserHeader from './UserHeader.vue'
 
 const organizations = ref([])
 
@@ -148,5 +149,13 @@ onMounted(() => {
 }
 .card:hover {
   transform: translateY(-5px);
+}
+
+.btn {
+  background-color: #6A80B9;
+}
+
+.btn:hover {
+  background-color: #6A80B9;
 }
 </style>

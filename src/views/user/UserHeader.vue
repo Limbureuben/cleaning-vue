@@ -1,98 +1,101 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow" style="background-color: #FE4F2D;">
-    <div class="container-fluid">
-      <!-- Brand -->
-      <router-link to="/" class="navbar-brand fw-bold">User Dashboard</router-link>
-      <button class="navbar-toggler" type="button" @click="toggleMenu">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div :class="['collapse navbar-collapse', { show: isMenuOpen }]">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <router-link to="/admin/dashboard" class="nav-link">Dashboard</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/admin/users" class="nav-link">Book service</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/admin/settings" class="nav-link">Settings</router-link>
-          </li>
-        </ul>
-
-        <!-- Right Side Buttons -->
-        <div class="d-flex align-items-center gap-3">
-          <button class="btn btn-outline-light" @click="logout">
-            <i class="bi bi-box-arrow-right me-1"></i> Logout
-          </button>
-
-          <!-- Profile Dropdown -->
-            <div class="dropdown">
-            <a
-                class="nav-link dropdown-toggle text-white"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-            >
-                <i class="bi bi-person-circle fs-4"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
-                <li><router-link class="dropdown-item">Profile</router-link></li>
-                <li><router-link class="dropdown-item" >Book service</router-link></li>
-                <li><router-link class="dropdown-item">Track booking</router-link></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li><a class="dropdown-item" @click="logout">Logout</a></li>
-            </ul>
-            </div>
-        </div>
-      </div>
-    </div>
-  </nav>
+  <header class="organization-header">
+    <h1>{{ organizationName }}</h1>
+    <nav>
+      <ul>
+        <li><router-link to="/user-dashboard">Dashboard</router-link></li>
+        <li><router-link to="/register-organization">RegisterCompany</router-link></li>
+        <li><router-link to="/organization-status">Status</router-link></li>
+        <li><a href="#members">Members</a></li>
+        <li><a href="#settings">Settings</a></li>
+        <li><button @click="logout" class="logout-button">Logout</button></li>
+      </ul>
+    </nav>
+  </header>
 </template>
 
+<script>
+import Swal from 'sweetalert2';
+export default {
+  name: 'OrganizationHeader',
+  data() {
+    return {
+      organizationName: 'AIR BNB',
+    }
+  },
+  methods: {
+    logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('role');
 
-<script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+        Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Logout successful",
+        showConfirmButton: false,
+        timer: 1500
+      });
+      setTimeout(() => {
+        this.$router.push('/');
+      }, 1500);
+    }
 
-const isMenuOpen = ref(false)
-const router = useRouter()
-
-const toggleMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value
-}
-
-const logout = () => {
-  console.log('Logging out...')
-  router.push('/login')
+    
+  }
 }
 </script>
 
-
 <style scoped>
-.navbar {
-  z-index: 1050; /* ensure it stays on top */
+.organization-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #6A80B9;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.navbar-brand {
-  font-size: 1.3rem;
+.organization-header h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
-.nav-link {
-  font-weight: 500;
+nav ul {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
-.btn-outline-light:hover {
-  background-color: white;
-  color: #FE4F2D;
+nav ul li {
+  margin-left: 1.5rem;
 }
 
-.navbar {
-  z-index: 1050;
+nav ul li a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: color 0.3s ease;
 }
 
-.navbar .dropdown-menu {
-  z-index: 2000;
+nav ul li a:hover {
+  color: #ffcccb;
 }
 
+.logout-button {
+  background-color: #FE4F2D;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #e63e1c;
+}
 </style>
