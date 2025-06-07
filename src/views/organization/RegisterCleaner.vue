@@ -12,53 +12,35 @@
               <h4 class="mb-4 text-center fw-bold" style="color: #6A80B9;">Register New Cleaner</h4>
 
               <form @submit.prevent="registerCleaner">
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-                    <input type="text" class="form-control" placeholder="First Name" v-model="cleaner.firstName" required />
-                  </div>
-                  <div class="col-md-6 mb-4">
-                    <input type="text" class="form-control" placeholder="Last Name" v-model="cleaner.lastName" required />
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-                    <input type="email" class="form-control" placeholder="Email" v-model="cleaner.email" required />
-                  </div>
-                  <div class="col-md-6 mb-4">
-                    <input type="tel" class="form-control" placeholder="Phone Number" v-model="cleaner.phone" required />
-                  </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6 mb-4">
-                        <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Skills (e.g. Carpet cleaning)"
-                        v-model="cleaner.skills"
-                        />
-                    </div>
-                    <div class="col-md-6 mb-4">
-                        <select class="form-select" v-model="cleaner.availability" required>
-                        <option value="">Select Availability</option>
-                        <option value="full-time">Full Time</option>
-                        <option value="part-time">Part Time</option>
-                        <option value="weekends">Weekends Only</option>
-                        </select>
-                    </div>
-                    </div>
-                <h5 class="mb-3 text-center text-primary">Assign to Booking</h5>
                 <div class="mb-4">
-                  <select class="form-select" v-model="selectedBooking">
-                    <option value="">Select a booking</option>
-                    <option v-for="booking in availableBookings" :key="booking.id" :value="booking.id">
-                      {{ booking.customerName }} - {{ booking.date }} - {{ booking.service }}
-                    </option>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Full Name"
+                    v-model="cleaner.full_name"
+                    required
+                  />
+                </div>
+                <div class="mb-4">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Phone / Contact"
+                    v-model="cleaner.contact"
+                    required
+                  />
+                </div>
+                <div class="mb-4">
+                  <select class="form-select" v-model="cleaner.status" required>
+                    <option value="">Select Status</option>
+                    <option value="available">Available</option>
+                    <option value="assigned">Assigned</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="busy">Busy</option>
                   </select>
                 </div>
 
-                <button type="submit" class="btn w-100 fw-bold" style="background-color: #6A80B9; border-color: #FE4F2D;">
+                <button type="submit" class="btn w-100 fw-bold text-white" style="background-color: #6A80B9;">
                   Register Cleaner
                 </button>
               </form>
@@ -75,58 +57,50 @@ import { ref, onMounted } from 'vue'
 
 const showForm = ref(false)
 
-onMounted(() => {
-  showForm.value = true
-})
-
 const cleaner = ref({
-  firstName: '',
-  lastName: '',
-  email: '',
-  phone: '',
-  address: '',
-  skills: '',
-  availability: ''
+  full_name: '',
+  contact: '',
+  status: 'available'
 })
-
-const selectedBooking = ref('')
-const availableBookings = ref([
-  { id: 1, customerName: 'John Doe', date: '2025-06-10', service: 'House Cleaning' },
-  { id: 2, customerName: 'Jane Smith', date: '2025-06-11', service: 'Office Cleaning' },
-])
 
 const registerCleaner = async () => {
-  console.log('Registering cleaner:', cleaner.value)
-  if (selectedBooking.value) {
-    console.log('Assigning cleaner to booking:', selectedBooking.value)
-  }
+  try {
+    const response = await fetch('http://localhost:8000/api/register-cleaner/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify(cleaner.value)
+    });
 
-  cleaner.value = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    address: '',
-    skills: '',
-    availability: ''
+    if (!response.ok) throw new Error('Failed to register cleaner');
+
+    alert('Cleaner registered successfully!');
+    cleaner.value = {
+      full_name: '',
+      contact: '',
+      status: 'available'
+    };
+  } catch (error) {
+    console.error(error);
+    alert('Something went wrong during cleaner registration.');
   }
-  selectedBooking.value = ''
-}
+};
+
+onMounted(() => {
+  showForm.value = true;
+});
 </script>
 
 <style scoped>
 input.form-control,
-textarea.form-control,
 select.form-select {
   height: 50px;
   border-radius: 0;
   font-size: 1rem;
   padding: 0.375rem 0.75rem;
   margin-bottom: 0;
-}
-
-textarea.form-control {
-  height: auto;
 }
 
 .bg-cover {
@@ -159,9 +133,5 @@ textarea.form-control {
 .fade-slide-enter-to {
   opacity: 1;
   transform: translateY(0);
-}
-
-.btn {
-  border-radius: 2px;
 }
 </style>
