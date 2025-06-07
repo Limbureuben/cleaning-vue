@@ -56,9 +56,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useToast } from 'vue-toastification';
 
-const toast = useToast();
 
 const cleaner = ref({
   firstName: '',
@@ -90,7 +88,6 @@ const registerCleaner = async () => {
     }
 
     // Show success message
-    toast.success('Cleaner registered successfully!');
 
     // Reset form
     cleaner.value = {
@@ -105,7 +102,6 @@ const registerCleaner = async () => {
     selectedBooking.value = '';
   } catch (error) {
     console.error('Error registering cleaner:', error);
-    toast.error('Failed to register cleaner. Please try again.');
   }
 };
 </script>
