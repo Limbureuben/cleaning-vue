@@ -9,6 +9,7 @@ import RegisterOrganization from '@/views/organization/RegisterOrganization.vue'
 import StaffRegistration from '@/views/admin/StaffRegistration.vue'
 import AvailableOrganization from '@/views/admin/AvailableOrganization.vue'
 import OrganizationStatus from '@/views/organization/OrganizationStatus.vue'
+import RegisterCleaner from '@/views/organization/RegisterCleaner.vue'
 
 
 const routes = [
@@ -21,7 +22,8 @@ const routes = [
   { path: '/register-organization', name: 'Register organization', component: RegisterOrganization },
   { path: '/register-staff', name: 'Register staff', component: StaffRegistration },
   { path: '/available-organization', name: 'Available organization', component: AvailableOrganization },
-  { path: '/organization-status', name: 'Organization status', component: OrganizationStatus }
+  { path: '/organization-status', name: 'Organization status', component: OrganizationStatus },
+  { path: '/registercleaner', name: 'Cleaners', component: RegisterCleaner }
   
 ]
 const router = createRouter({
