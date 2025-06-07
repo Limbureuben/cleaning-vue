@@ -26,7 +26,14 @@ const organizations = ref([])
 
 const fetchApprovedOrganizations = async () => {
   try {
-    const response = await fetch('http://localhost:8000/api/approved-organizations/');
+    const response = await fetch('http://localhost:8000/api/fetch-approved/', {
+      method: 'GET', // use GET, not POST
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+
     if (!response.ok) throw new Error('Failed to fetch data');
 
     const data = await response.json();
@@ -46,19 +53,6 @@ const requestService = (org) => {
     position: 'top-end',
   });
 
-  // Optional: send POST request to backend to log the request
-  /*
-  fetch('http://localhost:8000/api/service-requests/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    },
-    body: JSON.stringify({
-      organization_id: org.id
-    })
-  });
-  */
 }
 
 onMounted(() => {
