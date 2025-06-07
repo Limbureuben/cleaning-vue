@@ -1,43 +1,45 @@
 <template>
   <OrganizationHeader />
-  <div class="container my-5">
-    <div v-if="requests.length === 0">
-      <p>No service requests found.</p>
-    </div>
-    
-    <div v-else>
-      <table class="table table-bordered table-striped">
-        <thead :style="{ backgroundColor: '#6A80B9', color: '#fff' }">
-          <tr>
-            <th>#</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Requested At</th>
-            <th>Organization</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(req, index) in requests" :key="req.id">
-            <td>{{ index + 1 }}</td>
-            <td>{{ req.username }}</td>
-            <td>{{ req.email }}</td>
-            <td>{{ req.phone }}</td>
-            <td>{{ new Date(req.requested_at).toLocaleString() }}</td>
-            <td>{{ req.organization_name }}</td>
-            <td>
-              <button
-                class="btn btn-sm text-white"
-                :style="{ backgroundColor: '#6A80B9' }"
-                @click="assignCleaner(req)"
-              >
-                Assign Cleaner
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+  <div class="background-image">
+    <div class="container my-5 content-wrapper">
+      <div v-if="requests.length === 0">
+        <p>No service requests found.</p>
+      </div>
+      
+      <div v-else>
+        <table class="table table-bordered table-striped">
+          <thead :style="{ backgroundColor: '#6A80B9', color: '#fff' }">
+            <tr>
+              <th>#</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Requested At</th>
+              <th>Organization</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(req, index) in requests" :key="req.id">
+              <td>{{ index + 1 }}</td>
+              <td>{{ req.username }}</td>
+              <td>{{ req.email }}</td>
+              <td>{{ req.phone }}</td>
+              <td>{{ new Date(req.requested_at).toLocaleString() }}</td>
+              <td>{{ req.organization_name }}</td>
+              <td>
+                <button
+                  class="btn btn-sm text-white"
+                  :style="{ backgroundColor: '#6A80B9' }"
+                  @click="assignCleaner(req)"
+                >
+                  Assign Cleaner
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>
@@ -111,5 +113,25 @@ onMounted(() => {
 })
 </script>
 <style scoped>
+.background-image {
+  background-image: url('../../assets/images/wonaclean.jpg'); /* put your actual path here */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1; /* behind the content */
+}
 
+.content-wrapper {
+  position: relative;
+  z-index: 1; /* above background */
+  background: rgba(255, 255, 255, 0.85); /* optional: white transparent overlay for readability */
+  padding: 20px;
+  border-radius: 8px;
+}
 </style>
+

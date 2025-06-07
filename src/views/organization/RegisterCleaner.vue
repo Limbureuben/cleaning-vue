@@ -95,7 +95,7 @@ select.form-select {
 }
 
 .bg-cover {
-  background-image: url('../assets/images/woman.png');
+  background-image: url('../../assets/images/wonaclean.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -104,8 +104,8 @@ select.form-select {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 0;
-  opacity: 0.8;
+  z-index: -1;
+  opacity: 1;
 }
 
 .full-screen {
