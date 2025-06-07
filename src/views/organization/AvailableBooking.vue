@@ -1,8 +1,6 @@
 <template>
   <OrganizationHeader />
-
   <div class="container my-5">
-
     <div v-if="requests.length === 0">
       <p>No service requests found.</p>
     </div>
@@ -112,3 +110,6 @@ onMounted(() => {
   fetchMyOrgRequests()
 })
 </script>
+<style scoped>
+
+</style>

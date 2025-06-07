@@ -1,4 +1,5 @@
 <template>
+  <OrganizationHeader />
   <div class="bg-cover">
     <div class="d-flex justify-content-center align-items-center full-screen">
       <div class="container position-relative z-1">
@@ -45,6 +46,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import OrganizationHeader from './OrganizationHeader.vue';
 
 const showForm = ref(false)
 
