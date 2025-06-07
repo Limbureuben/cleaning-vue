@@ -43,6 +43,32 @@ const fetchApprovedOrganizations = async () => {
   }
 }
 
+const userInfo = ref({
+  username: '',
+  email: '',
+});
+
+const fetchUserInfo = async () => {
+  try {
+    const response = await fetch('http://localhost:8000/api/user-profile/', {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+
+    if (!response.ok) throw new Error('Failed to fetch user info');
+    const data = await response.json();
+    userInfo.value.username = data.username;
+    userInfo.value.email = data.email;
+
+  } catch (error) {
+    console.error('Error fetching user info:', error);
+  }
+};
+
+
+
 const requestService = async (org) => {
   const { value: formValues } = await swal.fire({
     title: `Request Cleaning Service from ${org.organization_name}`,
