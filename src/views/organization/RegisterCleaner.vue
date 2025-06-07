@@ -22,6 +22,15 @@
                     required
                   />
                 </div>
+                 <div class="mb-4">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Location"
+                    v-model="cleaner.location"
+                    required
+                  />
+                </div>
                 <div class="mb-4">
                   <input
                     type="text"
