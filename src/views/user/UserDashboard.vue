@@ -73,8 +73,8 @@ const requestService = async (org) => {
   const { value: formValues } = await swal.fire({
     title: `Request Cleaning Service from ${org.organization_name}`,
     html:
-      `<input id="swal-username" class="swal2-input" placeholder="Your Username">` +
-      `<input id="swal-email" type="email" class="swal2-input" placeholder="Your Email">` +
+      `<input id="swal-username" class="swal2-input" placeholder="Your Username" value="${userInfo.value.username}">` +
+      `<input id="swal-email" type="email" class="swal2-input" placeholder="Your Email" value="${userInfo.value.email}">` +
       `<input id="swal-phone" type="tel" class="swal2-input" placeholder="Your Phone Number">`,
     focusConfirm: false,
     showCancelButton: true,
@@ -110,8 +110,6 @@ const requestService = async (org) => {
         })
       });
 
-      const data = await response.json();
-
       if (response.ok) {
         swal.fire({
           icon: 'success',
@@ -119,17 +117,18 @@ const requestService = async (org) => {
           text: 'The organization will contact you soon.',
         });
       } else {
+        const data = await response.json();
         swal.fire({
           icon: 'error',
-          title: 'Failed to Submit',
-          text: data.error || 'Please try again later.',
+          title: 'Error',
+          text: data.error || 'Something went wrong.'
         });
       }
     } catch (err) {
       swal.fire({
         icon: 'error',
         title: 'Network Error',
-        text: 'Unable to send request. Check your connection.',
+        text: 'Unable to send request.'
       });
     }
   }
