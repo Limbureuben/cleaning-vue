@@ -55,6 +55,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import Swal from 'sweetalert2'
 import OrganizationHeader from './OrganizationHeader.vue';
 
 const showForm = ref(false)
@@ -78,7 +79,15 @@ const registerCleaner = async () => {
 
     if (!response.ok) throw new Error('Failed to register cleaner');
 
-    alert('Cleaner registered successfully!');
+    // Success alert
+    Swal.fire({
+      icon: 'success',
+      title: 'Cleaner Registered',
+      text: 'The cleaner was successfully added to your organization.',
+      confirmButtonColor: '#6A80B9'
+    });
+
+    // Reset form
     cleaner.value = {
       full_name: '',
       location: '',
@@ -86,7 +95,14 @@ const registerCleaner = async () => {
     };
   } catch (error) {
     console.error(error);
-    alert('Something went wrong during cleaner registration.');
+
+    // Error alert
+    Swal.fire({
+      icon: 'error',
+      title: 'Registration Failed',
+      text: 'Something went wrong during cleaner registration.',
+      confirmButtonColor: '#d33'
+    });
   }
 };
 
@@ -94,6 +110,7 @@ onMounted(() => {
   showForm.value = true;
 });
 </script>
+
 
 <style scoped>
 input.form-control,
