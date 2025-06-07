@@ -1,215 +1,76 @@
+<!-- ApprovedOrganizations.vue -->
 <template>
-    <UserHeader />
-  <div class="container mt-4">
+  <div class="container mt-5">
+    <h3 class="text-center mb-4" style="color: #6A80B9;">Approved Cleaning Organizations</h3>
     <div class="row">
-      <div
-        v-for="room in paginatedRooms"
-        :key="room.id"
-        class="col-md-4 mb-2"
-      >
-        <div class="card shadow">
-          <div class="card-body text-start">
-            <h5 class="card-title text-uppercase">{{ room.name }}</h5>
-            <p class="card-text">
-              <strong>Location:</strong> {{ room.location }}
-            </p>
-            <p class="card-text">
-              <strong>Price:</strong> Tsh {{ room.price }}
-            </p>
-            <p class="card-text">
-              <strong>Available Date:</strong> {{ formatDate(room.available_date) }}
-            </p>
-            <div class="d-flex justify-content-start mt-2">
-              <button
-                class="btn btn-outline-secondary btn-sm me-2"
-                @click="viewImage(room.image)"
-              >
-                View Image
-              </button>
-              <button
-                class="btn btn-primary btn-sm"
-                :disabled="!room.is_available"
-                @click="bookRoom(room.id)"
-              >
-                {{ room.is_available ? 'Book' : 'Unavailable' }}
-              </button>
-            </div>
-          </div>
+      <div v-for="org in organizations" :key="org.id" class="col-md-6 col-lg-4 mb-4">
+        <div class="card shadow rounded p-3">
+          <h5 class="fw-bold">{{ org.organization_name }}</h5>
+          <p><strong>Location:</strong> {{ org.location }}</p>
+          <p><strong>Email:</strong> {{ org.email }}</p>
+          <p><strong>Services:</strong> {{ org.services }}</p>
+          <button class="btn btn-primary w-100" @click="requestService(org)">
+            Request Cleaning Service
+          </button>
         </div>
       </div>
     </div>
-
-    <!-- Pagination -->
-    <nav aria-label="Page navigation">
-      <ul class="pagination justify-content-center mt-4">
-        <li class="page-item" :class="{ disabled: currentPage === 1 }">
-          <button class="page-link" @click="goToPage(currentPage - 1)">Prev</button>
-        </li>
-        <li class="page-item disabled">
-          <span class="page-link">Page {{ currentPage }} of {{ totalPages }}</span>
-        </li>
-        <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-          <button class="page-link" @click="goToPage(currentPage + 1)">Next</button>
-        </li>
-      </ul>
-    </nav>
   </div>
 </template>
 
-
-
-
 <script setup>
-import { ref, computed } from 'vue'
-import Swal from 'sweetalert2'
-import UserHeader from './UserHeader.vue'
-import Background from '@/sharing/Background.vue'
+import { ref, onMounted } from 'vue'
+import swal from 'sweetalert2'
 
-// Static rooms data (replace with your actual data)
-const rooms = ref([
-  {
-    id: 1,
-    name: 'COMPANY 1',
-    location: 'Dar es Salaam',
-    price: 100000,
-    available_date: '2025-06-01',
-    is_available: true,
-    image: '/images/room-a.jpg',
-  },
-  {
-    id: 2,
-    name: 'COMPANY 2',
-    location: 'Arusha',
-    price: 120000,
-    available_date: '2025-06-05',
-    is_available: false,
-    image: '/images/room-b.jpg',
-  },
-  {
-    id: 3,
-    name: 'COMPANY 3',
-    location: 'Dodoma',
-    price: 90000,
-    available_date: '2025-06-10',
-    is_available: true,
-    image: '/images/room-c.jpg',
-  },
-  {
-    id: 4,
-    name: 'COMPANY 4',
-    location: 'Mwanza',
-    price: 110000,
-    available_date: '2025-06-15',
-    is_available: true,
-    image: '/images/room-d.jpg',
-  },
-  {
-    id: 5,
-    name: 'COMPANY 5',
-    location: 'Mbeya',
-    price: 95000,
-    available_date: '2025-06-20',
-    is_available: false,
-    image: '/images/room-e.jpg',
-  },
-  {
-    id: 6,
-    name: 'COMPANY 6',
-    location: 'Morogoro',
-    price: 105000,
-    available_date: '2025-06-25',
-    is_available: true,
-    image: '/images/room-f.jpg',
-  }
-])
+const organizations = ref([])
 
-const formatDate = (date) => {
-  return new Date(date).toLocaleDateString()
-}
+const fetchApprovedOrganizations = async () => {
+  try {
+    const response = await fetch('http://localhost:8000/api/approved-organizations/');
+    if (!response.ok) throw new Error('Failed to fetch data');
 
-const bookRoom = (roomId) => {
-  Swal.fire({
-    title: 'Are you sure?',
-    text: 'You are about to start the booking process.',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, proceed!',
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.fire('Booked!', 'Your booking has been initiated.', 'success')
-    }
-  })
-}
-
-const viewImage = (imagePath) => {
-  Swal.fire({
-    title: 'Room Image',
-    imageUrl: imagePath,
-    imageWidth: 400,
-    imageHeight: 250,
-    imageAlt: 'Room image',
-  })
-}
-
-// Pagination
-const currentPage = ref(1)
-const itemsPerPage = 6
-
-const paginatedRooms = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage
-  return rooms.value.slice(start, start + itemsPerPage)
-})
-
-const totalPages = computed(() => {
-  return Math.ceil(rooms.value.length / itemsPerPage)
-})
-
-const goToPage = (page) => {
-  if (page >= 1 && page <= totalPages.value) {
-    currentPage.value = page
+    const data = await response.json();
+    organizations.value = data;
+  } catch (error) {
+    console.error('Error fetching organizations:', error);
   }
 }
+
+const requestService = (org) => {
+  swal.fire({
+    icon: 'success',
+    title: `Request sent to ${org.organization_name}`,
+    text: 'They will contact you soon.',
+    timer: 2000,
+    showConfirmButton: false,
+    position: 'top-end',
+  });
+
+  // Optional: send POST request to backend to log the request
+  /*
+  fetch('http://localhost:8000/api/service-requests/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    },
+    body: JSON.stringify({
+      organization_id: org.id
+    })
+  });
+  */
+}
+
+onMounted(() => {
+  fetchApprovedOrganizations();
+})
 </script>
-
 
 <style scoped>
 .card {
-  transition: transform 0.2s ease;
+  transition: all 0.3s ease;
 }
 .card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-5px);
 }
-
-.card-body {
-  padding: 0.5rem;
-  text-align: start;
-}
-
-.card-title {
-  font-size: 1rem;
-  margin-bottom: 0.2rem;
-  text-transform: uppercase;
-}
-
-.card-text {
-  font-size: 0.9rem;
-  margin-bottom: 0.2rem;
-}
-
-.page-link:disabled {
-  background-color: #ccc !important;
-  cursor: not-allowed;
-}
-
-.bg-image-container {
-  background-image: url('../../assets/images/wonaclean.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  padding: 1rem;
-  border-radius: 0.5rem;
-}
-
 </style>

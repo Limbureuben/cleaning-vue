@@ -30,10 +30,6 @@
                   </div>
                 </div>
 
-                <div class="mb-4">
-                  <textarea class="form-control" placeholder="Address" rows="3" v-model="cleaner.address" required></textarea>
-                </div>
-
                 <div class="row">
                     <div class="col-md-6 mb-4">
                         <input
