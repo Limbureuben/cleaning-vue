@@ -52,30 +52,29 @@ const fetchApprovedOrganizations = async () => {
 
 const showOrganizationDetails = (org) => {
   const services = org.services_list?.length
-    ? `<ul style="padding-left: 20px; margin: 0;">${org.services_list.map(s => `<li>${s}</li>`).join('')}</ul>`
-    : '<p style="margin: 0;">No services listed.</p>';
+    ? `<ul style="padding-left: 18px; margin: 0;">${org.services_list.map(s => `<li>${s}</li>`).join('')}</ul>`
+    : 'N/A';
 
   const content = `
-    <div style="text-align: left; font-size: 14px; padding: 10px;">
-      <p style="margin: 8px 0;"><strong>Organization:</strong> ${org.organization_name}</p>
-      <p style="margin: 8px 0;"><strong>Location:</strong> ${org.location}</p>
-      <p style="margin: 8px 0;"><strong>Price:</strong> ${org.price}</p>
-      <p style="margin: 8px 0;"><strong>Phone:</strong> ${org.phone}</p>
-      <p style="margin: 8px 0;"><strong>Address:</strong> ${org.address}</p>
-      <p style="margin: 8px 0;"><strong>Bedrooms:</strong> ${org.bedrooms}</p>
-      <p style="margin: 8px 0;"><strong>Guests:</strong> ${org.guest}</p>
-      <p style="margin: 8px 0;"><strong>Bathrooms:</strong> ${org.bathrooms}</p>
-      <p style="margin: 8px 0;"><strong>Services:</strong> ${services}</p>
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; font-size: 14px; text-align: left;">
+      <div style="flex: 1 1 45%">
+        <p><strong>Location:</strong> ${org.location}</p>
+        <p><strong>Price:</strong> ${org.price}</p>
+        <p><strong>Phone:</strong> ${org.phone}</p>
+        <p><strong>Address:</strong> ${org.address}</p>
+      </div>
+      <div style="flex: 1 1 45%">
+        <p><strong>Bedrooms:</strong> ${org.bedrooms}</p>
+        <p><strong>Guests:</strong> ${org.guest}</p>
+        <p><strong>Bathrooms:</strong> ${org.bathrooms}</p>
+        <p><strong>Services:</strong> ${services}</p>
+      </div>
     </div>
   `;
 
   swal.fire({
     title: `<strong>${org.organization_name}</strong>`,
     html: content,
-    imageUrl: org.file,
-    imageAlt: 'Organization Image',
-    imageWidth: 400,
-    imageHeight: 200,
     width: 600,
     showCancelButton: true,
     confirmButtonText: 'Request Service',
@@ -91,6 +90,7 @@ const showOrganizationDetails = (org) => {
     }
   });
 };
+
 
 
 
@@ -193,9 +193,10 @@ onMounted(() => {
 <style scoped>
 .card {
   background-color: #ffffff;
-  border-radius: 12px;
+  border-radius: 0px;
   overflow: hidden;
   transition: all 0.3s ease;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .card:hover {
@@ -212,16 +213,7 @@ onMounted(() => {
   background-color: #5c72aa;
 }
 
-.styled-popup {
-  border-radius: 12px;
-  padding: 1rem;
-}
 
-.swal2-popup .btn {
-  padding: 8px 16px;
-  font-size: 14px;
-  margin: 4px;
-}
 
 
 </style>
