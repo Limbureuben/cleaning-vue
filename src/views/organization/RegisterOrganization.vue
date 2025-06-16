@@ -27,7 +27,7 @@
           </div>
 
           <div class="col-md-6 mb-3">
-            <input type="email" class="form-control" v-model="form.email" placeholder="eg.debora@gmail.com" id="email" required>
+            <input type="number" class="form-control" v-model="form.price" placeholder="100000" id="price" required>
           </div>
 
           <div class="col-md-6 mb-3">
@@ -84,19 +84,17 @@ const form = ref({
   location: '',
   email: '',
   address: '',
-  services: [] // This is now an array for selected services
+  services: []
 })
 
-// Example of available services
+
 const availableServices = [
   'Cleaning',
   'Laundry',
   'Gardening',
   'Pest Control',
   'Security',
-  'Waste Management',
-  'Catering',
-  'Other'
+  'Waste Management'
 ]
 
 const router = useRouter()
@@ -105,14 +103,22 @@ const submitForm = async () => {
   try {
     // Get the token from localStorage
     const token = localStorage.getItem('token');
+    const formData = new FormData();
+
+    for (const key in form.value) {
+      if (key === 'services') {
+        form.value.services.forEach(service => formData.append('services', service));
+      } else if (form.value[key] !== null && form.value[key] !== '') {
+        formData.append(key, form.value[key]);
+      }
+    }
 
     const response = await fetch('http://localhost:8000/api/organizations-registration/', {
       method: 'POST',
-      body: JSON.stringify(form.value),
+      body: formData,
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
-      },
+      }
     });
 
     if (!response.ok) throw new Error('Network response was not ok');
@@ -134,13 +140,13 @@ const submitForm = async () => {
     form.value = {
       organization_name: '',
       location: '',
-      email: '',
+      price: '',
+      phone: '',
       address: '',
-      services: []
+      services: [],
+      file: null  
     };
 
-    // Optional redirect
-    // router.push('/some-route');
   } catch (error) {
     console.error('Error registering:', error);
     Swal.fire({
@@ -160,7 +166,7 @@ const submitForm = async () => {
   border-radius: 4px;
   position: relative;
   align-items: center;
-  top: 6px;
+  top: 0px;
   background: rgba(255, 255, 255, 0.95);
   min-height: 470px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -179,8 +185,8 @@ h4 {
   padding-top: 10px;
   text-transform: uppercase;
   letter-spacing: 2px;
-  margin-bottom: 25px;
-  font-size: 1.8rem;
+  margin-bottom: 15px;
+  font-size: 20px;
 }
 
 .form-label {

@@ -1,4 +1,3 @@
-<!-- ApprovedOrganizations.vue -->
 <template>
   <UserHeader />
   <div class="container mt-5">
@@ -7,9 +6,23 @@
         <div class="card shadow rounded p-2">
           <h5 class="fw-bold">{{ org.organization_name }}</h5>
           <p><strong>Location:</strong> {{ org.location }}</p>
-          <p><strong>Email:</strong> {{ org.email }}</p>
-          <p><strong>Services:</strong> {{ org.services }}</p>
-          <button class="btn w-100" @click="requestService(org)">
+          <p><strong>Price:</strong> {{ org.price }}</p>
+          <p><strong>Phone:</strong> {{ org.phone }}</p>
+          <p><strong>Address:</strong> {{ org.address }}</p>
+          
+          <!-- File Download -->
+          <p v-if="org.file">
+            <strong>File:</strong>
+            <a :href="org.file" target="_blank" class="text-primary">Download</a>
+          </p>
+
+          <!-- Services -->
+          <p><strong>Services:</strong></p>
+          <ul>
+            <li v-for="service in org.services_list || []" :key="service">{{ service }}</li>
+          </ul>
+
+          <button class="btn w-100 mt-2" @click="requestService(org)">
             Request Cleaning Service
           </button>
         </div>
@@ -28,7 +41,7 @@ const organizations = ref([])
 const fetchApprovedOrganizations = async () => {
   try {
     const response = await fetch('http://localhost:8000/api/fetch-approved/', {
-      method: 'GET', // use GET, not POST
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -63,13 +76,11 @@ const fetchUserInfo = async () => {
     const data = await response.json();
     userInfo.value.username = data.username;
     userInfo.value.email = data.email;
-    userInfo.value.phone = ''; // Empty - user will enter it
+    userInfo.value.phone = '';
   } catch (error) {
     console.error('Error fetching user info:', error);
   }
 }
-
-
 
 const requestService = async (org) => {
   const { value: formValues } = await swal.fire({
@@ -136,11 +147,10 @@ const requestService = async (org) => {
   }
 };
 
-
 onMounted(() => {
   fetchUserInfo();
   fetchApprovedOrganizations();
-})
+});
 </script>
 
 <style scoped>
