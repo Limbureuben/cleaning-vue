@@ -3,29 +3,44 @@
   <div class="container mt-5">
     <div class="row">
       <div v-for="org in organizations" :key="org.id" class="col-md-6 col-lg-4 mb-4">
-        <div class="card shadow rounded p-2">
-          <h5 class="fw-bold">{{ org.organization_name }}</h5>
-          <p><strong>Location:</strong> {{ org.location }}</p>
-          <p><strong>Price:</strong> {{ org.price }}</p>
-          <p><strong>Phone:</strong> {{ org.phone }}</p>
-          <p><strong>Address:</strong> {{ org.address }}</p>
-          
-          <!-- File Download -->
-          <p v-if="org.file">
-            <strong>File:</strong>
-            <a :href="org.file" target="_blank" class="text-primary">Download</a>
-          </p>
+        <div class="card h-100 shadow-sm border-0">
+          <img
+            v-if="org.file && org.file.match(/\.(jpeg|jpg|png|gif)$/i)"
+            :src="org.file"
+            alt="Organization Logo"
+            class="card-img-top rounded-top"
+            style="max-height: 180px; object-fit: cover;"
+          />
 
-          <!-- Services -->
-          <p><strong>Services:</strong></p>
-          <ul>
-            <li v-for="service in org.services_list || []" :key="service">{{ service }}</li>
-          </ul>
+          <div class="card-body">
+            <h5 class="fw-bold">{{ org.organization_name }}</h5>
+            <p class="mb-1"><strong>Location:</strong> {{ org.location }}</p>
+            <p class="mb-1"><strong>Price:</strong> {{ org.price }}</p>
+            <p class="mb-1"><strong>Phone:</strong> {{ org.phone }}</p>
+            <p class="mb-1"><strong>Address:</strong> {{ org.address }}</p>
 
-          <button class="btn w-100 mt-2" @click="requestService(org)">
-            Request Cleaning Service
-          </button>
+            <!-- File link if not image -->
+            <p v-if="org.file && !org.file.match(/\.(jpeg|jpg|png|gif)$/i)">
+              <strong>File:</strong>
+              <a :href="org.file" target="_blank" class="text-primary">Download</a>
+            </p>
+
+            <!-- Services -->
+            <div class="mt-2">
+              <strong>Services:</strong>
+              <ul class="ps-3">
+                <li v-for="service in org.services_list || []" :key="service">{{ service }}</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card-footer bg-transparent border-0">
+            <button class="btn btn-primary w-100" @click="requestService(org)">
+              Request Cleaning Service
+            </button>
+          </div>
         </div>
+
       </div>
     </div>
   </div>
@@ -155,17 +170,24 @@ onMounted(() => {
 
 <style scoped>
 .card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
   transition: all 0.3s ease;
 }
+
 .card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 .btn {
   background-color: #6A80B9;
+  border: none;
 }
 
 .btn:hover {
-  background-color: #6A80B9;
+  background-color: #5c72aa;
 }
+
 </style>
