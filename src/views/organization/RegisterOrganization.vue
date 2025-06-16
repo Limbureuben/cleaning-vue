@@ -4,14 +4,8 @@
     <div class="register-organization container">
       <h4 class="text-center mb-4">Register Property</h4>
       <form @submit.prevent="submitForm">
-        <div class="row">
-          <!-- Row 1 -->
-          <div class="col-md-4 mb-3">
-            <label for="organizationName" class="form-label">Property Name</label>
-            <input type="text" placeholder="DEBORA COMPANY" class="form-control" v-model="form.organization_name" id="organizationName" required>
-          </div>
-
-          <div class="col-md-4 mb-3">
+        <div class="row g-3">
+          <div class="col-md-4">
             <label for="location" class="form-label">Region</label>
             <select id="location" v-model="form.location" class="form-control" required>
               <option value="">Select a location</option>
@@ -26,66 +20,56 @@
               <option value="Kagera">Kagera</option>
             </select>
           </div>
-
-          <div class="col-md-4 mb-3">
-            <label for="price" class="form-label">Price</label>
+          <div class="col-md-4">
+            <label for="price" class="form-label">Price (TZS)</label>
             <input type="number" class="form-control" v-model="form.price" placeholder="100000" id="price" required>
           </div>
 
           <!-- Row 2 -->
-          <div class="col-md-4 mb-3">
+          <div class="col-md-4">
             <label for="address" class="form-label">Address</label>
             <input type="text" class="form-control" placeholder="Mwenge, P.O.BOX 28" v-model="form.address" id="address" required>
           </div>
-
-          <div class="col-md-4 mb-3">
+          <div class="col-md-4">
             <label for="phone" class="form-label">Phone Number</label>
-            <input type="tel" class="form-control" placeholder="e.g. 0712345678" v-model="form.phone" id="phone" required>
+            <input type="tel" class="form-control" placeholder="0712345678" v-model="form.phone" id="phone" required>
           </div>
-
-          <div class="col-md-4 mb-3">
+          <div class="col-md-4">
             <label for="file" class="form-label">Upload Document</label>
             <input type="file" class="form-control" @change="handleFileUpload" id="file" />
           </div>
 
           <!-- Row 3 -->
-          <div class="col-md-4 mb-3">
-            <label for="bedrooms" class="form-label">No. of Bedrooms</label>
+          <div class="col-md-4">
+            <label for="bedrooms" class="form-label">Bedrooms</label>
             <input type="number" class="form-control" v-model="form.bedrooms" id="bedrooms" placeholder="e.g. 3" required>
           </div>
-
-          <div class="col-md-4 mb-3">
-            <label for="guests" class="form-label">Max Guests</label>
+          <div class="col-md-4">
+            <label for="guests" class="form-label">Guests</label>
             <input type="number" class="form-control" v-model="form.guests" id="guests" placeholder="e.g. 5" required>
           </div>
-
-          <div class="col-md-4 mb-3">
-            <label for="bathrooms" class="form-label">No. of Bathrooms</label>
+          <div class="col-md-4">
+            <label for="bathrooms" class="form-label">Bathrooms</label>
             <input type="number" class="form-control" v-model="form.bathrooms" id="bathrooms" placeholder="e.g. 2" required>
           </div>
 
-          <!-- Services at the bottom -->
-          <div class="col-12 mb-3">
+          <!-- Services Section -->
+          <div class="col-12">
             <label class="form-label">Services Offered</label>
-            <div class="services-checkboxes d-flex flex-wrap gap-3">
+            <div class="services-checkboxes">
               <div class="form-check" v-for="service in availableServices" :key="service">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  :value="service"
-                  v-model="form.services"
-                  :id="`service-${service}`"
-                />
+                <input class="form-check-input" type="checkbox" :value="service" v-model="form.services" :id="`service-${service}`" />
                 <label class="form-check-label" :for="`service-${service}`">{{ service }}</label>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="text-center">
-          <button type="submit" class="btn btn-primary">Register</button>
+          <div class="col-12 text-center mt-3">
+            <button type="submit" class="btn btn-primary">Register</button>
+          </div>
         </div>
       </form>
+
     </div>
   </div>
 </template>
@@ -100,13 +84,15 @@ import Swal from 'sweetalert2'
 import OrganizationHeader from './OrganizationHeader.vue'
 
 const form = ref({
-  organization_name: '',
   location: '',
   price: '',
   address: '',
   phone: '',
   services: [],
-  file: null  // include this
+  file: null,
+  bedrooms: '',
+  guests: '',
+  bathrooms: ''
 })
 
 const handleFileUpload = (event) => {
@@ -168,13 +154,15 @@ const submitForm = async () => {
 
     // Reset form
     form.value = {
-      organization_name: '',
       location: '',
       price: '',
       phone: '',
       address: '',
       services: [],
-      file: null
+      file: null,
+      bedrooms: '',
+      guests: '',
+      bathrooms: ''
     };
 
   } catch (error) {
