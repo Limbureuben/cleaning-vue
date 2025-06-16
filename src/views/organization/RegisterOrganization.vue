@@ -5,13 +5,14 @@
       <h4 class="text-center mb-4">Register Property</h4>
       <form @submit.prevent="submitForm">
         <div class="row">
-          <div class="col-md-6 mb-3">
-            <label for="organizationName" class="form-label">Organization Name</label>
+          <!-- Row 1 -->
+          <div class="col-md-4 mb-3">
+            <label for="organizationName" class="form-label">Property Name</label>
             <input type="text" placeholder="DEBORA COMPANY" class="form-control" v-model="form.organization_name" id="organizationName" required>
           </div>
 
-          <div class="col-md-6 mb-3">
-            <label for="location" class="form-label">Organization Region</label>
+          <div class="col-md-4 mb-3">
+            <label for="location" class="form-label">Region</label>
             <select id="location" v-model="form.location" class="form-control" required>
               <option value="">Select a location</option>
               <option value="Dar-es-salaam">Dar-es-salaam</option>
@@ -26,27 +27,44 @@
             </select>
           </div>
 
-          <div class="col-md-6 mb-3">
+          <div class="col-md-4 mb-3">
+            <label for="price" class="form-label">Price</label>
             <input type="number" class="form-control" v-model="form.price" placeholder="100000" id="price" required>
           </div>
 
-          <div class="col-md-6 mb-3">
+          <!-- Row 2 -->
+          <div class="col-md-4 mb-3">
+            <label for="address" class="form-label">Address</label>
             <input type="text" class="form-control" placeholder="Mwenge, P.O.BOX 28" v-model="form.address" id="address" required>
           </div>
 
-          <!-- Horizontal Phone Number and File Upload -->
-          <div class="col-md-6 mb-3">
+          <div class="col-md-4 mb-3">
             <label for="phone" class="form-label">Phone Number</label>
             <input type="tel" class="form-control" placeholder="e.g. 0712345678" v-model="form.phone" id="phone" required>
           </div>
 
-          <div class="col-md-6 mb-3">
+          <div class="col-md-4 mb-3">
             <label for="file" class="form-label">Upload Document</label>
             <input type="file" class="form-control" @change="handleFileUpload" id="file" />
-
           </div>
 
-          <!-- Multiple services checkboxes - horizontal layout -->
+          <!-- Row 3 -->
+          <div class="col-md-4 mb-3">
+            <label for="bedrooms" class="form-label">No. of Bedrooms</label>
+            <input type="number" class="form-control" v-model="form.bedrooms" id="bedrooms" placeholder="e.g. 3" required>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label for="guests" class="form-label">Max Guests</label>
+            <input type="number" class="form-control" v-model="form.guests" id="guests" placeholder="e.g. 5" required>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label for="bathrooms" class="form-label">No. of Bathrooms</label>
+            <input type="number" class="form-control" v-model="form.bathrooms" id="bathrooms" placeholder="e.g. 2" required>
+          </div>
+
+          <!-- Services at the bottom -->
           <div class="col-12 mb-3">
             <label class="form-label">Services Offered</label>
             <div class="services-checkboxes d-flex flex-wrap gap-3">
@@ -71,6 +89,7 @@
     </div>
   </div>
 </template>
+
 
 
 
@@ -129,7 +148,6 @@ const submitForm = async () => {
       body: formData,
       headers: {
         'Authorization': `Bearer ${token}`
-        // 🚫 Do not manually set 'Content-Type' when using FormData
       }
     });
 
@@ -156,7 +174,7 @@ const submitForm = async () => {
       phone: '',
       address: '',
       services: [],
-      file: null  
+      file: null
     };
 
   } catch (error) {
@@ -181,7 +199,7 @@ const submitForm = async () => {
   align-items: center;
   top: 0px;
   background: rgba(255, 255, 255, 0.95);
-  min-height: 470px;
+  min-height: 460px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   padding: 30px;
   transition: all 0.3s ease;
@@ -195,10 +213,10 @@ const submitForm = async () => {
 h4 {
   color: #6A80B9;
   font-weight: bold;
-  padding-top: 10px;
+  padding-top: 0px;
   text-transform: uppercase;
   letter-spacing: 2px;
-  margin-bottom: 15px;
+  margin-bottom:8px;
   font-size: 20px;
 }
 
@@ -225,8 +243,8 @@ h4 {
 .btn-primary {
   background-color: #6A80B9;
   border: none;
-  border-radius: 8px;
-  padding: 0.75rem 4.5rem;
+  border-radius: 4px;
+  padding: 0.35rem 2.5rem;
   font-size: 1.1rem;
   font-weight: bold;
   transition: all 0.3s ease;
@@ -270,7 +288,6 @@ h4 {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-top: 10px;
 }
 
 .services-checkboxes .form-check {
@@ -278,7 +295,7 @@ h4 {
   align-items: center;
   background-color: #f8f9fa;
   padding: 8px 15px;
-  border-radius: 20px;
+  border-radius: 10px;
   transition: all 0.3s ease;
 }
 
