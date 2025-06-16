@@ -4,50 +4,25 @@
     <div class="row">
       <div v-for="org in organizations" :key="org.id" class="col-md-6 col-lg-4 mb-4">
         <div class="card h-100 shadow-sm border-0">
+          <!-- Clickable image -->
           <img
             v-if="org.file && org.file.match(/\.(jpeg|jpg|png|gif)$/i)"
             :src="org.file"
             alt="Organization Logo"
             class="card-img-top rounded-top"
-            style="max-height: 180px; object-fit: cover;"
+            style="max-height: 180px; object-fit: cover; cursor: pointer"
+            @click="showOrganizationDetails(org)"
           />
-
           <div class="card-body">
-            <h5 class="fw-bold">{{ org.organization_name }}</h5>
             <p class="mb-1"><strong>Location:</strong> {{ org.location }}</p>
             <p class="mb-1"><strong>Price:</strong> {{ org.price }}</p>
-            <p class="mb-1"><strong>Phone:</strong> {{ org.phone }}</p>
-            <p class="mb-1"><strong>Address:</strong> {{ org.address }}</p>
-            <p class="mb-1"><strong>Bedrooms:</strong> {{ org.bedrooms }}</p>
-            <p class="mb-1"><strong>Guests:</strong> {{ org.guest }}</p>
-            <p class="mb-1"><strong>Bathrooms:</strong> {{ org.bathrooms }}</p>
-
-            <!-- File link if not image -->
-            <p v-if="org.file && !org.file.match(/\.(jpeg|jpg|png|gif)$/i)">
-              <strong>File:</strong>
-              <a :href="org.file" target="_blank" class="text-primary">Download</a>
-            </p>
-
-            <!-- Services -->
-            <div class="mt-2">
-              <strong>Services:</strong>
-              <ul class="ps-3">
-                <li v-for="service in org.services_list || []" :key="service">{{ service }}</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="card-footer bg-transparent border-0">
-            <button class="btn btn-primary w-100" @click="requestService(org)">
-              Request Cleaning Service
-            </button>
           </div>
         </div>
-
       </div>
     </div>
   </div>
 </template>
+
 
 <script setup>
 import { ref, onMounted } from 'vue'
@@ -74,6 +49,38 @@ const fetchApprovedOrganizations = async () => {
     console.error('Error fetching organizations:', error);
   }
 }
+
+const showOrganizationDetails = (org) => {
+  const services = org.services_list?.length
+    ? `<ul style="text-align: left;">${org.services_list.map(s => `<li>${s}</li>`).join('')}</ul>`
+    : '<p>No services listed.</p>';
+
+  const content = `
+    <p><strong>Organization:</strong> ${org.organization_name}</p>
+    <p><strong>Location:</strong> ${org.location}</p>
+    <p><strong>Price:</strong> ${org.price}</p>
+    <p><strong>Phone:</strong> ${org.phone}</p>
+    <p><strong>Address:</strong> ${org.address}</p>
+    <p><strong>Bedrooms:</strong> ${org.bedrooms}</p>
+    <p><strong>Guests:</strong> ${org.guest}</p>
+    <p><strong>Bathrooms:</strong> ${org.bathrooms}</p>
+    <strong>Services:</strong> ${services}
+  `;
+
+  swal.fire({
+    title: 'Organization Details',
+    html: content,
+    imageUrl: org.file,
+    imageAlt: 'Organization Image',
+    showCancelButton: true,
+    confirmButtonText: 'Request Service',
+    cancelButtonText: 'Close',
+    preConfirm: () => {
+      requestService(org); // trigger the same requestService function
+    }
+  });
+};
+
 
 const userInfo = ref({
   username: '',
