@@ -18,6 +18,9 @@
             <p class="mb-1"><strong>Price:</strong> {{ org.price }}</p>
             <p class="mb-1"><strong>Phone:</strong> {{ org.phone }}</p>
             <p class="mb-1"><strong>Address:</strong> {{ org.address }}</p>
+            <p class="mb-1"><strong>Bedrooms:</strong> {{ org.bedrooms }}</p>
+            <p class="mb-1"><strong>Guests:</strong> {{ org.guest }}</p>
+            <p class="mb-1"><strong>Bathrooms:</strong> {{ org.bathrooms }}</p>
 
             <!-- File link if not image -->
             <p v-if="org.file && !org.file.match(/\.(jpeg|jpg|png|gif)$/i)">
