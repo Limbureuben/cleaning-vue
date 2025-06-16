@@ -52,34 +52,46 @@ const fetchApprovedOrganizations = async () => {
 
 const showOrganizationDetails = (org) => {
   const services = org.services_list?.length
-    ? `<ul style="text-align: left;">${org.services_list.map(s => `<li>${s}</li>`).join('')}</ul>`
-    : '<p>No services listed.</p>';
+    ? `<ul style="padding-left: 20px; margin: 0;">${org.services_list.map(s => `<li>${s}</li>`).join('')}</ul>`
+    : '<p style="margin: 0;">No services listed.</p>';
 
   const content = `
-    <p><strong>Organization:</strong> ${org.organization_name}</p>
-    <p><strong>Location:</strong> ${org.location}</p>
-    <p><strong>Price:</strong> ${org.price}</p>
-    <p><strong>Phone:</strong> ${org.phone}</p>
-    <p><strong>Address:</strong> ${org.address}</p>
-    <p><strong>Bedrooms:</strong> ${org.bedrooms}</p>
-    <p><strong>Guests:</strong> ${org.guest}</p>
-    <p><strong>Bathrooms:</strong> ${org.bathrooms}</p>
-    <strong>Services:</strong> ${services}
+    <div style="text-align: left; font-size: 14px; padding: 10px;">
+      <p style="margin: 8px 0;"><strong>Organization:</strong> ${org.organization_name}</p>
+      <p style="margin: 8px 0;"><strong>Location:</strong> ${org.location}</p>
+      <p style="margin: 8px 0;"><strong>Price:</strong> ${org.price}</p>
+      <p style="margin: 8px 0;"><strong>Phone:</strong> ${org.phone}</p>
+      <p style="margin: 8px 0;"><strong>Address:</strong> ${org.address}</p>
+      <p style="margin: 8px 0;"><strong>Bedrooms:</strong> ${org.bedrooms}</p>
+      <p style="margin: 8px 0;"><strong>Guests:</strong> ${org.guest}</p>
+      <p style="margin: 8px 0;"><strong>Bathrooms:</strong> ${org.bathrooms}</p>
+      <p style="margin: 8px 0;"><strong>Services:</strong> ${services}</p>
+    </div>
   `;
 
   swal.fire({
-    title: 'Organization Details',
+    title: `<strong>${org.organization_name}</strong>`,
     html: content,
     imageUrl: org.file,
     imageAlt: 'Organization Image',
+    imageWidth: 400,
+    imageHeight: 200,
+    width: 600,
     showCancelButton: true,
     confirmButtonText: 'Request Service',
     cancelButtonText: 'Close',
+    customClass: {
+      popup: 'styled-popup',
+      confirmButton: 'btn btn-primary',
+      cancelButton: 'btn btn-secondary'
+    },
+    buttonsStyling: false,
     preConfirm: () => {
-      requestService(org); // trigger the same requestService function
+      requestService(org);
     }
   });
 };
+
 
 
 const userInfo = ref({
@@ -199,5 +211,17 @@ onMounted(() => {
 .btn:hover {
   background-color: #5c72aa;
 }
+
+.styled-popup {
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.swal2-popup .btn {
+  padding: 8px 16px;
+  font-size: 14px;
+  margin: 4px;
+}
+
 
 </style>
