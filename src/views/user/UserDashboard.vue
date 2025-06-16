@@ -52,20 +52,29 @@ const fetchApprovedOrganizations = async () => {
 
 const showOrganizationDetails = (org) => {
   const services = org.services_list?.length
-    ? `<ul style="padding-left: 18px; margin: 0;">${org.services_list.map(s => `<li>${s}</li>`).join('')}</ul>`
-    : 'N/A';
+    ? `<ul style="padding-left: 20px; margin: 0;">${org.services_list.map(s => `<li>${s}</li>`).join('')}</ul>`
+    : '<em>No services listed</em>';
 
   const content = `
-    <div style="display: flex; flex-wrap: wrap; gap: 20px; font-size: 14px; text-align: left;">
-      <div style="flex: 1 1 45%">
+    <div style="
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      font-size: 16px;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 10px 5px;
+      color: #333;
+      line-height: 1.6;
+    ">
+      <div style="flex: 1 1 48%; padding: 10px;">
         <p><strong>Location:</strong> ${org.location}</p>
         <p><strong>Price:</strong> ${org.price}</p>
         <p><strong>Phone:</strong> ${org.phone}</p>
         <p><strong>Address:</strong> ${org.address}</p>
       </div>
-      <div style="flex: 1 1 45%">
+      <div style="flex: 1 1 48%; padding: 10px;">
         <p><strong>Bedrooms:</strong> ${org.bedrooms}</p>
-        <p><strong>Guests:</strong> ${org.guest}</p>
+        <p><strong>Guests:</strong> ${org.guests}</p>
         <p><strong>Bathrooms:</strong> ${org.bathrooms}</p>
         <p><strong>Services:</strong> ${services}</p>
       </div>
@@ -73,23 +82,23 @@ const showOrganizationDetails = (org) => {
   `;
 
   swal.fire({
-    title: `<strong>${org.organization_name}</strong>`,
+    title: `<h2 style="margin-bottom: 20px; font-size: 20px;">${org.organization_name}</h2>`,
     html: content,
-    width: 600,
+    width: 650,
+    background: '#fefefe',
     showCancelButton: true,
     confirmButtonText: 'Request Service',
     cancelButtonText: 'Close',
     customClass: {
-      popup: 'styled-popup',
-      confirmButton: 'btn btn-primary',
-      cancelButton: 'btn btn-secondary'
+      popup: 'custom-popup',
+      confirmButton: 'custom-confirm-button',
+      cancelButton: 'custom-cancel-button'
     },
     buttonsStyling: false,
-    preConfirm: () => {
-      requestService(org);
-    }
+    preConfirm: () => requestService(org)
   });
 };
+
 
 
 
@@ -121,7 +130,6 @@ const fetchUserInfo = async () => {
 
 const requestService = async (org) => {
   const { value: formValues } = await swal.fire({
-    title: `Request Cleaning Service from ${org.organization_name}`,
     html:
       `<input id="swal-username" class="swal2-input" placeholder="Your Username" value="${userInfo.value.username}" readonly>` +
       `<input id="swal-email" type="email" class="swal2-input" placeholder="Your Email" value="${userInfo.value.email}" readonly>` +
@@ -211,6 +219,42 @@ onMounted(() => {
 
 .btn:hover {
   background-color: #5c72aa;
+}
+
+.custom-popup {
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.custom-confirm-button,
+.custom-cancel-button {
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 15px;
+  margin: 12px 10px 0;
+  min-width: 160px;
+  transition: background-color 0.3s ease;
+}
+
+.custom-confirm-button {
+  background-color: #6A80B9;
+  color: white;
+  border: none;
+}
+
+.custom-confirm-button:hover {
+  background-color: #5c72aa;
+}
+
+.custom-cancel-button {
+  background-color: #f2f2f2;
+  color: #333;
+  border: none;
+}
+
+.custom-cancel-button:hover {
+  background-color: #e0e0e0;
 }
 
 
