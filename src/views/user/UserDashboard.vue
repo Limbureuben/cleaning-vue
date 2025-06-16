@@ -83,7 +83,6 @@ const showOrganizationDetails = (org) => {
   `;
 
   swal.fire({
-    title: `<h2 style="margin-bottom: 20px; font-size: 22px;">${org.organization_name}</h2>`,
     html: content,
     width: 650,
     background: '#fefefe',
@@ -95,7 +94,6 @@ const showOrganizationDetails = (org) => {
       confirmButton: 'custom-confirm-button',
       cancelButton: 'custom-cancel-button'
     },
-    buttonsStyling: false
   }).then((result) => {
     if (result.isConfirmed) {
       requestService(org);
@@ -220,50 +218,6 @@ onMounted(() => {
 .btn:hover {
   background-color: #5c72aa;
 }
-
-
-
-
-
-
-.custom-popup {
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
-}
-
-.custom-confirm-button,
-.custom-cancel-button {
-  padding: 12px 26px;
-  font-size: 16px;
-  font-weight: 500;
-  margin: 12px 8px 0;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-  min-width: 160px;
-  border: none;
-}
-
-.custom-confirm-button {
-  background-color: #3085d6;
-  color: white;
-}
-
-.custom-confirm-button:hover {
-  background-color: #2874c6;
-}
-
-.custom-cancel-button {
-  background-color: #e6e6e6;
-  color: #333;
-}
-
-.custom-cancel-button:hover {
-  background-color: #d6d6d6;
-}
-
-
-
 
 
 </style>
