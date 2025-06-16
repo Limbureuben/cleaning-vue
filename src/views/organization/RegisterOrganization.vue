@@ -2,7 +2,7 @@
   <OrganizationHeader />
   <div class="container-dashboard">
     <div class="register-organization container">
-      <h4 class="text-center mb-4">Register Organization</h4>
+      <h4 class="text-center mb-4">Register Property</h4>
       <form @submit.prevent="submitForm">
         <div class="row">
           <div class="col-md-6 mb-3">
@@ -34,10 +34,21 @@
             <input type="text" class="form-control" placeholder="Mwenge, P.O.BOX 28" v-model="form.address" id="address" required>
           </div>
 
-          <!-- Multiple services checkboxes - now horizontal -->
+          <!-- Horizontal Phone Number and File Upload -->
+          <div class="col-md-6 mb-3">
+            <label for="phone" class="form-label">Phone Number</label>
+            <input type="tel" class="form-control" placeholder="e.g. 0712345678" v-model="form.phone" id="phone" required>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="file" class="form-label">Upload Document</label>
+            <input type="file" class="form-control" @change="handleFileUpload" id="file" />
+          </div>
+
+          <!-- Multiple services checkboxes - horizontal layout -->
           <div class="col-12 mb-3">
             <label class="form-label">Services Offered</label>
-            <div class="services-checkboxes">
+            <div class="services-checkboxes d-flex flex-wrap gap-3">
               <div class="form-check" v-for="service in availableServices" :key="service">
                 <input
                   class="form-check-input"
@@ -59,6 +70,7 @@
     </div>
   </div>
 </template>
+
 
 
 <script setup>

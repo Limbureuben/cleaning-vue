@@ -4,10 +4,6 @@
     <nav>
       <ul>
         <li><router-link to="/user-dashboard">Dashboard</router-link></li>
-        <li><router-link to="/register-organization">Booking</router-link></li>
-        <li><router-link to="/organization-status">Status</router-link></li>
-        <li><a href="#members">Members</a></li>
-        <li><a href="#settings">Settings</a></li>
         <li><button @click="logout" class="logout-button">Logout</button></li>
       </ul>
     </nav>
