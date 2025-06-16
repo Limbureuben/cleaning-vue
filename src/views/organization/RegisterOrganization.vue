@@ -43,6 +43,7 @@
           <div class="col-md-6 mb-3">
             <label for="file" class="form-label">Upload Document</label>
             <input type="file" class="form-control" @change="handleFileUpload" id="file" />
+
           </div>
 
           <!-- Multiple services checkboxes - horizontal layout -->
@@ -82,10 +83,17 @@ import OrganizationHeader from './OrganizationHeader.vue'
 const form = ref({
   organization_name: '',
   location: '',
-  email: '',
+  price: '',
   address: '',
-  services: []
+  phone: '',
+  services: [],
+  file: null  // include this
 })
+
+const handleFileUpload = (event) => {
+  form.value.file = event.target.files[0]
+}
+
 
 
 const availableServices = [
@@ -101,16 +109,19 @@ const router = useRouter()
 
 const submitForm = async () => {
   try {
-    // Get the token from localStorage
     const token = localStorage.getItem('token');
     const formData = new FormData();
 
     for (const key in form.value) {
       if (key === 'services') {
         form.value.services.forEach(service => formData.append('services', service));
-      } else if (form.value[key] !== null && form.value[key] !== '') {
+      } else if (key !== 'file' && form.value[key] !== null && form.value[key] !== '') {
         formData.append(key, form.value[key]);
       }
+    }
+
+    if (form.value.file) {
+      formData.append('file', form.value.file);
     }
 
     const response = await fetch('http://localhost:8000/api/organizations-registration/', {
@@ -118,6 +129,7 @@ const submitForm = async () => {
       body: formData,
       headers: {
         'Authorization': `Bearer ${token}`
+        // 🚫 Do not manually set 'Content-Type' when using FormData
       }
     });
 
@@ -136,7 +148,7 @@ const submitForm = async () => {
 
     router.push('/organization');
 
-    // Clear form
+    // Reset form
     form.value = {
       organization_name: '',
       location: '',
@@ -158,6 +170,7 @@ const submitForm = async () => {
     });
   }
 }
+
 
 </script>
 <style scoped>
