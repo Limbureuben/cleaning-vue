@@ -27,6 +27,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import swal from 'sweetalert2'
+
 import UserHeader from './UserHeader.vue'
 
 const organizations = ref([])
@@ -82,7 +83,7 @@ const showOrganizationDetails = (org) => {
   `;
 
   swal.fire({
-    title: `<h2 style="margin-bottom: 20px; font-size: 20px;">${org.organization_name}</h2>`,
+    title: `<h2 style="margin-bottom: 20px; font-size: 22px;">${org.organization_name}</h2>`,
     html: content,
     width: 650,
     background: '#fefefe',
@@ -94,14 +95,13 @@ const showOrganizationDetails = (org) => {
       confirmButton: 'custom-confirm-button',
       cancelButton: 'custom-cancel-button'
     },
-    buttonsStyling: false,
-    preConfirm: () => requestService(org)
+    buttonsStyling: false
+  }).then((result) => {
+    if (result.isConfirmed) {
+      requestService(org);
+    }
   });
-};
-
-
-
-
+}
 
 const userInfo = ref({
   username: '',
@@ -221,41 +221,47 @@ onMounted(() => {
   background-color: #5c72aa;
 }
 
+
+
+
+
+
 .custom-popup {
   border-radius: 16px;
   padding: 24px;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
 }
 
 .custom-confirm-button,
 .custom-cancel-button {
+  padding: 12px 26px;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 12px 8px 0;
   border-radius: 8px;
-  padding: 12px 24px;
-  font-size: 15px;
-  margin: 12px 10px 0;
+  transition: all 0.3s ease;
   min-width: 160px;
-  transition: background-color 0.3s ease;
+  border: none;
 }
 
 .custom-confirm-button {
-  background-color: #6A80B9;
+  background-color: #3085d6;
   color: white;
-  border: none;
 }
 
 .custom-confirm-button:hover {
-  background-color: #5c72aa;
+  background-color: #2874c6;
 }
 
 .custom-cancel-button {
-  background-color: #f2f2f2;
+  background-color: #e6e6e6;
   color: #333;
-  border: none;
 }
 
 .custom-cancel-button:hover {
-  background-color: #e0e0e0;
+  background-color: #d6d6d6;
 }
+
 
 
 
