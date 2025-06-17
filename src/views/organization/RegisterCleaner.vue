@@ -13,32 +13,23 @@
               <h4 class="mb-4 text-center fw-bold" style="color: #6A80B9;">Register New Cleaner</h4>
 
               <form @submit.prevent="registerCleaner">
-                <div class="mb-4">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Full Name"
-                    v-model="cleaner.full_name"
-                    required
-                  />
+                <div class="mb-3">
+                  <input type="text" class="form-control" placeholder="Full Name" v-model="cleaner.full_name" required />
                 </div>
-                 <div class="mb-4">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Location"
-                    v-model="cleaner.location"
-                    required
-                  />
+                <div class="mb-3">
+                  <input type="text" class="form-control" placeholder="Location" v-model="cleaner.location" required />
+                </div>
+                <div class="mb-3">
+                  <input type="text" class="form-control" placeholder="Phone / Contact" v-model="cleaner.contact" required />
+                </div>
+                <div class="mb-3">
+                  <input type="text" class="form-control" placeholder="Username" v-model="cleaner.username" required />
+                </div>
+                <div class="mb-3">
+                  <input type="email" class="form-control" placeholder="Email" v-model="cleaner.email" required />
                 </div>
                 <div class="mb-4">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Phone / Contact"
-                    v-model="cleaner.contact"
-                    required
-                  />
+                  <input type="password" class="form-control" placeholder="Password" v-model="cleaner.password" required />
                 </div>
 
                 <button type="submit" class="btn w-100 fw-bold text-white" style="background-color: #6A80B9;">
@@ -53,17 +44,21 @@
   </div>
 </template>
 
+
 <script setup>
 import { ref, onMounted } from 'vue'
 import Swal from 'sweetalert2'
-import OrganizationHeader from './OrganizationHeader.vue';
+import OrganizationHeader from './OrganizationHeader.vue'
 
 const showForm = ref(false)
 
 const cleaner = ref({
   full_name: '',
   location: '',
-  contact: ''
+  contact: '',
+  username: '',
+  email: '',
+  password: ''
 })
 
 const registerCleaner = async () => {
@@ -77,34 +72,52 @@ const registerCleaner = async () => {
       body: JSON.stringify(cleaner.value)
     });
 
-    if (!response.ok) throw new Error('Failed to register cleaner');
+    if (!response.ok) {
+      const errorData = await response.json();
 
-    // Success alert
+      // Build a readable error message
+      const errorMessages = Object.entries(errorData)
+        .map(([field, messages]) => `${field}: ${messages.join(', ')}`)
+        .join('\n');
+
+      // Show error with SweetAlert
+      Swal.fire({
+        icon: 'error',
+        title: 'Registration Failed',
+        text: errorMessages,
+        confirmButtonColor: '#d33'
+      });
+
+      return; // Stop further execution
+    }
+
+    // Success
     Swal.fire({
       icon: 'success',
       title: 'Cleaner Registered',
-      text: 'The cleaner was successfully added to your organization.',
+      text: 'The cleaner was successfully added and can now log in.',
       confirmButtonColor: '#6A80B9'
     });
 
-    // Reset form
     cleaner.value = {
       full_name: '',
       location: '',
-      contact: ''
+      contact: '',
+      username: '',
+      email: '',
+      password: ''
     };
   } catch (error) {
     console.error(error);
-
-    // Error alert
     Swal.fire({
       icon: 'error',
-      title: 'Registration Failed',
-      text: 'Something went wrong during cleaner registration.',
+      title: 'Request Failed',
+      text: 'A system error occurred. Please try again later.',
       confirmButtonColor: '#d33'
     });
   }
 };
+
 
 onMounted(() => {
   showForm.value = true;
