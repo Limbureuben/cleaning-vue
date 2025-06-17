@@ -140,8 +140,17 @@ const requestService = async (org) => {
           justify-content: space-between;
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        .swal-form-container input {
+        .swal-form-group {
           width: 48%;
+          display: flex;
+          flex-direction: column;
+        }
+        .swal-form-group label {
+          margin-bottom: 4px;
+          font-size: 13px;
+          color: #333;
+        }
+        .swal-form-container input {
           padding: 10px 12px;
           border: 1.5px solid #ccc;
           border-radius: 6px;
@@ -161,11 +170,26 @@ const requestService = async (org) => {
         }
       </style>
       <div class="swal-form-container">
-        <input id="swal-username" placeholder="Your Username" value="${userInfo.value.username}" readonly>
-        <input id="swal-email" type="email" placeholder="Your Email" value="${userInfo.value.email}" readonly>
-        <input id="swal-phone" type="tel" placeholder="Your Phone Number">
-        <input id="swal-start-date" type="date" placeholder="Start Date">
-        <input id="swal-end-date" type="date" placeholder="End Date">
+        <div class="swal-form-group">
+          <label for="swal-username">Username</label>
+          <input id="swal-username" value="${userInfo.value.username}" readonly>
+        </div>
+        <div class="swal-form-group">
+          <label for="swal-email">Email</label>
+          <input id="swal-email" type="email" value="${userInfo.value.email}" readonly>
+        </div>
+        <div class="swal-form-group">
+          <label for="swal-phone">Phone Number</label>
+          <input id="swal-phone" type="tel" placeholder="Your Phone Number">
+        </div>
+        <div class="swal-form-group">
+          <label for="swal-start-date">Start Date</label>
+          <input id="swal-start-date" type="date">
+        </div>
+        <div class="swal-form-group">
+          <label for="swal-end-date">End Date</label>
+          <input id="swal-end-date" type="date">
+        </div>
       </div>
     `,
     focusConfirm: false,
