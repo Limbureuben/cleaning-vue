@@ -15,7 +15,7 @@
           />
           <div class="card-body">
             <p class="mb-1"><strong>Location:</strong> {{ org.location }}</p>
-            <p class="mb-1"><strong>Price:</strong> {{ org.price }}</p>
+            <p class="mb-1"><strong>Price:</strong> {{ org.price }} 2 days</p>
           </div>
         </div>
       </div>
@@ -165,7 +165,9 @@ const requestService = async (org) => {
           organization: org.id,
           username: formValues.username,
           email: formValues.email,
-          phone: formValues.phone
+          phone: formValues.phone,
+          start_date: formValues.start_date,
+          end_date: formValues.end_date
         })
       });
 
@@ -191,6 +193,7 @@ const requestService = async (org) => {
       });
     }
   }
+
 };
 
 onMounted(() => {
