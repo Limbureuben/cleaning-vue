@@ -131,14 +131,15 @@ const fetchUserInfo = async () => {
 
 const requestService = async (org) => {
   const { value: formValues } = await swal.fire({
-    html:
-      `<input id="swal-username" class="swal2-input" placeholder="Your Username" value="${userInfo.value.username}" readonly>` +
-      `<input id="swal-email" type="email" class="swal2-input" placeholder="Your Email" value="${userInfo.value.email}" readonly>` +
-      `<input id="swal-phone" type="tel" class="swal2-input" placeholder="Your Phone Number">` +
-      `<label style="display:block; margin-top:10px;">Start Date</label>` +
-      `<input id="swal-start-date" type="date" class="swal2-input">` +
-      `<label style="display:block; margin-top:10px;">End Date</label>` +
-      `<input id="swal-end-date" type="date" class="swal2-input">`,
+    html: `
+      <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between;">
+        <input id="swal-username" class="swal2-input" placeholder="Your Username" value="${userInfo.value.username}" readonly style="width: 48%;">
+        <input id="swal-email" type="email" class="swal2-input" placeholder="Your Email" value="${userInfo.value.email}" readonly style="width: 48%;">
+        <input id="swal-phone" type="tel" class="swal2-input" placeholder="Your Phone Number" style="width: 48%;">
+        <input id="swal-start-date" type="date" class="swal2-input" placeholder="Start Date" style="width: 48%;">
+        <input id="swal-end-date" type="date" class="swal2-input" placeholder="End Date" style="width: 48%;">
+      </div>
+    `,
     focusConfirm: false,
     showCancelButton: true,
     confirmButtonText: "Submit Request",
@@ -166,7 +167,6 @@ const requestService = async (org) => {
     }
   });
 
-
   if (formValues) {
     try {
       const response = await fetch('http://localhost:8000/api/send-service-request/', {
@@ -177,11 +177,7 @@ const requestService = async (org) => {
         },
         body: JSON.stringify({
           organization: org.id,
-          username: formValues.username,
-          email: formValues.email,
-          phone: formValues.phone,
-          start_date: formValues.start_date,
-          end_date: formValues.end_date
+          ...formValues
         })
       });
 
@@ -207,7 +203,6 @@ const requestService = async (org) => {
       });
     }
   }
-
 };
 
 onMounted(() => {
