@@ -53,8 +53,8 @@ const fetchApprovedOrganizations = async () => {
 
 const showOrganizationDetails = (org) => {
   const services = org.services_list?.length
-    ? `<ul style="padding-left: 20px; margin: 0;">${org.services_list.map(s => `<li>${s}</li>`).join('')}</ul>`
-    : '<em>No services listed</em>';
+    ? `<ul style="padding-left: 20px; margin: 0; list-style-type: disc; color: #4a90e2;">${org.services_list.map(s => `<li style="margin-bottom: 4px;">${s}</li>`).join('')}</ul>`
+    : '<em style="color: #999;">No services listed</em>';
 
   const content = `
     <div style="
@@ -62,22 +62,25 @@ const showOrganizationDetails = (org) => {
       flex-wrap: wrap;
       justify-content: space-between;
       font-size: 16px;
-      font-family: 'Segoe UI', sans-serif;
-      padding: 10px 5px;
-      color: #333;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 15px 20px;
+      color: #444;
       line-height: 1.6;
+      background: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     ">
-      <div style="flex: 1 1 48%; padding: 10px;">
-        <p><strong>Location:</strong> ${org.location}</p>
-        <p><strong>Price:</strong> ${org.price}</p>
-        <p><strong>Phone:</strong> ${org.phone}</p>
-        <p><strong>Address:</strong> ${org.address}</p>
+      <div style="flex: 1 1 48%; padding: 10px 15px; border-right: 1px solid #ddd;">
+        <p><strong style="color: #2c3e50;">Location:</strong> <span style="color: #555;">${org.location}</span></p>
+        <p><strong style="color: #2c3e50;">Price:</strong> <span style="color: #555;">${org.price}</span></p>
+        <p><strong style="color: #2c3e50;">Phone:</strong> <span style="color: #555;">${org.phone}</span></p>
+        <p><strong style="color: #2c3e50;">Address:</strong> <span style="color: #555;">${org.address}</span></p>
       </div>
-      <div style="flex: 1 1 48%; padding: 10px;">
-        <p><strong>Bedrooms:</strong> ${org.bedrooms}</p>
-        <p><strong>Guests:</strong> ${org.guests}</p>
-        <p><strong>Bathrooms:</strong> ${org.bathrooms}</p>
-        <p><strong>Services:</strong> ${services}</p>
+      <div style="flex: 1 1 48%; padding: 10px 15px;">
+        <p><strong style="color: #2c3e50;">Bedrooms:</strong> <span style="color: #555;">${org.bedrooms}</span></p>
+        <p><strong style="color: #2c3e50;">Guests:</strong> <span style="color: #555;">${org.guests}</span></p>
+        <p><strong style="color: #2c3e50;">Bathrooms:</strong> <span style="color: #555;">${org.bathrooms}</span></p>
+        <p><strong style="color: #2c3e50;">Services:</strong> ${services}</p>
       </div>
     </div>
   `;
@@ -85,7 +88,7 @@ const showOrganizationDetails = (org) => {
   swal.fire({
     html: content,
     width: 650,
-    background: '#fefefe',
+    background: '#ffffff',
     showCancelButton: true,
     confirmButtonText: 'Request Service',
     cancelButtonText: 'Close',
