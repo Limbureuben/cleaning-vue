@@ -11,11 +11,11 @@
           <thead :style="{ backgroundColor: '#6A80B9', color: '#fff' }">
             <tr>
               <th>#</th>
-              <th>Username</th>
+              <th>Booker</th>
               <th>Email</th>
               <th>Phone</th>
               <th>Requested At</th>
-              <th>Organization</th>
+              <th>Address</th>
               <th>Action</th>
             </tr>
           </thead>
