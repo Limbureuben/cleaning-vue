@@ -132,12 +132,40 @@ const fetchUserInfo = async () => {
 const requestService = async (org) => {
   const { value: formValues } = await swal.fire({
     html: `
-      <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between;">
-        <input id="swal-username" class="swal2-input" placeholder="Your Username" value="${userInfo.value.username}" readonly style="width: 48%;">
-        <input id="swal-email" type="email" class="swal2-input" placeholder="Your Email" value="${userInfo.value.email}" readonly style="width: 48%;">
-        <input id="swal-phone" type="tel" class="swal2-input" placeholder="Your Phone Number" style="width: 48%;">
-        <input id="swal-start-date" type="date" class="swal2-input" placeholder="Start Date" style="width: 48%;">
-        <input id="swal-end-date" type="date" class="swal2-input" placeholder="End Date" style="width: 48%;">
+      <style>
+        .swal-form-container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          justify-content: space-between;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .swal-form-container input {
+          width: 48%;
+          padding: 10px 12px;
+          border: 1.5px solid #ccc;
+          border-radius: 6px;
+          font-size: 14px;
+          transition: border-color 0.3s ease;
+          box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .swal-form-container input:focus {
+          border-color: #4a90e2;
+          outline: none;
+          box-shadow: 0 0 8px rgba(74, 144, 226, 0.6);
+        }
+        .swal-form-container input[readonly] {
+          background-color: #f5f5f5;
+          color: #666;
+          cursor: not-allowed;
+        }
+      </style>
+      <div class="swal-form-container">
+        <input id="swal-username" placeholder="Your Username" value="${userInfo.value.username}" readonly>
+        <input id="swal-email" type="email" placeholder="Your Email" value="${userInfo.value.email}" readonly>
+        <input id="swal-phone" type="tel" placeholder="Your Phone Number">
+        <input id="swal-start-date" type="date" placeholder="Start Date">
+        <input id="swal-end-date" type="date" placeholder="End Date">
       </div>
     `,
     focusConfirm: false,
