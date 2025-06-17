@@ -134,24 +134,38 @@ const requestService = async (org) => {
     html:
       `<input id="swal-username" class="swal2-input" placeholder="Your Username" value="${userInfo.value.username}" readonly>` +
       `<input id="swal-email" type="email" class="swal2-input" placeholder="Your Email" value="${userInfo.value.email}" readonly>` +
-      `<input id="swal-phone" type="tel" class="swal2-input" placeholder="Your Phone Number">`,
+      `<input id="swal-phone" type="tel" class="swal2-input" placeholder="Your Phone Number">` +
+      `<label style="display:block; margin-top:10px;">Start Date</label>` +
+      `<input id="swal-start-date" type="date" class="swal2-input">` +
+      `<label style="display:block; margin-top:10px;">End Date</label>` +
+      `<input id="swal-end-date" type="date" class="swal2-input">`,
     focusConfirm: false,
     showCancelButton: true,
     confirmButtonText: "Submit Request",
     preConfirm: () => {
       const phone = document.getElementById('swal-phone').value;
+      const start_date = document.getElementById('swal-start-date').value;
+      const end_date = document.getElementById('swal-end-date').value;
+
       if (!phone) {
         swal.showValidationMessage('Phone number is required');
+        return false;
+      }
+      if (!start_date || !end_date) {
+        swal.showValidationMessage('Please provide both start and end dates');
         return false;
       }
 
       return {
         username: userInfo.value.username,
         email: userInfo.value.email,
-        phone: phone
+        phone,
+        start_date,
+        end_date
       };
     }
   });
+
 
   if (formValues) {
     try {
