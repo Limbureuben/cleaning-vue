@@ -1,14 +1,18 @@
 
-  mutation RegisterUser($username: String!, $email:String!, $password: String!, $confirmPassword: String!, $role: String) {
-    registerUser(username: $username, email: $email, password: $password, confirmPassword: $confirmPassword, role: $role) {
-      success
+mutation RegisterUser($email: String!, $password:String!, $passwordConfirm: String!, $role: String, $username: String!) {
+  registerUser(email: $email, password: $password, passwordConfirm: $passwordConfirm, role: $role, username: $username) {
+   output {
       message
+      success
       user {
         id
         username
-        isStaff
-        isSuperuser
       }
-    }
+   }
+   user {
+    email
+    id
+    username
+   }
   }
-
+}

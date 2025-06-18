@@ -45,7 +45,7 @@
 
               <div class="mb-4">
                 <input
-                  v-model="form.confirmPassword"
+                  v-model="form.passwordConfirm"
                   type="password"
                   class="form-control"
                   placeholder="Confirm your password"
@@ -82,7 +82,7 @@ const form = ref({
   username: '',
   email: '',
   password: '',
-  confirmPassword: ''
+  passwordConfirm: ''
 });
 
 
@@ -95,7 +95,7 @@ const onSubmit = async () => {
     username: form.value.username,
     email: form.value.email,
     password: form.value.password,
-    confirmPassword: form.value.confirmPassword
+    passwordConfirm: form.value.passwordConfirm
   });
 
   onDone(({ data }) => {
@@ -111,7 +111,7 @@ const onSubmit = async () => {
       form.value.username = '';
       form.value.email = '';
       form.value.password = '';
-      form.value.confirmPassword = '';
+      form.value.passwordConfirm = '';
 
       setTimeout(() => {
         router.push('/login');
