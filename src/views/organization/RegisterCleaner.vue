@@ -85,8 +85,8 @@
 import { ref, onMounted } from 'vue'
 import Swal from 'sweetalert2'
 import OrganizationHeader from './OrganizationHeader.vue'
-
-
+import REGISTER_USER from '@/graphql/registerUser.graphql'
+import { useMutation } from '@vue/apollo-composable'
 
 const form = ref({
   username: '',
@@ -99,7 +99,7 @@ const form = ref({
 const showForm = ref(false)
 const { mutate: registerUser, onDone, onError } = useMutation(REGISTER_USER)
 
-const onSubmit = async () => {
+const registerCleaner = async () => {
   // Construct input as expected by GraphQL
   const input = {
     username: form.value.username,

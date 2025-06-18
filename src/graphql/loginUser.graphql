@@ -1,14 +1,13 @@
-
 mutation LoginUser($username: String!, $password: String!) {
   loginUser(username: $username, password: $password) {
     message
     success
-    token
     user {
       id
+      isCleaner
       isStaff
-      isSuperuser
       username
+      token
     }
   }
 }

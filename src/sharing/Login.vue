@@ -54,7 +54,6 @@
 </template>
 
 
-
 <script setup>
 import { reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
@@ -79,15 +78,14 @@ const submitForm = async () => {
     password: form.value.password
   });
 
-  onDone( ({ data }) => {
+  onDone(({ data }) => {
     const result = data.loginUser;
-    
-    if (result.success && result.token) {
-      localStorage.setItem('token', result.token);
-      console.log('Token saved:', result.token);
 
-      const role = result.user.isSuperuser ? 'superuser' : result.user.isStaff ? 'staff' : 'user';
-      localStorage.setItem('role', role);
+    if (result.success && result.user.token) {
+      const user = result.user;
+      
+      localStorage.setItem('token', user.token);
+      localStorage.setItem('role', user.isSuperuser ? 'superuser' : user.isStaff ? 'staff' : user.isCleaner ? 'cleaner' : 'user');
 
       swal.fire({
         position: "top-end",
@@ -96,12 +94,14 @@ const submitForm = async () => {
         showConfirmButton: false,
         timer: 1500
       }).then(() => {
-        if (role === 'superuser') {
-          router.push('/admin-dashboard');
-        } else if (role === 'staff') {
-          router.push('/organization');
+        if (user.isSuperuser) {
+          router.push('/admindashboard');
+        } else if (user.isStaff) {
+          router.push('/staff');
+        } else if (user.isCleaner) {
+          router.push('/cleaner');
         } else {
-          router.push('/user-dashboard');
+          router.push('/user');
         }
       });
     } else {
@@ -111,8 +111,17 @@ const submitForm = async () => {
         text: result.message || 'Please check your credentials and try again.'
       });
     }
-  })
+  });
+
+  onError((error) => {
+    swal.fire({
+      icon: 'error',
+      title: 'Login failed',
+      text: error.message
+    });
+  });
 }
+
 const showForm = ref(false)
 
 onMounted(() => {
