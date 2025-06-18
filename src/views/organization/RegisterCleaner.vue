@@ -13,27 +13,62 @@
               <h4 class="mb-4 text-center fw-bold" style="color: #6A80B9;">Register New Cleaner</h4>
 
               <form @submit.prevent="registerCleaner">
+                <!-- Full Name -->
                 <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Full Name" v-model="cleaner.full_name" required />
-                </div>
-                <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Location" v-model="cleaner.location" required />
-                </div>
-                <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Phone / Contact" v-model="cleaner.contact" required />
-                </div>
-                <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Username" v-model="cleaner.username" required />
-                </div>
-                <div class="mb-3">
-                  <input type="email" class="form-control" placeholder="Email" v-model="cleaner.email" required />
-                </div>
-                <div class="mb-4">
-                  <input type="password" class="form-control" placeholder="Password" v-model="cleaner.password" required />
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Full Name"
+                    v-model="form.username"
+                    required
+                  />
                 </div>
 
+                <!-- Email -->
+                <div class="mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Email"
+                    v-model="form.email"
+                    required
+                  />
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                  <input
+                    type="password"
+                    class="form-control"
+                    placeholder="Password"
+                    v-model="form.password"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <input
+                    type="password"
+                    class="form-control"
+                    placeholder="Password"
+                    v-model="form.passwordConfirm"
+                    required
+                  />
+                </div>
+
+                <!-- Role Dropdown -->
+                <div class="mb-4">
+                  <select
+                    class="form-select"
+                    v-model="form.role"
+                    required
+                  >
+                    <option value="" disabled>Select Role</option>
+                    <option value="is_cleaner">Cleaner</option>
+                    <option value="user">Normal User</option>
+                  </select>
+                </div>
                 <button type="submit" class="btn w-100 fw-bold text-white" style="background-color: #6A80B9;">
-                  Register Cleaner
+                  Register User
                 </button>
               </form>
             </div>
@@ -45,79 +80,74 @@
 </template>
 
 
+
 <script setup>
 import { ref, onMounted } from 'vue'
 import Swal from 'sweetalert2'
 import OrganizationHeader from './OrganizationHeader.vue'
 
-const showForm = ref(false)
 
-const cleaner = ref({
-  full_name: '',
-  location: '',
-  contact: '',
+
+const form = ref({
   username: '',
   email: '',
-  password: ''
+  password: '',
+  passwordConfirm: '',
+  role: ''
 })
 
-const registerCleaner = async () => {
-  try {
-    const response = await fetch('http://localhost:8000/api/register-cleaner/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      },
-      body: JSON.stringify(cleaner.value)
-    });
+const showForm = ref(false)
+const { mutate: registerUser, onDone, onError } = useMutation(REGISTER_USER)
 
-    if (!response.ok) {
-      const errorData = await response.json();
-
-      // Build a readable error message
-      const errorMessages = Object.entries(errorData)
-        .map(([field, messages]) => `${field}: ${messages.join(', ')}`)
-        .join('\n');
-
-      // Show error with SweetAlert
-      Swal.fire({
-        icon: 'error',
-        title: 'Registration Failed',
-        text: errorMessages,
-        confirmButtonColor: '#d33'
-      });
-
-      return; // Stop further execution
-    }
-
-    // Success
-    Swal.fire({
-      icon: 'success',
-      title: 'Cleaner Registered',
-      text: 'The cleaner was successfully added and can now log in.',
-      confirmButtonColor: '#6A80B9'
-    });
-
-    cleaner.value = {
-      full_name: '',
-      location: '',
-      contact: '',
-      username: '',
-      email: '',
-      password: ''
-    };
-  } catch (error) {
-    console.error(error);
-    Swal.fire({
-      icon: 'error',
-      title: 'Request Failed',
-      text: 'A system error occurred. Please try again later.',
-      confirmButtonColor: '#d33'
-    });
+const onSubmit = async () => {
+  // Construct input as expected by GraphQL
+  const input = {
+    username: form.value.username,
+    email: form.value.email,
+    password: form.value.password,
+    passwordConfirm: form.value.passwordConfirm,
+    role: form.value.role || null
   }
-};
 
+  registerUser({ input })
+
+  onDone(({ data }) => {
+    if (data.registerUser.output.success) {
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Registration successful",
+        showConfirmButton: false,
+        timer: 1500
+      })
+
+      // Clear the form
+      form.value.username = ''
+      form.value.email = ''
+      form.value.password = ''
+      form.value.passwordConfirm = ''
+      form.value.role = ''
+
+      setTimeout(() => {
+        router.push('/login')
+      }, 500)
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Registration failed",
+        text: data.registerUser.output.message
+      })
+    }
+  })
+
+  onError((error) => {
+    Swal.fire({
+      icon: "error",
+      title: "Registration failed",
+      text: error.message
+    })
+  })
+}
 
 onMounted(() => {
   showForm.value = true;
