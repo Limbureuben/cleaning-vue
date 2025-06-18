@@ -1,18 +1,17 @@
-
-mutation RegisterUser($email: String!, $password:String!, $passwordConfirm: String!, $role: String, $username: String!) {
-  registerUser(email: $email, password: $password, passwordConfirm: $passwordConfirm, role: $role, username: $username) {
-   output {
-      message
+mutation RegisterUser($input: RegistrationInputObject!) {
+  registerUser(input: $input) {
+    output {
       success
+      message
       user {
         id
         username
       }
-   }
-   user {
-    email
-    id
-    username
-   }
+    }
+    user {
+      id
+      email
+      username
+    }
   }
 }

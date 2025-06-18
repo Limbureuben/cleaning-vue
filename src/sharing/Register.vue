@@ -69,74 +69,84 @@
   </div>
 </template>
 <script setup>
-import { reactive, ref, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import Background from './Background.vue';
-import { useMutation } from '@vue/apollo-composable';
-import REGISTER_USER from '@/graphql/registerUser.graphql'
+import Background from './Background.vue'
 import BackButton from './BackButton.vue'
 import Swal from 'sweetalert2'
-import router from '@/router';
+import { useMutation } from '@vue/apollo-composable'
+import REGISTER_USER from '@/graphql/registerUser.graphql'
 
+const router = useRouter()
+
+// Reactive form data
 const form = ref({
   username: '',
   email: '',
   password: '',
-  passwordConfirm: ''
-});
-
+  passwordConfirm: '',
+  role: ''  // Optional role field
+})
 
 const showForm = ref(false)
 
-const { mutate: registerUser, onDone, onError } = useMutation(REGISTER_USER);
+const { mutate: registerUser, onDone, onError } = useMutation(REGISTER_USER)
 
 const onSubmit = async () => {
-  registerUser({
+  // Construct input as expected by GraphQL
+  const input = {
     username: form.value.username,
     email: form.value.email,
     password: form.value.password,
-    passwordConfirm: form.value.passwordConfirm
-  });
+    passwordConfirm: form.value.passwordConfirm,
+    role: form.value.role || null
+  }
+
+  registerUser({ input })
 
   onDone(({ data }) => {
-    if (data.registerUser.success) {
+    if (data.registerUser.output.success) {
       Swal.fire({
         position: "top-end",
         icon: "success",
         title: "Registration successful",
         showConfirmButton: false,
         timer: 1500
-      });
+      })
 
-      form.value.username = '';
-      form.value.email = '';
-      form.value.password = '';
-      form.value.passwordConfirm = '';
+      // Clear the form
+      form.value.username = ''
+      form.value.email = ''
+      form.value.password = ''
+      form.value.passwordConfirm = ''
+      form.value.role = ''
 
       setTimeout(() => {
-        router.push('/login');
-      }, 200);
+        router.push('/login')
+      }, 500)
     } else {
       Swal.fire({
         icon: "error",
         title: "Registration failed",
-        text: data.registerUser.message
-      });
+        text: data.registerUser.output.message
+      })
     }
-  });
+  })
 
   onError((error) => {
     Swal.fire({
       icon: "error",
       title: "Registration failed",
       text: error.message
-    });
-  });
+    })
+  })
 }
+
 onMounted(() => {
   showForm.value = true
 })
 </script>
+
 
 <style scoped>
 body,
