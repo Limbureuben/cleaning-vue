@@ -93,16 +93,28 @@ const submitForm = async () => {
         title: "Login successful",
         showConfirmButton: false,
         timer: 1500
-      }).then(() => {
-        if (user.isSuperuser) {
-          router.push('/admin-dashboard');
-        } else if (user.isStaff) {
+     }).then(() => {
+      const user = result.user;
+
+      if (user.isSuperuser === true) {
+      router.push('/admin-dashboard');
+        } else if (user.isStaff === true && user.isCleaner !== true) {
           router.push('/organization');
-        } else if (user.isCleaner) {
-          router.push('/availablebooking');
+        } else if (user.isCleaner === true) {
+          router.push('/cleaner');
         } else {
-          router.push('/available-organization');
+          router.push('/user');
         }
+
+        // if (user.isSuperuser === true) {
+        //   router.push('/admin-dashboard');
+        // } else if (user.isStaff === true && user.isCleaner !== true) {
+        //   router.push('/organization');
+        // } else if (user.isCleaner === true) {
+        //   router.push('/availablebooking');
+        // } else {
+        //   router.push('/available-organization');
+        // }
       });
     } else {
       swal.fire({

@@ -8,6 +8,7 @@ mutation LoginUser($username: String!, $password: String!) {
       isStaff
       username
       token
+      isSuperuser
     }
   }
 }

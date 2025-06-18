@@ -10,7 +10,7 @@
               style="min-width: 450px;"
               v-show="showForm"
             >
-              <h4 class="mb-4 text-center fw-bold" style="color: #6A80B9;">Register New Cleaner</h4>
+              <h4 class="mb-4 text-center fw-bold" style="color: #6A80B9;">Register New Staff</h4>
 
               <form @submit.prevent="registerCleaner">
                 <!-- Full Name -->
@@ -63,7 +63,7 @@
                     required
                   >
                     <option value="" disabled>Select Role</option>
-                    <option value="is_cleaner">Cleaner</option>
+                    <option value="staff">Staff</option>
                     <option value="user">Normal User</option>
                   </select>
                 </div>
