@@ -95,13 +95,13 @@ const submitForm = async () => {
         timer: 1500
       }).then(() => {
         if (user.isSuperuser) {
-          router.push('/admindashboard');
+          router.push('/admin-dashboard');
         } else if (user.isStaff) {
-          router.push('/staff');
+          router.push('/organization');
         } else if (user.isCleaner) {
-          router.push('/cleaner');
+          router.push('/availablebooking');
         } else {
-          router.push('/user');
+          router.push('/available-organization');
         }
       });
     } else {
