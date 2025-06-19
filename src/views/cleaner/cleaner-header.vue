@@ -2,9 +2,9 @@
   <header class="header">
     <nav>
       <router-link to="/cleaner-dashboard">Dashboard</router-link>
-      <router-link to="/jobs">Jobs</router-link>
-      <router-link to="/schedule">Schedule</router-link>
-      <router-link to="/profile">Profile</router-link>
+      <router-link to="#">Jobs</router-link>
+      <router-link to="#">Schedule</router-link>
+      <router-link to="#">Profile</router-link>
     </nav>
     <button @click="logout" class="logout-btn">Logout</button>
   </header>

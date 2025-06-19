@@ -33,13 +33,6 @@
           <span class="metric-value">${{ earnings.lastMonth }}</span>
         </div>
       </div>
-      <div class="card reviews">
-        <h2>Recent Reviews</h2>
-        <div v-for="review in recentReviews" :key="review.id" class="review">
-          <div class="rating">{{ review.rating }} / 5</div>
-          <p>{{ review.comment }}</p>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -81,7 +74,7 @@ export default {
   max-width: 1200px;
   margin: 20px auto;
   padding: 20px;
-  background-color: #f5f7fa;
+  background-color: #fff;
 }
 
 .dashboard-grid {
@@ -92,7 +85,7 @@ export default {
 
 .card {
   background-color: #ffffff;
-  border-radius: 10px;
+  border-radius: 2px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
   transition: transform 0.3s ease;

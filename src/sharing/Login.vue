@@ -103,7 +103,7 @@ const submitForm = async () => {
         } else if (user.isCleaner === true) {
           router.push('/cleaner-dashboard');
         } else {
-          router.push('/user');
+          router.push('/user-dashboard');
         }
 
         // if (user.isSuperuser === true) {
