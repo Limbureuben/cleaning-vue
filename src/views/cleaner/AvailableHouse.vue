@@ -73,7 +73,7 @@ const showOrganizationDetails = (org) => {
       <div style="flex: 1 1 48%; padding: 10px 15px; border-right: 1px solid #ddd;">
         <p><strong style="color: #2c3e50;">Price:</strong> <span style="color: #555;">${org.start_date}</span></p>
         <p><strong style="color: #2c3e50;">Phone:</strong> <span style="color: #555;">${org.end_date}</span></p>
-        <p><strong style="color: #2c3e50;">Address:</strong> <span style="color: #555;">${org.organization_address}</span></p>
+        <p><strong style="color: #2c3e50;">Address:</strong> <span style="color: #555;">${org.organization_location}</span></p>
       </div>
       <div style="flex: 1 1 48%; padding: 10px 15px;">
         <p><strong style="color: #2c3e50;">Services:</strong> ${services}</p>
