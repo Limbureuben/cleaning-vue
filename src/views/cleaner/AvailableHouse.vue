@@ -14,7 +14,7 @@
             @click="showOrganizationDetails(org)"
           />
           <div class="card-body">
-            <p class="mb-1"><strong>Location:</strong> {{ org.organizaion_location }}</p>
+            <p class="mb-1"><strong>Location:</strong> {{ org.organization_location }}</p>
             <p class="mb-1"><strong>start Date:</strong> {{ org.start_date }} 2 days</p>
           </div>
         </div>
@@ -253,7 +253,7 @@ const getFullImageUrl = (path) => {
   border-radius: 0px;
   overflow: hidden;
   transition: all 0.3s ease;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 
 .card:hover {
