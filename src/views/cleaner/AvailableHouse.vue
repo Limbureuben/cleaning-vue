@@ -6,16 +6,16 @@
         <div class="card h-100 shadow-sm border-0">
           <!-- Clickable image -->
           <img
-            v-if="org.file && org.file.match(/\.(jpeg|jpg|png|gif)$/i)"
-            :src="org.file"
+            v-if="org.organization_image"
+            :src="getFullImageUrl(org.organization_image)"
             alt="Organization Logo"
             class="card-img-top rounded-top"
             style="max-height: 180px; object-fit: cover; cursor: pointer"
             @click="showOrganizationDetails(org)"
-          />
+            />
           <div class="card-body">
-            <p class="mb-1"><strong>Location:</strong> {{ org.location }}</p>
-            <p class="mb-1"><strong>Price:</strong> {{ org.price }} 2 days</p>
+            <p class="mb-1"><strong>Location:</strong> {{ org.organizaion_location }}</p>
+            <p class="mb-1"><strong>start Date:</strong> {{ org.start_date }} 2 days</p>
           </div>
         </div>
       </div>
@@ -261,6 +261,11 @@ onMounted(() => {
   fetchUserInfo();
   fetchApprovedOrganizations();
 });
+
+const getFullImageUrl = (path) => {
+  return path.startsWith('http') ? path : `http://localhost:8000${path}`;
+};
+
 </script>
 
 <style scoped>
