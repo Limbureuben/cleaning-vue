@@ -15,7 +15,8 @@
           />
           <div class="card-body">
             <p class="mb-1"><strong>Location:</strong> {{ org.organization_location }}</p>
-            <p class="mb-1"><strong>start Date:</strong> {{ org.start_date }} 2 days</p>
+            <p class="mb-1"><strong>start Date:</strong> {{ org.start_date }}</p>
+            <p class="mb-1"><strong>status: </strong><span style="color: green;">{{ org.status }}</span></p>
           </div>
         </div>
       </div>
@@ -71,12 +72,9 @@ const showOrganizationDetails = (org) => {
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     ">
       <div style="flex: 1 1 48%; padding: 10px 15px; border-right: 1px solid #ddd;">
-        <p><strong style="color: #2c3e50;">Price:</strong> <span style="color: #555;">${org.start_date}</span></p>
-        <p><strong style="color: #2c3e50;">Phone:</strong> <span style="color: #555;">${org.end_date}</span></p>
-        <p><strong style="color: #2c3e50;">Address:</strong> <span style="color: #555;">${org.organization_location}</span></p>
-      </div>
-      <div style="flex: 1 1 48%; padding: 10px 15px;">
-        <p><strong style="color: #2c3e50;">Services:</strong> ${services}</p>
+        <p><strong style="color: #2c3e50;">Start Date:</strong> <span style="color: #555;">${org.start_date}</span></p>
+        <p><strong style="color: #2c3e50;">End Date:</strong> <span style="color: #555;">${org.end_date}</span></p>
+        <p><strong style="color: #2c3e50;">Location:</strong> <span style="color: #555;">${org.organization_location}</span></p>
       </div>
     </div>
   `;
@@ -175,7 +173,7 @@ const requestService = async (org) => {
           <input id="swal-email" type="email" value="${userInfo.value.email}" readonly>
         </div>
         <div class="swal-form-group">
-          <label for="swal-phone">Clener_location</label>
+          <label for="swal-phone">Clener Location</label>
           <input id="swal-cleaner_location" type="tel" placeholder="Your location">
         </div>
       </div>
