@@ -41,16 +41,6 @@ export default {
   color: white;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-}
-
-.logo img {
-  height: 40px;
-  margin-right: 10px;
-}
-
 nav {
   display: flex;
   gap: 20px;

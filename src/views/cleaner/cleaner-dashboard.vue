@@ -1,12 +1,13 @@
 <template>
-    <cleanerHeader />
+  <cleanerHeader />
   <div class="dashboard">
     <div class="dashboard-grid">
       <div class="card upcoming-jobs">
         <h2>Upcoming Jobs</h2>
         <ul>
           <li v-for="job in upcomingJobs" :key="job.id">
-            {{ job.date }} - {{ job.location }}
+            <span class="job-date">{{ job.date }}</span>
+            <span class="job-location">{{ job.location }}</span>
           </li>
         </ul>
       </div>
@@ -14,22 +15,22 @@
         <h2>Performance Metrics</h2>
         <div class="metric">
           <span>Job Completion Rate:</span>
-          <span>{{ performanceMetrics.completionRate }}%</span>
+          <span class="metric-value">{{ performanceMetrics.completionRate }}%</span>
         </div>
         <div class="metric">
           <span>On-Time Rate:</span>
-          <span>{{ performanceMetrics.onTimeRate }}%</span>
+          <span class="metric-value">{{ performanceMetrics.onTimeRate }}%</span>
         </div>
       </div>
       <div class="card earnings">
         <h2>Earnings</h2>
         <div class="metric">
           <span>This Month:</span>
-          <span>${{ earnings.thisMonth }}</span>
+          <span class="metric-value">${{ earnings.thisMonth }}</span>
         </div>
         <div class="metric">
           <span>Last Month:</span>
-          <span>${{ earnings.lastMonth }}</span>
+          <span class="metric-value">${{ earnings.lastMonth }}</span>
         </div>
       </div>
       <div class="card reviews">
@@ -76,48 +77,37 @@ export default {
 
 <style scoped>
 .dashboard {
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 20px auto;
   padding: 20px;
+  background-color: #f5f7fa;
 }
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
 }
 
 .card {
   background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
+  transition: transform 0.3s ease;
 }
 
-h1 {
-  color: #333;
-  margin-bottom: 20px;
+.card:hover {
+  transform: translateY(-5px);
 }
 
 h2 {
-  color: #444;
-  margin-top: 0;
-}
-
-.metric {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.review {
+  color: #333;
+  font-size: 1.5rem;
   margin-bottom: 15px;
-}
-
-.rating {
-  font-weight: bold;
-  color: #f39c12;
+  border-bottom: 2px solid #6A80B9;
+  padding-bottom: 10px;
 }
 
 ul {
@@ -126,6 +116,57 @@ ul {
 }
 
 li {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f0f4f8;
+  border-radius: 5px;
+}
+
+.job-date {
+  font-weight: bold;
+  color: #6A80B9;
+}
+
+.job-location {
+  margin-left: 10px;
+  color: #555;
+}
+
+.metric {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f0f4f8;
+  border-radius: 5px;
+}
+
+.metric-value {
+  font-weight: bold;
+  color: #6A80B9;
+}
+
+.review {
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #f0f4f8;
+  border-radius: 5px;
+}
+
+.rating {
+  font-weight: bold;
+  color: #f39c12;
   margin-bottom: 5px;
+}
+
+p {
+  margin: 0;
+  color: #555;
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
