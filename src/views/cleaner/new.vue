@@ -2,17 +2,17 @@
   <cleanerHeader />
   <div class="container mt-5">
     <div class="row">
-      <div v-for="org in organizations" :key="org.organization_id" class="col-md-6 col-lg-4 mb-4">
+      <div v-for="org in organizations" :key="org.id" class="col-md-6 col-lg-4 mb-4">
         <div class="card h-100 shadow-sm border-0">
           <!-- Clickable image -->
           <img
-            v-if="org.organization_image && org.organization_image.match(/\.(jpeg|jpg|png|gif)$/i)"
-            :src="org.organization_image"
+            v-if="org.organization_image"
+            :src="getFullImageUrl(org.organization_image)"
             alt="Organization Logo"
             class="card-img-top rounded-top"
             style="max-height: 180px; object-fit: cover; cursor: pointer"
             @click="showOrganizationDetails(org)"
-          />
+            />
           <div class="card-body">
             <p class="mb-1"><strong>Location:</strong> {{ org.organizaion_location }}</p>
             <p class="mb-1"><strong>start Date:</strong> {{ org.start_date }} 2 days</p>
