@@ -101,7 +101,7 @@ const submitForm = async () => {
         } else if (user.isStaff === true && user.isCleaner !== true) {
           router.push('/organization');
         } else if (user.isCleaner === true) {
-          router.push('/cleaner');
+          router.push('/cleaner-dashboard');
         } else {
           router.push('/user');
         }
