@@ -1,7 +1,6 @@
 <template>
     <cleanerHeader />
   <div class="dashboard">
-    <h1>Cleaner Dashboard</h1>
     <div class="dashboard-grid">
       <div class="card upcoming-jobs">
         <h2>Upcoming Jobs</h2>

@@ -1,11 +1,7 @@
 <template>
   <header class="header">
-    <div class="logo">
-      <img src="../../assets/images/tools.png" alt="Company Logo" />
-      <span>Cleaner Portal</span>
-    </div>
     <nav>
-      <router-link to="/dashboard">Dashboard</router-link>
+      <router-link to="/cleaner-dashboard">Dashboard</router-link>
       <router-link to="/jobs">Jobs</router-link>
       <router-link to="/schedule">Schedule</router-link>
       <router-link to="/profile">Profile</router-link>
