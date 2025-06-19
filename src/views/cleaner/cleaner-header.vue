@@ -2,7 +2,7 @@
   <header class="header">
     <nav>
       <router-link to="/cleaner-dashboard">Dashboard</router-link>
-      <router-link to="#">Jobs</router-link>
+      <router-link to="/available-house">Jobs</router-link>
       <router-link to="#">Schedule</router-link>
       <router-link to="#">Profile</router-link>
     </nav>
