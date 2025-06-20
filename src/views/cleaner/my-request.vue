@@ -52,34 +52,35 @@ import cleanerHeader from './cleaner-header.vue';
 
 const cleanerRequests = ref([])
 
-// ... existing fetchCleanerRequests and formatDate functions ...
-
-const getStatusClass = (status) => {
-  switch (status) {
-    case 'pending': return 'bg-warning text-dark'
-    case 'approved': return 'bg-success'
-    case 'rejected': return 'bg-danger'
-    case 'completed': return 'bg-primary'
-    default: return 'bg-secondary'
-  }
-}
-
-const cancelRequest = async (requestId) => {
+const fetchCleanerRequests = async () => {
   try {
-    const res = await fetch(`http://localhost:8000/api/cleaner-requests/${requestId}/cancel/`, {
-      method: 'POST',
+    const res = await fetch('http://localhost:8000/api/cleaner-requests/from-cleaner/', {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     });
 
-    if (!res.ok) throw new Error('Failed to cancel request');
+    if (!res.ok) throw new Error('Failed to fetch');
 
-    // Refresh the list after cancellation
-    await fetchCleanerRequests();
+    cleanerRequests.value = await res.json();
   } catch (error) {
-    console.error('Error cancelling request:', error)
+    console.error('Error fetching cleaner requests:', error)
+  }
+}
+
+const formatDate = (dateStr) => {
+  const d = new Date(dateStr)
+  return d.toLocaleString()
+}
+
+const getStatusClass = (status) => {
+  switch (status) {
+    case 'pending': return 'text-warning fw-bold'
+    case 'approved': return 'text-success fw-bold'
+    case 'rejected': return 'text-danger fw-bold'
+    case 'completed': return 'text-primary fw-bold'
+    default: return ''
   }
 }
 
