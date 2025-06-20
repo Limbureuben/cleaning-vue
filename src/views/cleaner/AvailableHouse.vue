@@ -198,7 +198,7 @@ const requestService = async (org) => {
 
   if (formValues) {
     try {
-      const response = await fetch('http://localhost:8000/api/send-service-request/', {
+      const response = await fetch('http://localhost:8000/api/client-send-service-request/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

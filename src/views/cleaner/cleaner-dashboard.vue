@@ -3,7 +3,7 @@
   <div class="dashboard">
     <div class="dashboard-grid">
       <div class="card upcoming-jobs">
-        <h2>Upcoming Jobs</h2>
+        <h2>Available Jobs</h2>
         <ul>
           <li v-for="job in upcomingJobs" :key="job.id">
             <span class="job-date">{{ job.date }}</span>
