@@ -44,20 +44,17 @@
       <div class="modal-content p-4 rounded bg-white shadow">
         <form @submit.prevent="submitCleaner">
           <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
             <input v-model="form.username" id="username" type="text" class="form-control" required />
           </div>
           <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
             <input v-model="form.email" id="email" type="email" class="form-control" required />
           </div>
           <div class="mb-3">
-            <label for="location" class="form-label">password</label>
-            <input v-model="form.cleaner_location" id="location" type="text" class="form-control" required />
+            <input v-model="form.password" id="location" type="text" class="form-control" required />
           </div>
           <div class="mb-3">
             <label for="organization" class="form-label">password Confirm</label>
-            <input v-model="form.organization_name" id="organization" type="text" class="form-control" required />
+            <input v-model="form.passwordConfirm" id="organization" type="text" class="form-control" required />
           </div>
           <div class="mb-3">
             <label for="role" class="form-label">Role</label>
@@ -66,7 +63,7 @@
               <option value="is_cleaner">Cleaner</option>
               <option value="user">User</option>
             </select>
-            </div>
+          </div>
           <div class="d-flex justify-content-end">
             <button type="button" class="btn btn-secondary me-2" @click="showForm = false">Cancel</button>
             <button type="submit" class="btn btn-primary">Register</button>
@@ -169,7 +166,7 @@ onMounted(() => {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.5);
+  background-color: #6A80B9;
   display: flex;
   align-items: center;
   justify-content: center;

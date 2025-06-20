@@ -4,7 +4,7 @@
 
     <div class="table-responsive">
       <table class="table table-striped table-hover shadow-sm">
-        <thead class="table-dark">
+        <thead style="background-color: #6A80B9; color: white;">
           <tr>
             <th>#</th>
             <th>CLIENT</th>
@@ -111,5 +111,9 @@ h2 {
 .btn-sm {
   font-size: 0.8em;
   padding: 0.25em 0.5em;
+}
+
+.table-class {
+  background-color: #6A80B9;
 }
 </style>
