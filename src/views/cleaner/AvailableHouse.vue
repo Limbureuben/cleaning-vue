@@ -205,10 +205,18 @@ const requestService = async (org) => {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
-          organization: org.id,
+          organization: org.organization_id,
           ...formValues
         })
       });
+
+      console.log('Request payload:', {
+        organization: org.organization_id,
+        username: userInfo.value.username,
+        email: userInfo.value.email,
+        cleaner_location: formValues.cleaner_location
+      });
+
 
       if (response.ok) {
         swal.fire({
