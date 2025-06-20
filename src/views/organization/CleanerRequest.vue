@@ -1,6 +1,6 @@
 <template>
+  <OrganizationHeader />
   <div class="container mt-5">
-
     <table class="table table-striped table-hover">
       <thead>
         <tr>
@@ -34,6 +34,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import OrganizationHeader from './OrganizationHeader.vue'
 
 const receivedRequests = ref([])
 
