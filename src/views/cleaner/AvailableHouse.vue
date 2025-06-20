@@ -46,15 +46,15 @@ const fetchApprovedOrganizations = async () => {
     if (!response.ok) throw new Error('Failed to fetch data');
 
     const data = await response.json();
-    organizations.value = data;
+    serviceRequests.value = data;
   } catch (error) {
     console.error('Error fetching organizations:', error);
   }
 }
 
-const showOrganizationDetails = (org) => {
-  const services = org.services_list?.length
-    ? `<ul style="padding-left: 20px; margin: 0; list-style-type: disc; color: #4a90e2;">${org.services_list.map(s => `<li style="margin-bottom: 4px;">${s}</li>`).join('')}</ul>`
+const showOrganizationDetails = (sr) => {
+  const services = sr.services_list?.length
+    ? `<ul style="padding-left: 20px; margin: 0; list-style-type: disc; color: #4a90e2;">${sr.services_list.map(s => `<li style="margin-bottom: 4px;">${s}</li>`).join('')}</ul>`
     : '<em style="color: #999;">No services listed</em>';
 
   const content = `
@@ -72,9 +72,9 @@ const showOrganizationDetails = (org) => {
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     ">
       <div style="flex: 1 1 48%; padding: 10px 15px; border-right: 1px solid #ddd;">
-        <p><strong style="color: #2c3e50;">Start Date:</strong> <span style="color: #555;">${org.start_date}</span></p>
-        <p><strong style="color: #2c3e50;">End Date:</strong> <span style="color: #555;">${org.end_date}</span></p>
-        <p><strong style="color: #2c3e50;">Location:</strong> <span style="color: #555;">${org.organization_location}</span></p>
+        <p><strong style="color: #2c3e50;">Start Date:</strong> <span style="color: #555;">${sr.start_date}</span></p>
+        <p><strong style="color: #2c3e50;">End Date:</strong> <span style="color: #555;">${sr.end_date}</span></p>
+        <p><strong style="color: #2c3e50;">Location:</strong> <span style="color: #555;">${sr.organization_location}</span></p>
       </div>
     </div>
   `;
@@ -93,7 +93,7 @@ const showOrganizationDetails = (org) => {
     },
   }).then((result) => {
     if (result.isConfirmed) {
-      requestService(org);
+      requestService(sr);
     }
   });
 }
