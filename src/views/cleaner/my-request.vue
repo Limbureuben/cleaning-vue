@@ -1,7 +1,6 @@
 <template>
     <cleanerHeader />
   <div class="container mt-5">
-    <h2 class="mb-4">My Cleaning Requests</h2>
 
     <table class="table table-bordered table-hover">
       <thead class="table-light">
