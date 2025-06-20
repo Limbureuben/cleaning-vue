@@ -4,14 +4,14 @@
     <table class="table table-striped table-hover">
       <thead>
         <tr>
-          <th>#</th>
-          <th>Cleaner</th>
-          <th>Email</th>
-          <th>Location</th>
-          <th>Organization</th>
-          <th>Status</th>
-          <th>Requested At</th>
-          <th style="width: 50px;"></th> <!-- Extra column for + button -->
+          <th style="background-color: #6A80B9; color: white;">#</th>
+          <th style="background-color: #6A80B9; color: white;">Cleaner</th>
+          <th style="background-color: #6A80B9; color: white;">Email</th>
+          <th style="background-color: #6A80B9; color: white;">Location</th>
+          <th style="background-color: #6A80B9; color: white;">Organization</th>
+          <th style="background-color: #6A80B9; color: white;">Status</th>
+          <th style="background-color: #6A80B9; color: white;">Requested At</th>
+          <th style="background-color: #6A80B9; color: white;">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -20,12 +20,24 @@
           <td>{{ req.username }}</td>
           <td>{{ req.email }}</td>
           <td>{{ req.cleaner_location }}</td>
-          <td>{{ req.organization_name }}</td>
+          <td>{{ req.organization_location }}</td>
           <td>
             <span :class="getStatusClass(req.status)">{{ req.status }}</span>
           </td>
           <td>{{ formatDate(req.created_at) }}</td>
-          <td></td>
+          <td>
+            <button v-if="req.status === 'pending'" @click="acceptRequest(req.id)" class="btn btn-success btn-sm me-1">
+              Accept
+            </button>
+            <button v-if="req.status === 'pending'" @click="openRejectModal(req)" class="btn btn-warning btn-sm me-1"
+            >
+              Reject
+            </button>
+            <button v-if="req.status === 'rejected'" @click="deleteRequest(req.id)" class="btn btn-danger btn-sm"
+            >
+              Delete
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -84,7 +96,7 @@ const form = ref({
   username: '',
   email: '',
   cleaner_location: '',
-  organization_name: ''
+  organization_location: ''
 })
 
 const fetchReceivedCleanerRequests = async () => {
@@ -135,7 +147,7 @@ const submitCleaner = async () => {
       username: '',
       email: '',
       cleaner_location: '',
-      organization_name: ''
+      organization_location: ''
     }
     showForm.value = false
 
