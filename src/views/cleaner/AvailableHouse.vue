@@ -2,21 +2,21 @@
   <cleanerHeader />
   <div class="container mt-5">
     <div class="row">
-      <div v-for="org in organizations" :key="org.organization_id" class="col-md-6 col-lg-4 mb-4">
+      <div v-for="sr in serviceRequests" :key="sr.id" class="col-md-6 col-lg-4 mb-4">
         <div class="card h-100 shadow-sm border-0">
           <!-- Clickable image -->
           <img
-            v-if="org.organization_image && org.organization_image.match(/\.(jpeg|jpg|png|gif)$/i)"
-            :src="org.organization_image"
+            v-if="sr.organization_image && sr.organization_image.match(/\.(jpeg|jpg|png|gif)$/i)"
+            :src="sr.organization_image"
             alt="Organization Logo"
             class="card-img-top rounded-top"
             style="max-height: 180px; object-fit: cover; cursor: pointer"
-            @click="showOrganizationDetails(org)"
+            @click="showOrganizationDetails(sr)"
           />
           <div class="card-body">
-            <p class="mb-1"><strong>Location:</strong> {{ org.organization_location }}</p>
-            <p class="mb-1"><strong>start Date:</strong> {{ org.start_date }}</p>
-            <p class="mb-1"><strong>status: </strong><span style="color: green;">{{ org.status }}</span></p>
+            <p class="mb-1"><strong>Location:</strong> {{ sr.organization_location }}</p>
+            <p class="mb-1"><strong>start Date:</strong> {{ sr.start_date }}</p>
+            <p class="mb-1"><strong>status: </strong><span style="color: green;">{{ sr.status }}</span></p>
           </div>
         </div>
       </div>
@@ -31,7 +31,7 @@ import swal from 'sweetalert2'
 
 import cleanerHeader from './cleaner-header.vue'
 
-const organizations = ref([])
+const serviceRequests = ref([])
 
 const fetchApprovedOrganizations = async () => {
   try {
@@ -123,7 +123,7 @@ const fetchUserInfo = async () => {
   }
 }
 
-const requestService = async (org) => {
+const requestService = async (sr) => {
   const { value: formValues } = await swal.fire({
     html: `
       <style>
@@ -205,13 +205,13 @@ const requestService = async (org) => {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
-          organization: org.organization_id,
+          service_request: sr.id,
           ...formValues
         })
       });
 
       console.log('Request payload:', {
-        organization: org.organization_id,
+        service_request: sr.id,
         username: userInfo.value.username,
         email: userInfo.value.email,
         cleaner_location: formValues.cleaner_location
