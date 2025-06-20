@@ -13,6 +13,7 @@ import AvailableBooking from '@/views/organization/AvailableBooking.vue'
 import CleanerDashboard from '@/views/cleaner/cleaner-dashboard.vue'
 import AvailableHouse from '@/views/cleaner/AvailableHouse.vue'
 import MyRequest from '@/views/cleaner/my-request.vue'
+import CleanerRequest from '@/views/organization/CleanerRequest.vue'
 
 
 const routes = [
@@ -29,7 +30,8 @@ const routes = [
   { path: '/availablebooking', name: 'Booking', component: AvailableBooking },
   { path: '/cleaner-dashboard', name: 'CleanerDashboard', component: CleanerDashboard },
   { path: '/available-house', name: 'AvailableHouse', component: AvailableHouse },
-  { path: '/cleaner-request', name: 'CleanerRequest', component: MyRequest}
+  { path: '/cleaner-request', name: 'CleanerRequest', component: MyRequest},
+  { path: '/from-cleaner', name: 'FromCleaner', component: CleanerRequest }
   
 ]
 const router = createRouter({
