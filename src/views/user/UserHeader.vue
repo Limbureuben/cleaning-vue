@@ -16,17 +16,16 @@
       </nav>
     </header>
 
-    <div v-if="showNotifications" class="notification-popup">
+      <div v-if="showNotifications" class="notification-popup">
       <div class="notification-header">
         <strong>Notifications</strong>
-        <button class="close-btn" @click="showNotifications = false">×</button>
+        <button class="close-btn" @click="showNotifications = false">&times;</button>
       </div>
       <ul class="notification-list">
         <li v-if="notifications.length === 0">No notifications.</li>
         <li v-for="n in notifications" :key="n.id">
           <p><strong>{{ n.title }}</strong></p>
-          <p style="font-size: 13px;">{{ n.message }}</p>
-          <hr />
+          <p>{{ n.message }}</p>
         </li>
       </ul>
     </div>
@@ -184,34 +183,50 @@ nav ul li a:hover {
   padding: 2px 6px;
 }
 
+
+
+
 .notification-popup {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 300px;
-  max-height: 400px;
+  width: 400px;
+  max-height: 80vh;
   overflow-y: auto;
   background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   z-index: 1000;
+  font-family: Arial, sans-serif;
 }
 
 .notification-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 15px;
-  background-color: #f0f0f0;
-  border-bottom: 1px solid #e0e0e0;
+  padding: 15px 20px;
+  background-color: #6A80B9;
+  color: white;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.notification-header strong {
+  font-size: 1.2rem;
 }
 
 .close-btn {
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 24px;
+  color: white;
   cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.close-btn:hover {
+  transform: scale(1.1);
 }
 
 .notification-list {
@@ -221,12 +236,38 @@ nav ul li a:hover {
 }
 
 .notification-list li {
-  padding: 10px 15px;
+  padding: 15px 20px;
   border-bottom: 1px solid #e0e0e0;
+  transition: background-color 0.2s ease;
+}
+
+.notification-list li:hover {
+  background-color: #f5f5f5;
 }
 
 .notification-list li:last-child {
   border-bottom: none;
 }
 
+.notification-list li p {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.notification-list li p:first-child {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.notification-list li p:last-child {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.notification-list hr {
+  margin: 10px 0;
+  border: none;
+  border-top: 1px solid #e0e0e0;
+}
 </style>
