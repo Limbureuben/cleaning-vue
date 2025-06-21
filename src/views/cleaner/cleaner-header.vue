@@ -53,27 +53,27 @@
     </div>
 
     <div v-if="showReportForm" class="report-form-popup">
-    <div class="report-header">
-      <strong>Work Completion Report</strong>
-      <button class="close-btn" @click="showReportForm = false">&times;</button>
-    </div>
-    <form @submit.prevent="submitReport" class="report-form">
-      <div class="form-group">
-        <label for="date">Date Completed:</label>
-        <input type="date" id="date" v-model="report.date" required />
+      <div class="report-header">
+        <strong>Work Completion Report</strong>
+        <button class="close-btn" @click="showReportForm = false">&times;</button>
       </div>
-      <div class="form-group">
-        <label for="description">Description:</label>
-        <textarea id="description" v-model="report.description" rows="4" placeholder="Describe the work done or any problems"></textarea>
-      </div>
-      <div class="form-group">
-        <label for="file">Attach File (optional):</label>
-        <input type="file" id="file" @change="handleFileUpload" />
-      </div>
-      <div class="form-actions">
-        <button type="submit" class="submit-btn">Submit Report</button>
-      </div>
-    </form>
+      <form @submit.prevent="submitReport" class="report-form">
+        <div class="form-group">
+          <label for="date">Date Completed:</label>
+          <input type="date" id="date" v-model="report.date" required />
+        </div>
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <textarea id="description" v-model="report.description" rows="4" placeholder="Describe the work done or any problems"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="file">Attach File (optional):</label>
+          <input type="file" id="file" @change="handleFileUpload" />
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="submit-btn">Submit Report</button>
+        </div>
+      </form>
   </div>
 </template>
 
@@ -494,36 +494,105 @@ nav a:hover {
   flex-grow: 1;
 }
 
-
-
-.report-btn {
-  background: none;
-  border: none;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 1rem;
-  padding: 0;
-  margin: 0 10px;
-}
-
-.report-btn:hover {
-  text-decoration: underline;
-}
-
 .report-form-popup {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
   width: 450px;
   max-height: 80vh;
   overflow-y: auto;
-  background-color: white;
+  background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transform: translate(-50%, -50%);
   z-index: 1000;
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.report-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #06923E;
+  color: white;
+  padding: 16px 24px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.close-btn:hover {
+  transform: scale(1.1);
+}
+
+.report-form {
+  padding: 20px 24px 30px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #333;
+  font-size: 1rem;
+}
+
+.form-group input[type="date"],
+.form-group input[type="file"],
+.form-group textarea {
+  padding: 10px 12px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.form-group input[type="date"]:focus,
+.form-group input[type="file"]:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #06923E;
+  box-shadow: 0 0 5px rgba(6, 146, 62, 0.5);
+}
+
+.form-group textarea {
+  min-height: 90px;
+}
+
+.form-actions {
+  text-align: right;
+}
+
+.submit-btn {
+  background-color: #06923E;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #057a2a;
+}
 </style>
