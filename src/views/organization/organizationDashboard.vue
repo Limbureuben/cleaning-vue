@@ -11,11 +11,10 @@
           <div class="card shadow border-0 hover-effect">
             <div class="card-body text-center d-flex flex-column justify-content-between">
               <div>
-                <i :class="card.icon" class="card-icon mb-3"></i>
+                <i :class="card.icon" class="card-icon mb-3 fs-1 text-primary"></i>
                 <h5 class="card-title fw-bold">{{ card.title }}</h5>
-                <p class="card-text text-muted">{{ card.description }}</p>
+                <h1 class="display-5 fw-bold">{{ card.count }}</h1>
               </div>
-              <button class="btn mt-3 animated-btn">View Details</button>
             </div>
           </div>
         </div>
@@ -24,19 +23,60 @@
   </div>
 </template>
 
-
 <script setup>
 import { ref, onMounted } from 'vue';
 import OrganizationHeader from './OrganizationHeader.vue';
 
-const cards = [
-  { title: "TOTAL CLEANER", description: "Manage all Accounts of Registered users in this platform.", icon: "fas fa-users" },
-  { title: "AVAILABLE BOOKING", description: "These are the Registered Companies that ", icon: "fas fa-building" },
-  { title: "BOOKING SERVICES", description: "Check and Manage bookings available in different companies", icon: "fas fa-calendar-check" },
-  { title: "MESSAGES", description: "Check Messages sent by the users", icon: "fas fa-envelope" }
-];
-
 const totalCleaners = ref(0)
+
+onMounted(() => {
+  fetchTotalCleaners();
+});
+
+const fetchTotalCleaners = async () => {
+  try {
+    const res = await fetch('http://localhost:8000/api/staff/cleaners/', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    const data = await res.json()
+    totalCleaners.value = data.total_cleaners
+  } catch (err) {
+    console.error('Failed to fetch cleaner count', err)
+  }
+}
+
+const cards = ref([
+  {
+    title: "TOTAL CLEANERS",
+    icon: "fas fa-users",
+    count: totalCleaners
+  },
+  {
+    title: "AVAILABLE BOOKING",
+    icon: "fas fa-building",
+    count: ref(0) // You can replace with actual data later
+  },
+  {
+    title: "BOOKING SERVICES",
+    icon: "fas fa-calendar-check",
+    count: ref(0)
+  },
+  {
+    title: "MESSAGES",
+    icon: "fas fa-envelope",
+    count: ref(0)
+  }
+])
+
+// const cards = [
+//   { title: "TOTAL CLEANER", description: "Manage all Accounts of Registered users in this platform.", icon: "fas fa-users" },
+//   { title: "AVAILABLE BOOKING", description: "These are the Registered Companies that ", icon: "fas fa-building" },
+//   { title: "BOOKING SERVICES", description: "Check and Manage bookings available in different companies", icon: "fas fa-calendar-check" },
+//   { title: "MESSAGES", description: "Check Messages sent by the users", icon: "fas fa-envelope" }
+// ];
 
 
 </script>

@@ -20,7 +20,7 @@
           </div>
         </div>
       </div>
-      <div class="d-flex justify-content-center mt-1 gap-2">
+      <div class="d-flex justify-content-center mt-2gap-2">
         <button
           class="btn btn-outline-primary"
           @click="goToPage(currentPage - 1)"

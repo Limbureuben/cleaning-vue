@@ -68,7 +68,7 @@
             </div>
           </div>
         </div>
-    <button 
+    <button
       class="btn rounded-circle position-absolute"
       style="bottom: 100px; right: -30px; width: 45px; height: 45px; font-size: 24px; line-height: 1;"
       @click="showForm = true"
