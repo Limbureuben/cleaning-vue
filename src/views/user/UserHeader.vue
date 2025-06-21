@@ -5,16 +5,32 @@
       <ul>
         <li><router-link to="/user-dashboard">Dashboard</router-link></li>
         <li>
-          <router-link to="/notifications" class="notification-icon">
+          <span class="notification-icon" @click="toggleNotificationPopup">
             <i class="fas fa-bell"></i>
             <span v-if="unreadCount > 0" class="badge">{{ unreadCount }}</span>
-          </router-link>
+          </span>
         </li>
         <li><button @click="logout" class="logout-button">Logout</button></li>
       </ul>
     </nav>
+
+    <div v-if="showNotifications" class="notification-popup">
+      <div class="notification-header">
+        <strong>Notifications</strong>
+        <button class="close-btn" @click="showNotifications = false">×</button>
+      </div>
+      <ul class="notification-list">
+        <li v-if="notifications.length === 0">No notifications.</li>
+        <li v-for="n in notifications" :key="n.id">
+          <p><strong>{{ n.title }}</strong></p>
+          <p style="font-size: 13px;">{{ n.message }}</p>
+          <hr />
+        </li>
+      </ul>
+    </div>
   </header>
 </template>
+
 
 
 <script>
@@ -24,7 +40,9 @@ export default {
   data() {
   return {
     organizationName: 'AIR BNB',
-    unreadCount: 0
+    unreadCount: 0,
+    notifications: [],
+    showNotifications: false
   }
 },
 mounted() {
@@ -47,11 +65,12 @@ methods: {
       this.$router.push('/');
     }, 1500);
   },
+
   async fetchNotificationCount() {
     try {
       const res = await fetch('http://localhost:8000/api/notifications/unread-count/', {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
           'Content-Type': 'application/json'
         }
       });
@@ -60,7 +79,26 @@ methods: {
         this.unreadCount = data.unread_count;
       }
     } catch (error) {
-      console.error('Failed to fetch notifications count:', error);
+      console.error('Notification count error:', error);
+    }
+  },
+
+  async toggleNotificationPopup() {
+    this.showNotifications = !this.showNotifications;
+    if (this.showNotifications) {
+      try {
+        const res = await fetch('http://localhost:8000/api/notifications/', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        if (res.ok) {
+          this.notifications = await res.json();
+        }
+      } catch (error) {
+        console.error('Failed to fetch notifications:', error);
+      }
     }
   }
 }
