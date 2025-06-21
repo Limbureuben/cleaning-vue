@@ -1,274 +1,195 @@
 <template>
   <cleanerHeader />
   <div class="container mt-5">
-    <div class="row">
-      <div v-for="org in organizations" :key="org.id" class="col-md-6 col-lg-4 mb-4">
-        <div class="card h-100 shadow-sm border-0">
-          <!-- Clickable image -->
-          <img
-            v-if="org.organization_image"
-            :src="getFullImageUrl(org.organization_image)"
-            alt="Organization Logo"
-            class="card-img-top rounded-top"
-            style="max-height: 180px; object-fit: cover; cursor: pointer"
-            @click="showOrganizationDetails(org)"
-            />
-          <div class="card-body">
-            <p class="mb-1"><strong>Location:</strong> {{ org.organizaion_location }}</p>
-            <p class="mb-1"><strong>start Date:</strong> {{ org.start_date }} 2 days</p>
-          </div>
-        </div>
-      </div>
+    <div class="table-responsive">
+      <table class="table table-striped table-hover shadow-sm">
+        <thead>
+          <tr>
+            <th style="background-color: #06923E; color: white;">#</th>
+            <th style="background-color: #06923E; color: white;">CLIENT</th>
+            <th style="background-color: #06923E; color: white;">LOCATION</th>
+            <th style="background-color: #06923E; color: white;">STATUS</th>
+            <th style="background-color: #06923E; color: white;">REQUESTED ON</th>
+            <th style="background-color: #06923E; color: white;">ACTION</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(request, index) in cleanerRequests" :key="request.id">
+            <td>{{ index + 1 }}</td>
+            <td>{{ request.service_request_username }}</td>
+            <td>{{ request.cleaner_location }}</td>
+            <td>
+              <span :class="getStatusClass(request.status)" class="badge">
+                {{ request.status }}
+              </span>
+            </td>
+            <td>{{ formatDate(request.created_at) }}</td>
+            <td>
+              <button 
+                v-if="request.status === 'pending'"
+                @click="cancelRequest(request.id)" 
+                class="btn btn-danger btn-sm"
+              >
+                Cancel
+              </button>
+              <button 
+                  v-if="request.status === 'cancelled'"
+                  @click="deleteRequest(request.id)" 
+                  class="btn btn-outline-danger btn-sm ms-2"
+                  title="Delete Request"
+                >
+                  <i class="fas fa-trash"></i>
+                </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div v-if="cleanerRequests.length === 0" class="alert alert-info text-center">
+      No requests submitted yet.
     </div>
   </div>
 </template>
 
-
 <script setup>
 import { ref, onMounted } from 'vue'
+import cleanerHeader from './cleaner-header.vue';
 import swal from 'sweetalert2'
 
-import cleanerHeader from './cleaner-header.vue'
+const cleanerRequests = ref([])
 
-const organizations = ref([])
-
-const fetchApprovedOrganizations = async () => {
+const fetchCleanerRequests = async () => {
   try {
-    const response = await fetch('http://localhost:8000/api/fetch-to-cleaner/', {
-      method: 'GET',
+    const res = await fetch('http://localhost:8000/api/cleaner-requests/from-cleaner/', {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     });
 
-    if (!response.ok) throw new Error('Failed to fetch data');
+    if (!res.ok) throw new Error('Failed to fetch');
 
-    const data = await response.json();
-    organizations.value = data;
+    cleanerRequests.value = await res.json();
   } catch (error) {
-    console.error('Error fetching organizations:', error);
+    console.error('Error fetching cleaner requests:', error)
   }
 }
 
-const showOrganizationDetails = (org) => {
-  const services = org.services_list?.length
-    ? `<ul style="padding-left: 20px; margin: 0; list-style-type: disc; color: #4a90e2;">${org.services_list.map(s => `<li style="margin-bottom: 4px;">${s}</li>`).join('')}</ul>`
-    : '<em style="color: #999;">No services listed</em>';
-
-  const content = `
-    <div style="
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      font-size: 16px;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      padding: 15px 20px;
-      color: #444;
-      line-height: 1.6;
-      background: #f9f9f9;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    ">
-      <div style="flex: 1 1 48%; padding: 10px 15px; border-right: 1px solid #ddd;">
-        <p><strong style="color: #2c3e50;">Price:</strong> <span style="color: #555;">${org.start_date}</span></p>
-        <p><strong style="color: #2c3e50;">Phone:</strong> <span style="color: #555;">${org.end_date}</span></p>
-        <p><strong style="color: #2c3e50;">Address:</strong> <span style="color: #555;">${org.organization_address}</span></p>
-      </div>
-      <div style="flex: 1 1 48%; padding: 10px 15px;">
-        <p><strong style="color: #2c3e50;">Services:</strong> ${services}</p>
-      </div>
-    </div>
-  `;
-
-  swal.fire({
-    html: content,
-    width: 650,
-    background: '#ffffff',
-    showCancelButton: true,
-    confirmButtonText: 'Request Service',
-    cancelButtonText: 'Close',
-    customClass: {
-      popup: 'custom-popup',
-      confirmButton: 'custom-confirm-button',
-      cancelButton: 'custom-cancel-button'
-    },
-  }).then((result) => {
-    if (result.isConfirmed) {
-      requestService(org);
-    }
-  });
+const formatDate = (dateStr) => {
+  const d = new Date(dateStr)
+  return d.toLocaleString()
 }
 
-const userInfo = ref({
-  username: '',
-  email: '',
-  cleaner_location: '',
-});
-
-const fetchUserInfo = async () => {
-  try {
-    const response = await fetch('http://localhost:8000/api/user-profile/', {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
-    });
-
-    if (!response.ok) throw new Error('Failed to fetch user info');
-    const data = await response.json();
-    userInfo.value.username = data.username;
-    userInfo.value.email = data.email;
-    userInfo.value.cleaner_location = '';
-  } catch (error) {
-    console.error('Error fetching user info:', error);
+const getStatusClass = (status) => {
+  switch (status) {
+    case 'pending': return 'text-warning fw-bold'
+    case 'approved': return 'text-success fw-bold'
+    case 'rejected': return 'text-danger fw-bold'
+    case 'completed': return 'text-primary fw-bold'
+    case 'cancelled': return 'text-danger fw-bold'
+    default: return ''
   }
 }
 
-const requestService = async (org) => {
-  const { value: formValues } = await swal.fire({
-    html: `
-      <style>
-        .swal-form-container {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 12px;
-          justify-content: space-between;
-          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .swal-form-group {
-          width: 48%;
-          display: flex;
-          flex-direction: column;
-        }
-        .swal-form-group label {
-          margin-bottom: 4px;
-          font-size: 13px;
-          color: #333;
-        }
-        .swal-form-container input {
-          padding: 10px 12px;
-          border: 1.5px solid #ccc;
-          border-radius: 6px;
-          font-size: 14px;
-          transition: border-color 0.3s ease;
-          box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .swal-form-container input:focus {
-          border-color: #4a90e2;
-          outline: none;
-          box-shadow: 0 0 8px rgba(74, 144, 226, 0.6);
-        }
-        .swal-form-container input[readonly] {
-          background-color: #f5f5f5;
-          color: #666;
-          cursor: not-allowed;
-        }
-      </style>
-      <div class="swal-form-container">
-        <div class="swal-form-group">
-          <label for="swal-username">Username</label>
-          <input id="swal-username" value="${userInfo.value.username}" readonly>
-        </div>
-        <div class="swal-form-group">
-          <label for="swal-email">Email</label>
-          <input id="swal-email" type="email" value="${userInfo.value.email}" readonly>
-        </div>
-        <div class="swal-form-group">
-          <label for="swal-phone">Clener_location</label>
-          <input id="swal-cleaner_location" type="tel" placeholder="Your location">
-        </div>
-      </div>
-    `,
-    focusConfirm: false,
+const cancelRequest = async (requestId) => {
+  const confirm = await swal.fire({
+    title: 'Cancel Request?',
+    text: 'Do you really want to cancel this cleaning request?',
+    icon: 'warning',
     showCancelButton: true,
-    confirmButtonText: "Submit Request",
-    preConfirm: () => {
-      const cleaner_location = document.getElementById('swal-cleaner_location').value;
-      if (!cleaner_location) {
-        swal.showValidationMessage('Location name is required');
-        return false;
-      }
-
-      return {
-        username: userInfo.value.username,
-        email: userInfo.value.email,
-        cleaner_location
-      };
-    }
+    confirmButtonText: 'Yes, Cancel it',
+    cancelButtonText: 'No'
   });
 
-  if (formValues) {
+  if (confirm.isConfirmed) {
     try {
-      const response = await fetch('http://localhost:8000/api/send-service-request/', {
-        method: 'POST',
+      const response = await fetch(`http://localhost:8000/api/cancel-cleaner-request/${requestId}/`, {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('token')}`
-        },
-        body: JSON.stringify({
-          organization: org.id,
-          ...formValues
-        })
+        }
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        swal.fire('Cancelled', data.detail, 'success');
+        fetchCleanerRequests();  // Refresh the table
+      } else {
+        swal.fire('Error', data.detail || 'Failed to cancel request.', 'error');
+      }
+    } catch (error) {
+      swal.fire('Network Error', 'Please try again later.', 'error');
+    }
+  }
+};
+
+const deleteRequest = async (requestId) => {
+  const confirm = await swal.fire({
+    title: 'Delete Request?',
+    text: 'This action will permanently delete the request.',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, delete it',
+    cancelButtonText: 'No'
+  });
+
+  if (confirm.isConfirmed) {
+    try {
+      const response = await fetch(`http://localhost:8000/api/delete-cleaner-request/${requestId}/`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
       });
 
       if (response.ok) {
-        swal.fire({
-          icon: 'success',
-          title: 'Request Sent!',
-          text: `${formValues.username}, your request has been submitted.`
-        });
+        swal.fire('Deleted!', 'Request has been removed.', 'success');
+        fetchCleanerRequests();  // Refresh list
       } else {
         const data = await response.json();
-        swal.fire({
-          icon: 'error',
-          title: 'Request Failed',
-          text: data.detail || 'Something went wrong.'
-        });
+        swal.fire('Error', data.detail || 'Could not delete request.', 'error');
       }
-    } catch (err) {
-      swal.fire({
-        icon: 'error',
-        title: 'Network Error',
-        text: 'Could not send request.'
-      });
+    } catch (error) {
+      swal.fire('Network Error', 'Please try again later.', 'error');
     }
   }
 };
 
 onMounted(() => {
-  fetchUserInfo();
-  fetchApprovedOrganizations();
-});
-
-const getFullImageUrl = (path) => {
-  return path.startsWith('http') ? path : `http://localhost:8000${path}`;
-};
-
+  fetchCleanerRequests()
+})
 </script>
 
 <style scoped>
-.card {
-  background-color: #ffffff;
-  border-radius: 0px;
+.table {
+  font-size: 15px;
+}
+
+.badge {
+  font-size: 0.9em;
+  padding: 0.5em 0.7em;
+}
+
+h2 {
+  color: #333;
+  font-weight: 600;
+}
+
+.table-responsive {
+  border-radius: 8px;
   overflow: hidden;
-  transition: all 0.3s ease;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+.btn-sm {
+  font-size: 0.8em;
+  padding: 0.25em 0.5em;
 }
 
-.btn {
+.table-class {
   background-color: #6A80B9;
-  border: none;
 }
-
-.btn:hover {
-  background-color: #5c72aa;
-}
-
-
 </style>

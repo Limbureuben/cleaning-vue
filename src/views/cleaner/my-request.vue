@@ -1,31 +1,47 @@
 <template>
-  <cleanerHeader />
-  <div class="container mt-5">
+    <cleanerHeader/>
+  <div class="table-container">
+    <div class="header-container">
+      <h2 class="table-title">MY REQUEST</h2>
 
-    <div class="table-responsive">
-      <table class="table table-striped table-hover shadow-sm">
+      <!-- Search Input -->
+      <div class="search-container">
+        <input
+          v-model="searchTerm"
+          type="text"
+          placeholder="Filter by name"
+          class="search-field"
+        />
+      </div>
+    </div>
+
+    <div class="table-wrapper">
+      <table class="custom-table">
         <thead>
-          <tr>
-            <th style="background-color: #6A80B9; color: white;">#</th>
-            <th style="background-color: #6A80B9; color: white;">CLIENT</th>
-            <th style="background-color: #6A80B9; color: white;">LOCATION</th>
-            <th style="background-color: #6A80B9; color: white;">STATUS</th>
-            <th style="background-color: #6A80B9; color: white;">REQUESTED ON</th>
-            <th style="background-color: #6A80B9; color: white;">ACTION</th>
+          <tr class="mat-header-row">
+           <th class="mat-header-cell">#</th>
+            <th class="mat-header-cell">CLIENT</th>
+            <th class="mat-header-cell">LOCATION</th>
+            <th class="mat-header-cell">STATUS</th>
+            <th class="mat-header-cell">REQESTED ON</th>
+            <th class="mat-header-cell">ACTIONS</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(request, index) in cleanerRequests" :key="request.id">
-            <td>{{ index + 1 }}</td>
-            <td>{{ request.service_request_username }}</td>
-            <td>{{ request.cleaner_location }}</td>
-            <td>
+          <tr
+            v-for="(request, index) in cleanerRequests"
+            :key="request.id"
+          >
+            <td class="mat-cell">{{ index + 1 }}</td>
+            <td class="mat-cell">{{ request.service_request_username }}</td>
+            <td class="mat-cell">{{ request.cleaner_location }}</td>
+            <td class="mat-cell">
               <span :class="getStatusClass(request.status)" class="badge">
                 {{ request.status }}
               </span>
             </td>
-            <td>{{ formatDate(request.created_at) }}</td>
-            <td>
+            <td class="mat-cell">{{ formatDate(request.created_at) }}</td>
+            <td class="mat-cell">
               <button 
                 v-if="request.status === 'pending'"
                 @click="cancelRequest(request.id)" 
@@ -43,12 +59,11 @@
                 </button>
             </td>
           </tr>
+          <tr v-if="cleanerRequests.length === 0">
+            <td class="mat-cell" colspan="5">No matching reports found.</td>
+          </tr>
         </tbody>
       </table>
-    </div>
-
-    <div v-if="cleanerRequests.length === 0" class="alert alert-info text-center">
-      No requests submitted yet.
     </div>
   </div>
 </template>
@@ -57,6 +72,7 @@
 import { ref, onMounted } from 'vue'
 import cleanerHeader from './cleaner-header.vue';
 import swal from 'sweetalert2'
+import { useRouter } from 'vue-router'
 
 const cleanerRequests = ref([])
 
@@ -166,31 +182,73 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.table {
-  font-size: 15px;
-}
-
-.badge {
-  font-size: 0.9em;
-  padding: 0.5em 0.7em;
-}
-
-h2 {
-  color: #333;
-  font-weight: 600;
-}
-
-.table-responsive {
+.table-container {
+  margin: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
   border-radius: 8px;
-  overflow: hidden;
+  box-shadow: 0 2px 8px #06923E;
+  min-height: 490px;
 }
 
-.btn-sm {
-  font-size: 0.8em;
-  padding: 0.25em 0.5em;
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-.table-class {
-  background-color: #6A80B9;
+.table-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #06923E;
+}
+
+.search-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.search-field {
+  width: 300px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.mat-header-row {
+  background-color: #06923E;
+}
+
+.mat-header-cell {
+  background-color: #06923E;
+  color: white;
+  font-weight: bold;
+  padding: 12px;
+  text-align: left;
+}
+
+.mat-cell {
+  background-color: white;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.active {
+  color: green;
+}
+
+.inactive {
+  color: red;
+}
+
+.confirmed-icon {
+  color: green;
 }
 </style>

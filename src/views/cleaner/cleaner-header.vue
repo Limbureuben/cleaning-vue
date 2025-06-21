@@ -56,6 +56,7 @@
 <script>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import Swal from 'sweetalert2'
 
 export default {
   name: 'HeaderComponent',
@@ -133,7 +134,7 @@ export default {
         text: 'You are about to delete this notification.',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
+        confirmButtonColor: '#6A80B9',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!',
       });
@@ -219,7 +220,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #6A80B9;
+  background-color: #06923E;
   color: white;
 }
 
@@ -321,7 +322,7 @@ nav a:hover {
   justify-content: space-between;
   align-items: center;
   padding: 15px 20px;
-  background-color: #6A80B9;
+  background-color: #06923E;
   color: white;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;

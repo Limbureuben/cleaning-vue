@@ -31,7 +31,7 @@ const routes = [
   { path: '/cleaner-dashboard', name: 'CleanerDashboard', component: CleanerDashboard },
   { path: '/available-house', name: 'AvailableHouse', component: AvailableHouse },
   { path: '/cleaner-request', name: 'CleanerRequest', component: MyRequest},
-  { path: '/from-cleaner', name: 'FromCleaner', component: CleanerRequest }
+  { path: '/from-cleaner', name: 'FromCleaner', component: CleanerRequest },
   
 ]
 const router = createRouter({
