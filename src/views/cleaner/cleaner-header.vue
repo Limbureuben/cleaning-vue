@@ -31,6 +31,9 @@
         <li v-for="n in notifications" :key="n.id">
           <p><strong>{{ n.title }}</strong></p>
           <p>{{ n.message }}</p>
+          <button class="delete-btn" @click="deleteNotification(n.id)">
+            <i class="fas fa-trash-alt"></i>
+          </button>
         </li>
       </ul>
     </div>
@@ -124,6 +127,52 @@ export default {
       }
     }
 
+    const deleteNotification = async (id) => {
+      const result = await Swal.fire({
+        title: 'Are you sure?',
+        text: 'You are about to delete this notification.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+      });
+
+      if (result.isConfirmed) {
+        try {
+          const res = await fetch(`http://localhost:8000/api/notifications/${id}/delete/`, {
+            method: 'DELETE',
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          });
+
+          if (res.status === 204) {
+            notifications.value = notifications.value.filter(n => n.id !== id);
+            unreadCount.value--;
+
+            Swal.fire({
+              title: 'Deleted!',
+              text: 'The notification has been deleted.',
+              icon: 'success',
+              timer: 1500,
+              showConfirmButton: false
+            });
+          }
+        } catch (error) {
+          console.error('Failed to delete notification:', error);
+          Swal.fire({
+            title: 'Error',
+            text: 'Something went wrong while deleting.',
+            icon: 'error',
+            confirmButtonText: 'OK',
+          });
+        }
+      }
+    };
+
+
+
     const toggleProfileCard = () => {
       showProfileCard.value = !showProfileCard.value
       if (showProfileCard.value) {
@@ -158,6 +207,7 @@ export default {
       profile,
       toggleProfileCard,
       closePopups,
+      deleteNotification
     }
   }
 }
@@ -330,4 +380,27 @@ nav a:hover {
   color: #333;
   margin: 8px 0;
 }
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #fe4f2d;
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 16px;
+  transition: color 0.2s ease;
+}
+
+.delete-btn:hover {
+  color: darkred;
+}
+.notification-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.notification-content {
+  flex-grow: 1;
+}
+
 </style>
