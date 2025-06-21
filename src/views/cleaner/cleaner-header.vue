@@ -4,7 +4,6 @@
       <router-link to="/cleaner-dashboard">Dashboard</router-link>
       <router-link to="/available-house">Jobs</router-link>
       <router-link to="/cleaner-request">Request</router-link>
-      <router-link to="#">Profile</router-link>
     </nav>
 
     <div class="actions">
@@ -12,7 +11,7 @@
         <i class="fas fa-bell"></i>
         <span v-if="unreadCount > 0" class="badge">{{ unreadCount }}</span>
       </span>
-      <span class="profile-icon" @click="goToProfile" title="View Profile">
+      <span class="profile-icon" @click="toggleProfileCard" title="View Profile">
         <i class="fas fa-user-circle"></i>
       </span>
       <button @click="logout" class="logout-btn">Logout</button>
@@ -36,15 +35,15 @@
       </ul>
     </div>
 
+    <div v-if="showProfileCard" class="overlay" @click="closePopups"></div>
     <div v-if="showProfileCard" class="profile-card-popup">
     <div class="profile-header">
       <strong>Your Profile</strong>
       <button class="close-btn" @click="showProfileCard = false">&times;</button>
     </div>
     <div class="profile-content">
-      <p><strong>Name:</strong> {{ profile.name }}</p>
+      <p><strong>Name:</strong> {{ profile.username }}</p>
       <p><strong>Email:</strong> {{ profile.email }}</p>
-      <p><strong>Role:</strong> {{ profile.role }}</p>
       <!-- Add more profile fields as needed -->
     </div>
   </div>
@@ -164,7 +163,6 @@ export default {
 }
 </script>
 
-
 <style scoped>
 .header {
   display: flex;
@@ -222,13 +220,24 @@ nav a:hover {
   position: absolute;
   top: -6px;
   right: -10px;
-  background-color: red;
+  background-color: rgb(10, 173, 72);
   color: white;
   font-size: 11px;
   border-radius: 50%;
   padding: 2px 6px;
 }
 
+.profile-icon {
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  margin-left: 15px;
+  vertical-align: middle;
+}
+
+.profile-icon:hover {
+  color: #ccc;
+}
 
 .overlay {
   position: fixed;
@@ -236,13 +245,14 @@ nav a:hover {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4); /* semi-transparent black */
-  z-index: 999; /* below popup */
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 999;
 }
 
-.notification-popup {
+.notification-popup,
+.profile-card-popup {
   position: fixed;
-  top: 30%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 600px;
@@ -251,10 +261,12 @@ nav a:hover {
   background-color: white;
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  z-index: 1000; /* above overlay */
+  z-index: 1000;
+  font-family: Arial, sans-serif;
 }
 
-.notification-header {
+.notification-header,
+.profile-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -263,10 +275,6 @@ nav a:hover {
   color: white;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
-}
-
-.notification-header strong {
-  font-size: 1.2rem;
 }
 
 .close-btn {
@@ -282,14 +290,18 @@ nav a:hover {
   transform: scale(1.1);
 }
 
+.notification-list,
+.profile-content {
+  padding: 15px 20px;
+}
+
 .notification-list {
   list-style-type: none;
-  padding: 0;
   margin: 0;
 }
 
 .notification-list li {
-  padding: 15px 20px;
+  padding: 10px 0;
   border-bottom: 1px solid #e0e0e0;
   transition: background-color 0.2s ease;
 }
@@ -300,11 +312,6 @@ nav a:hover {
 
 .notification-list li:last-child {
   border-bottom: none;
-}
-
-.notification-list li p {
-  margin: 0;
-  line-height: 1.4;
 }
 
 .notification-list li p:first-child {
@@ -318,22 +325,9 @@ nav a:hover {
   color: #666;
 }
 
-.notification-list hr {
-  margin: 10px 0;
-  border: none;
-  border-top: 1px solid #e0e0e0;
+.profile-content p {
+  font-size: 1rem;
+  color: #333;
+  margin: 8px 0;
 }
-
-.profile-icon {
-  color: white;
-  font-size: 22px;
-  cursor: pointer;
-  margin-left: 15px;
-  vertical-align: middle;
-}
-
-.profile-icon:hover {
-  color: #ccc;
-}
-
 </style>
