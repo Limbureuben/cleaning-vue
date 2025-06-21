@@ -188,18 +188,18 @@ const submitForm = async () => {
   top: 0px;
   background: rgba(255, 255, 255, 0.95);
   min-height: 460px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, #06923E 0px 6px 6px;
   padding: 30px;
   transition: all 0.3s ease;
 }
 
 .register-organization:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 15px 35px #06923E;
 }
 
 h4 {
-  color: #6A80B9;
+  color: #06923E;
   font-weight: bold;
   padding-top: 0px;
   text-transform: uppercase;
@@ -224,12 +224,12 @@ h4 {
 }
 
 .form-control:focus {
-  border-color: #6A80B9;
-  box-shadow: 0 0 0 3px rgba(106, 128, 185, 0.2);
+  border-color: #06923E;
+  box-shadow: 0 0 0 3px #06923E;
 }
 
 .btn-primary {
-  background-color: #6A80B9;
+  background-color: #06923E;
   border: none;
   border-radius: 4px;
   padding: 0.35rem 2.5rem;
@@ -240,20 +240,20 @@ h4 {
 }
 
 .btn-primary:hover {
-  background-color: #5A70A9;
+  background-color: #06923E;
   transform: translateY(-2px);
   box-shadow: 0 6px 8px rgba(106, 128, 185, 0.3);
 }
 
 .container-dashboard {
-  background-image: url('../../assets/images/wonaclean.jpg');
+  /* background-image: url('../../assets/images/wonaclean.jpg'); */
   background-size: cover;
   background-position: center;
   min-height: 88vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding-top: 40px;
+  padding-top: 20px;
 }
 
 .container-dashboard::before {
