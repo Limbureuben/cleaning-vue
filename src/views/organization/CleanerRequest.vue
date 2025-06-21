@@ -163,7 +163,7 @@ const getStatusClass = (status) => {
 
 const acceptRequest = async (id) => {
   try {
-    const res = await fetch(`http://localhost:8000/api/cleaner-requests/${id}/accept/`, {
+    const res = await fetch(`http://localhost:8000/api/cleaner-requests/${id}/approve/`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -172,7 +172,7 @@ const acceptRequest = async (id) => {
     })
     if (!res.ok) throw new Error('Failed to accept request')
     swal.fire('Accepted', 'Cleaner request accepted successfully', 'success')
-    fetchRequests()
+    fetchReceivedCleanerRequests()
   } catch (error) {
     swal.fire('Error', error.message, 'error')
   }
@@ -208,7 +208,7 @@ const submitReject = async () => {
     if (!res.ok) throw new Error('Failed to reject request')
     swal.fire('Rejected', 'Cleaner request rejected and notified', 'success')
     closeRejectModal()
-    fetchRequests()
+    fetchReceivedCleanerRequests()
   } catch (error) {
     swal.fire('Error', error.message, 'error')
   }
