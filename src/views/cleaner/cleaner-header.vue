@@ -12,6 +12,9 @@
         <i class="fas fa-bell"></i>
         <span v-if="unreadCount > 0" class="badge">{{ unreadCount }}</span>
       </span>
+      <span class="profile-icon" @click="goToProfile" title="View Profile">
+        <i class="fas fa-user-circle"></i>
+      </span>
       <button @click="logout" class="logout-btn">Logout</button>
     </div>
   </header>
@@ -32,6 +35,19 @@
         </li>
       </ul>
     </div>
+
+    <div v-if="showProfileCard" class="profile-card-popup">
+    <div class="profile-header">
+      <strong>Your Profile</strong>
+      <button class="close-btn" @click="showProfileCard = false">&times;</button>
+    </div>
+    <div class="profile-content">
+      <p><strong>Name:</strong> {{ profile.name }}</p>
+      <p><strong>Email:</strong> {{ profile.email }}</p>
+      <p><strong>Role:</strong> {{ profile.role }}</p>
+      <!-- Add more profile fields as needed -->
+    </div>
+  </div>
 </template>
 
 
@@ -44,6 +60,16 @@ export default {
   setup() {
     const router = useRouter()
     const unreadCount = ref(0)
+
+    const showNotifications = ref(false)
+    const notifications = ref([])
+
+    const showProfileCard = ref(false)
+    const profile = ref({
+      name: '',
+      email: '',
+      role: ''
+    })
 
     const fetchUnreadNotifications = async () => {
       try {
@@ -61,8 +87,7 @@ export default {
       }
     }
 
-  const showNotifications = ref(false)
-  const notifications = ref([])
+
 
   const toggleNotificationPopup = async () => {
     showNotifications.value = !showNotifications.value;
@@ -81,7 +106,38 @@ export default {
         console.error('Failed to fetch notifications:', error);
       }
     }
+    if (showNotifications.value) showProfileCard.value = false;
   }
+
+  const fetchProfile = async () => {
+      try {
+        const res = await fetch('http://localhost:8000/api/user-profile/', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        })
+        if (res.ok) {
+          const data = await res.json()
+          profile.value = data
+        }
+      } catch (error) {
+        console.error('Failed to fetch profile:', error)
+      }
+    }
+
+    const toggleProfileCard = () => {
+      showProfileCard.value = !showProfileCard.value
+      if (showProfileCard.value) {
+        fetchProfile()
+        showNotifications.value = false
+      }
+    }
+
+    const closePopups = () => {
+      showNotifications.value = false
+      showProfileCard.value = false
+    }
+
     const logout = () => {
       localStorage.removeItem('token')
       localStorage.removeItem('role')
@@ -97,7 +153,12 @@ export default {
       unreadCount,
       showNotifications,
       notifications,
-      toggleNotificationPopup
+      toggleNotificationPopup,
+      unreadCount,
+      showProfileCard,
+      profile,
+      toggleProfileCard,
+      closePopups,
     }
   }
 }
@@ -261,6 +322,18 @@ nav a:hover {
   margin: 10px 0;
   border: none;
   border-top: 1px solid #e0e0e0;
+}
+
+.profile-icon {
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  margin-left: 15px;
+  vertical-align: middle;
+}
+
+.profile-icon:hover {
+  color: #ccc;
 }
 
 </style>
