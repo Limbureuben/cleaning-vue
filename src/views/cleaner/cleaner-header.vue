@@ -52,6 +52,7 @@
     </div>
     </div>
 
+    <div v-if="showReportForm" class="overlay" @click="showReportForm = false"></div>
     <div v-if="showReportForm" class="report-form-popup">
       <div class="report-header">
         <strong>Work Completion Report</strong>
@@ -59,11 +60,9 @@
       </div>
       <form @submit.prevent="submitReport" class="report-form">
         <div class="form-group">
-          <label for="date">Date Completed:</label>
           <input type="date" id="date" v-model="report.date" required />
         </div>
         <div class="form-group">
-          <label for="description">Description:</label>
           <textarea id="description" v-model="report.description" rows="4" placeholder="Describe the work done or any problems"></textarea>
         </div>
         <div class="form-group">
@@ -231,21 +230,39 @@ export default {
     }
 
 
+    const openReportForm = (serviceRequestId) => {
+      report.value = {
+        date: '',
+        description: '',
+        file: null,
+        service_request: serviceRequestId
+      }
+      showReportForm.value = true
+    }
+
+
     const submitReport = async () => {
-      if (!report.value.date) {
-        Swal.fire('Error', 'Please select a date.', 'error')
+      if (!report.value.date || !report.value.description) {
+        Swal.fire('Error', 'Please complete all required fields.', 'error')
         return
       }
-      // Prepare form data
+
       const formData = new FormData()
-      formData.append('date', report.value.date)
+      formData.append('completed_at', report.value.date)
       formData.append('description', report.value.description)
+      
+      // Optional file
       if (report.value.file) {
-        formData.append('file', report.value.file)
+        formData.append('attachment', report.value.file)
+      }
+
+      // Optional: if you're linking to a service request ID
+      if (report.value.service_request) {
+        formData.append('service_request', report.value.service_request)
       }
 
       try {
-        const res = await fetch('http://localhost:8000/api/reports/', {
+        const res = await fetch('http://localhost:8000/api/cleaning-reports/', {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -253,18 +270,20 @@ export default {
           body: formData
         })
 
+        const data = await res.json()
+
         if (res.ok) {
           Swal.fire('Success', 'Report submitted successfully.', 'success')
           showReportForm.value = false
         } else {
-          const errorData = await res.json()
-          Swal.fire('Error', errorData.message || 'Failed to submit report.', 'error')
+          Swal.fire('Error', data.detail || 'Submission failed.', 'error')
         }
       } catch (error) {
         console.error('Failed to submit report:', error)
-        Swal.fire('Error', 'An error occurred while submitting the report.', 'error')
+        Swal.fire('Error', 'Something went wrong.', 'error')
       }
     }
+
 
     const closePopups = () => {
       showNotifications.value = false
