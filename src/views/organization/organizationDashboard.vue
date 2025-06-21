@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import OrganizationHeader from './OrganizationHeader.vue';
 
 const totalCleaners = ref(0)
@@ -48,37 +48,28 @@ const fetchTotalCleaners = async () => {
   }
 }
 
-const cards = ref([
+const cards = computed(() => [
   {
     title: "TOTAL CLEANERS",
     icon: "fas fa-users",
-    count: totalCleaners
+    count: totalCleaners.value
   },
   {
     title: "AVAILABLE BOOKING",
     icon: "fas fa-building",
-    count: ref(0) // You can replace with actual data later
+    count: 0
   },
   {
     title: "BOOKING SERVICES",
     icon: "fas fa-calendar-check",
-    count: ref(0)
+    count: 0
   },
   {
     title: "MESSAGES",
     icon: "fas fa-envelope",
-    count: ref(0)
+    count: 0
   }
 ])
-
-// const cards = [
-//   { title: "TOTAL CLEANER", description: "Manage all Accounts of Registered users in this platform.", icon: "fas fa-users" },
-//   { title: "AVAILABLE BOOKING", description: "These are the Registered Companies that ", icon: "fas fa-building" },
-//   { title: "BOOKING SERVICES", description: "Check and Manage bookings available in different companies", icon: "fas fa-calendar-check" },
-//   { title: "MESSAGES", description: "Check Messages sent by the users", icon: "fas fa-envelope" }
-// ];
-
-
 </script>
 
 <style scoped>
@@ -138,6 +129,6 @@ const cards = ref([
 
 .hover-effect:hover {
   transform: translateY(-5px) scale(1.02);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 12px 25px rgba(49, 183, 95, 0.08);
 }
 </style>
