@@ -28,6 +28,8 @@ import { ref, onMounted, computed } from 'vue';
 import OrganizationHeader from './OrganizationHeader.vue';
 
 const totalCleaners = ref(0)
+const totalOrganizations = ref(0);
+const totalServiceRequests = ref(0);
 
 onMounted(() => {
   fetchTotalCleaners();
@@ -48,6 +50,30 @@ const fetchTotalCleaners = async () => {
   }
 }
 
+const fetchDashboardStats = async () => {
+  try {
+    const token = localStorage.getItem('token');
+    const statsRes = await fetch('http://localhost:8000/api/dashboard-stats/', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    if (statsRes.ok) {
+      const data = await statsRes.json();
+      totalOrganizations.value = data.total_organizations;
+      totalServiceRequests.value = data.total_service_requests;
+    }
+  } catch (err) {
+    console.error('Failed to fetch dashboard stats', err);
+  }
+};
+
+onMounted(() => {
+  fetchTotalCleaners();
+  fetchDashboardStats();
+});
+
 const cards = computed(() => [
   {
     title: "TOTAL CLEANERS",
@@ -55,14 +81,14 @@ const cards = computed(() => [
     count: totalCleaners.value
   },
   {
-    title: "AVAILABLE BOOKING",
+    title: "AVAILABLE HOUSES",
     icon: "fas fa-building",
-    count: 0
+    count: totalOrganizations.value
   },
   {
     title: "BOOKING SERVICES",
     icon: "fas fa-calendar-check",
-    count: 0
+    count: totalServiceRequests.value
   },
   {
     title: "MESSAGES",
@@ -110,7 +136,7 @@ const cards = computed(() => [
 
 .dashboard-wrapper .btn {
   background-color: #06923E;
-  border-radius: 2px;
+  border-radius: 0;
   color: white;
   font-weight: bold;
   padding: 0.3rem 1rem;
@@ -120,6 +146,7 @@ const cards = computed(() => [
   overflow: hidden;
   align-self: center;
   margin-top: 8px;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
 .dashboard-wrapper .btn:hover {
