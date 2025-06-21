@@ -4,40 +4,67 @@
     <nav>
       <ul>
         <li><router-link to="/user-dashboard">Dashboard</router-link></li>
+        <li>
+          <router-link to="/notifications" class="notification-icon">
+            <i class="fas fa-bell"></i>
+            <span v-if="unreadCount > 0" class="badge">{{ unreadCount }}</span>
+          </router-link>
+        </li>
         <li><button @click="logout" class="logout-button">Logout</button></li>
       </ul>
     </nav>
   </header>
 </template>
 
+
 <script>
 import Swal from 'sweetalert2';
 export default {
   name: 'OrganizationHeader',
   data() {
-    return {
-      organizationName: 'AIR BNB',
-    }
-  },
-  methods: {
-    logout() {
-      localStorage.removeItem('token');
-      localStorage.removeItem('role');
-
-        Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Logout successful",
-        showConfirmButton: false,
-        timer: 1500
-      });
-      setTimeout(() => {
-        this.$router.push('/');
-      }, 1500);
-    }
-
-    
+  return {
+    organizationName: 'AIR BNB',
+    unreadCount: 0
   }
+},
+mounted() {
+  this.fetchNotificationCount();
+},
+methods: {
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Logout successful",
+      showConfirmButton: false,
+      timer: 1500
+    });
+
+    setTimeout(() => {
+      this.$router.push('/');
+    }, 1500);
+  },
+  async fetchNotificationCount() {
+    try {
+      const res = await fetch('http://localhost:8000/api/notifications/unread-count/', {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        this.unreadCount = data.unread_count;
+      }
+    } catch (error) {
+      console.error('Failed to fetch notifications count:', error);
+    }
+  }
+}
+
 }
 </script>
 
@@ -94,4 +121,27 @@ nav ul li a:hover {
 .logout-button:hover {
   background-color: #e63e1c;
 }
+
+.notification-icon {
+  position: relative;
+  color: white;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.notification-icon i {
+  font-size: 20px;
+}
+
+.badge {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  font-size: 10px;
+  border-radius: 50%;
+  padding: 2px 6px;
+}
+
 </style>

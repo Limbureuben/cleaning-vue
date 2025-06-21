@@ -9,7 +9,7 @@
 
     <div class="actions">
       <router-link to="/notifications" class="notification-icon">
-        🔔
+        <i class="fas fa-bell"></i>
         <span v-if="unreadCount > 0" class="badge">{{ unreadCount }}</span>
       </router-link>
       <button @click="logout" class="logout-btn">Logout</button>
