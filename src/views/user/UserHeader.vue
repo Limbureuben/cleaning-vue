@@ -1,18 +1,20 @@
 <template>
-  <header class="organization-header">
-    <h1>{{ organizationName }}</h1>
-    <nav>
-      <ul>
-        <li><router-link to="/user-dashboard">Dashboard</router-link></li>
-        <li>
-          <span class="notification-icon" @click="toggleNotificationPopup">
-            <i class="fas fa-bell"></i>
-            <span v-if="unreadCount > 0" class="badge">{{ unreadCount }}</span>
-          </span>
-        </li>
-        <li><button @click="logout" class="logout-button">Logout</button></li>
-      </ul>
-    </nav>
+  <div>
+    <header class="organization-header">
+      <h1>{{ organizationName }}</h1>
+      <nav>
+        <ul>
+          <li><router-link to="/user-dashboard">Dashboard</router-link></li>
+          <li>
+            <span class="notification-icon" @click="toggleNotificationPopup">
+              <i class="fas fa-bell"></i>
+              <span v-if="unreadCount > 0" class="badge">{{ unreadCount }}</span>
+            </span>
+          </li>
+          <li><button @click="logout" class="logout-button">Logout</button></li>
+        </ul>
+      </nav>
+    </header>
 
     <div v-if="showNotifications" class="notification-popup">
       <div class="notification-header">
@@ -28,7 +30,7 @@
         </li>
       </ul>
     </div>
-  </header>
+  </div>
 </template>
 
 
@@ -180,6 +182,51 @@ nav ul li a:hover {
   font-size: 10px;
   border-radius: 50%;
   padding: 2px 6px;
+}
+
+.notification-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  max-height: 400px;
+  overflow-y: auto;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.notification-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notification-list li {
+  padding: 10px 15px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.notification-list li:last-child {
+  border-bottom: none;
 }
 
 </style>
