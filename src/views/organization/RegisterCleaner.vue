@@ -85,7 +85,6 @@
 import { ref, onMounted } from 'vue'
 import Swal from 'sweetalert2'
 import OrganizationHeader from './OrganizationHeader.vue'
-import REGISTER_USER from '@/graphql/registerUser.graphql'
 import { useMutation } from '@vue/apollo-composable'
 
 const form = ref({
@@ -97,57 +96,59 @@ const form = ref({
 })
 
 const showForm = ref(false)
-const { mutate: registerUser, onDone, onError } = useMutation(REGISTER_USER)
 
 const registerCleaner = async () => {
-  // Construct input as expected by GraphQL
-  const input = {
-    username: form.value.username,
-    email: form.value.email,
-    password: form.value.password,
-    passwordConfirm: form.value.passwordConfirm,
-    role: form.value.role || null
-  }
+  try {
+    const response = await fetch('http://localhost:8000/api/register-cleaner/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({
+        username: form.value.username,
+        email: form.value.email,
+        password: form.value.password,
+        passwordConfirm: form.value.passwordConfirm,
+        role: form.value.role
+      })
+    });
 
-  registerUser({ input })
+    const data = await response.json();
 
-  onDone(({ data }) => {
-    if (data.registerUser.output.success) {
+    if (response.ok) {
       Swal.fire({
         position: "top-end",
         icon: "success",
         title: "Registration successful",
         showConfirmButton: false,
         timer: 1500
-      })
+      });
 
-      // Clear the form
-      form.value.username = ''
-      form.value.email = ''
-      form.value.password = ''
-      form.value.passwordConfirm = ''
-      form.value.role = ''
-
-      setTimeout(() => {
-        router.push('/login')
-      }, 500)
+      // Reset the form
+      form.value = {
+        username: '',
+        email: '',
+        password: '',
+        passwordConfirm: '',
+        role: ''
+      };
     } else {
       Swal.fire({
         icon: "error",
         title: "Registration failed",
-        text: data.registerUser.output.message
-      })
+        text: data.error || 'Something went wrong.'
+      });
     }
-  })
-
-  onError((error) => {
+  } catch (error) {
     Swal.fire({
       icon: "error",
-      title: "Registration failed",
+      title: "Network Error",
       text: error.message
-    })
-  })
-}
+    });
+  }
+};
+
 
 onMounted(() => {
   showForm.value = true;
