@@ -116,7 +116,7 @@ methods: {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #6A80B9;
+  background-color: #06923E;
   color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -217,7 +217,7 @@ nav ul li a:hover {
   justify-content: space-between;
   align-items: center;
   padding: 15px 20px;
-  background-color: #6A80B9;
+  background-color: #06923E;
   color: white;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;

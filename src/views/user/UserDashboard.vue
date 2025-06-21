@@ -2,7 +2,8 @@
   <UserHeader />
   <div class="container mt-5">
     <div class="row">
-      <div v-for="org in organizations" :key="org.id" class="col-md-6 col-lg-4 mb-4">
+    
+      <div v-for="org in paginatedOrganizations" :key="org.id" class="col-md-6 col-lg-4 mb-4">
         <div class="card h-100 shadow-sm border-0">
           <!-- Clickable image -->
           <img
@@ -10,7 +11,7 @@
             :src="org.file"
             alt="Organization Logo"
             class="card-img-top rounded-top"
-            style="max-height: 180px; object-fit: cover; cursor: pointer"
+            style="max-height: 130px; object-fit: cover; cursor: pointer"
             @click="showOrganizationDetails(org)"
           />
           <div class="card-body">
@@ -19,18 +20,38 @@
           </div>
         </div>
       </div>
+      <div class="d-flex justify-content-center mt-1 gap-2">
+        <button
+          class="btn btn-outline-primary"
+          @click="goToPage(currentPage - 1)"
+          :disabled="currentPage === 1"
+        >
+          Previous
+        </button>
+        <span class="align-self-center">Page {{ currentPage }} of {{ totalPages }}</span>
+        <button
+          class="btn btn-outline-primary"
+          @click="goToPage(currentPage + 1)"
+          :disabled="currentPage === totalPages"
+        >
+          Next
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import swal from 'sweetalert2'
 
 import UserHeader from './UserHeader.vue'
 
 const organizations = ref([])
+
+const currentPage = ref(1)
+const perPage = 6
 
 const fetchApprovedOrganizations = async () => {
   try {
@@ -48,6 +69,22 @@ const fetchApprovedOrganizations = async () => {
     organizations.value = data;
   } catch (error) {
     console.error('Error fetching organizations:', error);
+  }
+}
+
+const paginatedOrganizations = computed(() => {
+  const start = (currentPage.value - 1) * perPage
+  return organizations.value.slice(start, start + perPage)
+})
+
+const totalPages = computed(() => {
+  return Math.ceil(organizations.value.length / perPage)
+})
+
+
+const goToPage = (page) => {
+  if (page >= 1 && page <= totalPages.value) {
+    currentPage.value = page
   }
 }
 
@@ -159,7 +196,7 @@ const requestService = async (org) => {
           box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
         }
         .swal-form-container input:focus {
-          border-color: #4a90e2;
+          border-color: #06923E;
           outline: none;
           box-shadow: 0 0 8px rgba(74, 144, 226, 0.6);
         }
@@ -270,6 +307,7 @@ onMounted(() => {
   overflow: hidden;
   transition: all 0.3s ease;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  height: 70px;
 }
 
 .card:hover {

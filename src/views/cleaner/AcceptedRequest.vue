@@ -2,7 +2,7 @@
     <cleanerHeader/>
   <div class="table-container">
     <div class="header-container">
-      <h2 class="table-title">MY REQUEST</h2>
+      <h2 class="table-title">MY APPROVED REQUEST</h2>
 
       <!-- Search Input -->
       <div class="search-container">
@@ -183,7 +183,7 @@ const report = ref({
 
 const fetchCleanerRequests = async () => {
   try {
-    const res = await fetch('http://localhost:8000/api/cleaner-requests/from-cleaner/', {
+    const res = await fetch('http://localhost:8000/api/cleaner-request-approved/', {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`

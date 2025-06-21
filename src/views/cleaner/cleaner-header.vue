@@ -4,7 +4,9 @@
       <router-link to="/cleaner-dashboard">Dashboard</router-link>
       <router-link to="/available-house">Jobs</router-link>
       <router-link to="/cleaner-request">Request</router-link>
-      <button class="report-btn" @click="toggleReportForm">Report</button>
+      <router-link to="/approved-reqest">History</router-link>
+      <!-- Assuming you have the ID in `item.service_request_id` -->
+
     </nav>
 
     <div class="actions">
@@ -51,29 +53,6 @@
       <!-- Add more profile fields as needed -->
     </div>
     </div>
-
-    <div v-if="showReportForm" class="overlay" @click="showReportForm = false"></div>
-    <div v-if="showReportForm" class="report-form-popup">
-      <div class="report-header">
-        <strong>Work Completion Report</strong>
-        <button class="close-btn" @click="showReportForm = false">&times;</button>
-      </div>
-      <form @submit.prevent="submitReport" class="report-form">
-        <div class="form-group">
-          <input type="date" id="date" v-model="report.date" required />
-        </div>
-        <div class="form-group">
-          <textarea id="description" v-model="report.description" rows="4" placeholder="Describe the work done or any problems"></textarea>
-        </div>
-        <div class="form-group">
-          <label for="file">Attach File (optional):</label>
-          <input type="file" id="file" @change="handleFileUpload" />
-        </div>
-        <div class="form-actions">
-          <button type="submit" class="submit-btn">Submit Report</button>
-        </div>
-      </form>
-  </div>
 </template>
 
 
@@ -214,15 +193,24 @@ export default {
       }
     }
 
-    const toggleReportForm = () => {
-      showReportForm.value = !showReportForm.value
-      if (showReportForm.value) {
-        showNotifications.value = false
-        showProfileCard.value = false
-        // Reset form
-        report.value = { date: '', description: '', file: null }
-      }
-    }
+    // Unified toggleReportForm that accepts a serviceRequestId
+      const toggleReportForm = (serviceRequestId = null) => {
+        showReportForm.value = !showReportForm.value;
+
+        if (showReportForm.value) {
+          showNotifications.value = false;
+          showProfileCard.value = false;
+
+          // Reset and bind service_request
+          report.value = {
+            date: '',
+            description: '',
+            file: null,
+            service_request: serviceRequestId
+          };
+        }
+      };
+
 
     const handleFileUpload = (event) => {
       const file = event.target.files[0]
@@ -235,7 +223,7 @@ export default {
         date: '',
         description: '',
         file: null,
-        service_request: serviceRequestId
+        service_request: selectedServiceRequestId 
       }
       showReportForm.value = true
     }
@@ -512,6 +500,10 @@ nav a:hover {
 .notification-content {
   flex-grow: 1;
 }
+
+
+
+
 
 .report-form-popup {
   position: fixed;
