@@ -154,6 +154,7 @@ nav a:hover {
   color: white;
   font-size: 22px;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .badge {
