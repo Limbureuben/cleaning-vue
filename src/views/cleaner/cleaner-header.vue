@@ -4,6 +4,7 @@
       <router-link to="/cleaner-dashboard">Dashboard</router-link>
       <router-link to="/available-house">Jobs</router-link>
       <router-link to="/cleaner-request">Request</router-link>
+      <button class="report-btn" @click="toggleReportForm">Report</button>
     </nav>
 
     <div class="actions">
@@ -49,6 +50,30 @@
       <p><strong>Email:</strong> {{ profile.email }}</p>
       <!-- Add more profile fields as needed -->
     </div>
+    </div>
+
+    <div v-if="showReportForm" class="report-form-popup">
+    <div class="report-header">
+      <strong>Work Completion Report</strong>
+      <button class="close-btn" @click="showReportForm = false">&times;</button>
+    </div>
+    <form @submit.prevent="submitReport" class="report-form">
+      <div class="form-group">
+        <label for="date">Date Completed:</label>
+        <input type="date" id="date" v-model="report.date" required />
+      </div>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea id="description" v-model="report.description" rows="4" placeholder="Describe the work done or any problems"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="file">Attach File (optional):</label>
+        <input type="file" id="file" @change="handleFileUpload" />
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="submit-btn">Submit Report</button>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -74,6 +99,14 @@ export default {
       role: ''
     })
 
+    const showReportForm = ref(false)
+
+    const report = ref({
+      date: '',
+      description: '',
+      file: null
+    })
+
     const fetchUnreadNotifications = async () => {
       try {
         const res = await fetch('http://localhost:8000/api/notifications/unread-count/', {
@@ -89,8 +122,6 @@ export default {
         console.error('Error fetching notifications', err)
       }
     }
-
-
 
   const toggleNotificationPopup = async () => {
     showNotifications.value = !showNotifications.value;
@@ -109,7 +140,10 @@ export default {
         console.error('Failed to fetch notifications:', error);
       }
     }
-    if (showNotifications.value) showProfileCard.value = false;
+    if (showNotifications.value) {
+      showProfileCard.value = false
+      showReportForm.value = false
+    }
   }
 
   const fetchProfile = async () => {
@@ -134,7 +168,7 @@ export default {
         text: 'You are about to delete this notification.',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#6A80B9',
+        confirmButtonColor: '#06923E',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!',
       });
@@ -172,19 +206,70 @@ export default {
       }
     };
 
-
-
     const toggleProfileCard = () => {
       showProfileCard.value = !showProfileCard.value
       if (showProfileCard.value) {
         fetchProfile()
         showNotifications.value = false
+        showReportForm.value = false
+      }
+    }
+
+    const toggleReportForm = () => {
+      showReportForm.value = !showReportForm.value
+      if (showReportForm.value) {
+        showNotifications.value = false
+        showProfileCard.value = false
+        // Reset form
+        report.value = { date: '', description: '', file: null }
+      }
+    }
+
+    const handleFileUpload = (event) => {
+      const file = event.target.files[0]
+      report.value.file = file || null
+    }
+
+
+    const submitReport = async () => {
+      if (!report.value.date) {
+        Swal.fire('Error', 'Please select a date.', 'error')
+        return
+      }
+      // Prepare form data
+      const formData = new FormData()
+      formData.append('date', report.value.date)
+      formData.append('description', report.value.description)
+      if (report.value.file) {
+        formData.append('file', report.value.file)
+      }
+
+      try {
+        const res = await fetch('http://localhost:8000/api/reports/', {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          },
+          body: formData
+        })
+
+        if (res.ok) {
+          Swal.fire('Success', 'Report submitted successfully.', 'success')
+          showReportForm.value = false
+        } else {
+          const errorData = await res.json()
+          Swal.fire('Error', errorData.message || 'Failed to submit report.', 'error')
+        }
+      } catch (error) {
+        console.error('Failed to submit report:', error)
+        Swal.fire('Error', 'An error occurred while submitting the report.', 'error')
       }
     }
 
     const closePopups = () => {
       showNotifications.value = false
       showProfileCard.value = false
+      showReportForm.value = false
     }
 
     const logout = () => {
@@ -208,7 +293,12 @@ export default {
       profile,
       toggleProfileCard,
       closePopups,
-      deleteNotification
+      deleteNotification,
+      report,
+      handleFileUpload,
+      submitReport,
+      toggleReportForm,
+      showReportForm,
     }
   }
 }
@@ -271,7 +361,7 @@ nav a:hover {
   position: absolute;
   top: -6px;
   right: -10px;
-  background-color: rgb(10, 173, 72);
+  background-color: #FE4F2D;
   color: white;
   font-size: 11px;
   border-radius: 50%;
@@ -385,7 +475,7 @@ nav a:hover {
 .delete-btn {
   background: none;
   border: none;
-  color: #fe4f2d;
+  color: #FE4F2D;
   cursor: pointer;
   margin-left: 10px;
   font-size: 16px;
@@ -393,7 +483,7 @@ nav a:hover {
 }
 
 .delete-btn:hover {
-  color: darkred;
+  color: #FE4F2D;
 }
 .notification-item {
   display: flex;
@@ -402,6 +492,38 @@ nav a:hover {
 }
 .notification-content {
   flex-grow: 1;
+}
+
+
+
+.report-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0;
+  margin: 0 10px;
+}
+
+.report-btn:hover {
+  text-decoration: underline;
+}
+
+.report-form-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 450px;
+  max-height: 80vh;
+  overflow-y: auto;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  font-family: Arial, sans-serif;
 }
 
 </style>
