@@ -24,23 +24,52 @@
             <th class="mat-header-cell">EMAIL</th>
             <th class="mat-header-cell">PHONE</th>
             <th class="mat-header-cell">REQESTED ON</th>
+             <th class="mat-header-cell">STATUS</th>
             <th class="mat-header-cell">ACTIONS</th>
           </tr>
         </thead>
         <tbody>
           <tr
-            v-for="(request, index) in cleanerRequests"
-            :key="request.id"
-          >
-            <td class="mat-cell">{{ index + 1 }}</td>
-            <td class="mat-cell">{{ request.username }}</td>
-            <td class="mat-cell">{{ request.email }}</td>
-            <td class="mat-cell">{{ request.phone }}</td>
-            <td class="mat-cell">{{ new Date(request.requested_at).toLocaleString()}}</td>
-          </tr>
-          <tr v-if="cleanerRequests.length === 0">
-            <td class="mat-cell" colspan="5">No matching reports found.</td>
-          </tr>
+              v-for="(request, index) in cleanerRequests"
+              :key="request.id"
+            >
+              <td class="mat-cell">{{ index + 1 }}</td>
+              <td class="mat-cell">{{ request.username }}</td>
+              <td class="mat-cell">{{ request.email }}</td>
+              <td class="mat-cell">{{ request.phone }}</td>
+              <td class="mat-cell">{{ new Date(request.requested_at).toLocaleString() }}</td>
+              <td class="mat-cell">{{ request.status }}</td>
+              <td class="mat-cell">
+                <!-- Accept button -->
+                <button
+                  v-if="request.status === 'available'"
+                  @click="acceptRequest(request.id)"
+                  class="btn btn-success btn-sm me-2"
+                  title="Accept Request"
+                >
+                  <i class="fas fa-check"></i>
+                </button>
+
+                <!-- Reject button -->
+                <button
+                  v-if="request.status === 'available'"
+                  @click="rejectRequest(request.id)"
+                  class="btn btn-warning btn-sm me-2"
+                  title="Reject Request"
+                >
+                  <i class="fas fa-times"></i>
+                </button>
+
+                <!-- Delete button -->
+                <button
+                  @click="deleteRequest(request.id)"
+                  class="btn btn-danger btn-sm"
+                  title="Delete Request"
+                >
+                  <i class="fas fa-trash"></i>
+                </button>
+              </td>
+            </tr>
         </tbody>
       </table>
     </div>
