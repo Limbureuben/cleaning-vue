@@ -309,6 +309,8 @@ const registerCleaner = async () => {
         passwordConfirm: '',
         role: ''
       };
+      showForm.value = false;
+      showAddCleanerForm.value = false;
     } else {
       swal.fire({
         icon: "error",
@@ -613,15 +615,15 @@ button.btn-primary:hover {
 }
 
 button.btn-secondary {
-  background-color: #06923E;
-  border-color: #06923E;
+  background-color: #FE4F2D;
+  border-color: #FE4F2D;
   font-weight: 600;
   transition: background-color 0.3s ease;
 }
 
 button.btn-secondary:hover {
-  background-color: #06923E;
-  border-color: #06923E;
+  background-color: #FE4F2D;
+  border-color: #FE4F2D;
 }
 
 /* Reject modal textarea */
