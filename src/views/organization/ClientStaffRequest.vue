@@ -38,7 +38,11 @@
               <td class="mat-cell">{{ request.email }}</td>
               <td class="mat-cell">{{ request.phone }}</td>
               <td class="mat-cell">{{ new Date(request.requested_at).toLocaleString() }}</td>
-              <td class="mat-cell">{{ request.status }}</td>
+              <td class="mat-cell">
+                <span :class="statusClass(request.status)">
+                  {{ request.status }}
+                </span>
+              </td>
               <td class="mat-cell">
                 <!-- Accept button -->
                 <button
@@ -191,6 +195,20 @@ const formatDate = (dateStr) => {
   const d = new Date(dateStr)
   return d.toLocaleString()
 }
+
+const statusClass = (status) => {
+  switch (status) {
+    case 'available':
+      return 'status-pill available';
+    case 'taken':
+      return 'status-pill taken';
+    case 'rejected':
+      return 'status-pill rejected';
+    default:
+      return 'status-pill';
+  }
+};
+
 
 
 onMounted(() => {
@@ -382,6 +400,30 @@ onMounted(() => {
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 999;
+}
+
+.status-pill {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  text-transform: capitalize;
+  font-size: 0.85rem;
+  display: inline-block;
+}
+
+.status-pill.available {
+  background-color: #e1f7e7;
+  color: #06923E;
+}
+
+.status-pill.taken {
+  background-color: #e0ecff;
+  color: #0d6efd;
+}
+
+.status-pill.rejected {
+  background-color: #ffe0e0;
+  color: #dc3545;
 }
 </style>
 

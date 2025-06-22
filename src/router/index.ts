@@ -9,7 +9,6 @@ import RegisterOrganization from '@/views/organization/RegisterOrganization.vue'
 import StaffRegistration from '@/views/admin/StaffRegistration.vue'
 import AvailableOrganization from '@/views/admin/AvailableOrganization.vue'
 import RegisterCleaner from '@/views/organization/RegisterCleaner.vue'
-import AvailableBooking from '@/views/organization/AvailableBooking.vue'
 import CleanerDashboard from '@/views/cleaner/cleaner-dashboard.vue'
 import AvailableHouse from '@/views/cleaner/AvailableHouse.vue'
 import MyRequest from '@/views/cleaner/my-request.vue'
@@ -29,7 +28,6 @@ const routes = [
   { path: '/register-staff', name: 'Register staff', component: StaffRegistration },
   { path: '/available-organization', name: 'Available organization', component: AvailableOrganization },
   { path: '/registercleaner', name: 'Cleaners', component: RegisterCleaner },
-  { path: '/availablebooking', name: 'Booking', component: AvailableBooking },
   { path: '/cleaner-dashboard', name: 'CleanerDashboard', component: CleanerDashboard },
   { path: '/available-house', name: 'AvailableHouse', component: AvailableHouse },
   { path: '/cleaner-request', name: 'CleanerRequest', component: MyRequest},

@@ -5,7 +5,7 @@
       <ul>
         <li><router-link to="/organization">Dashboard</router-link></li>
         <li><router-link to="/register-organization">RegisterHouse</router-link></li>
-        <li><router-link to="/availablebooking">Booking</router-link></li>
+        <li><router-link to="/request">Booking</router-link></li>
         <li><router-link to="/from-cleaner">Requests</router-link></li>
         <li><router-link to="/registercleaner">AddCleaner</router-link></li>
         <li><a href="#settings">Settings</a></li>
