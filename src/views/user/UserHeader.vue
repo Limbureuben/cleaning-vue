@@ -328,4 +328,19 @@ nav ul li a:hover {
   border: none;
   border-top: 1px solid #e0e0e0;
 }
+
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #FE4F2D;
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 16px;
+  transition: color 0.2s ease;
+}
+
+.delete-btn:hover {
+  color: #FE4F2D;
+}
 </style>
