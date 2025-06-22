@@ -30,9 +30,9 @@
           <p><strong>{{ n.title }}</strong></p>
           <p>{{ n.message }}</p>
         </li>
-        <button @click="deleteNotification(n.id)" class="delete-btn" title="Delete notification">
-          <i class="fas fa-trash"></i>
-        </button>
+        <button class="delete-btn" @click="deleteNotification(n.id)">
+            <i class="fas fa-trash-alt"></i>
+          </button>
       </ul>
     </div>
   </div>
@@ -105,6 +105,50 @@ methods: {
         }
       } catch (error) {
         console.error('Failed to fetch notifications:', error);
+      }
+    }
+  },
+
+  async deleteNotification(id) {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'You are about to delete this notification.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#06923E',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const res = await fetch(`http://localhost:8000/api/notifications/${id}/delete/`, {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        });
+
+        if (res.status === 204) {
+          this.notifications = this.notifications.filter(n => n.id !== id);
+          this.unreadCount--;
+
+          Swal.fire({
+            title: 'Deleted!',
+            text: 'The notification has been deleted.',
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false
+          });
+        }
+      } catch (error) {
+        console.error('Failed to delete notification:', error);
+        Swal.fire({
+          title: 'Error',
+          text: 'Something went wrong while deleting.',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
       }
     }
   }
