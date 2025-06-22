@@ -79,7 +79,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import OrganizationHeader from './OrganizationHeader.vue'
-import swal from 'sweetalert2'
+import Swal from 'sweetalert2'
 import { useRouter } from 'vue-router'
 
 const cleanerRequests = ref([])
@@ -101,41 +101,6 @@ const fetchCleanerRequests = async () => {
   }
 }
 
-
-// const acceptRequest = async (id) => {
-//   await fetch(`http://localhost:8000/api/service-request/${id}/action/`, {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Authorization: `Bearer ${localStorage.getItem('token')}`
-//     },
-//     body: JSON.stringify({ action: 'accept' })
-//   })
-// }
-
-// const rejectRequest = async (id)=> {
-//   await fetch(`http://localhost:8000/api/service-request/${id}/action/`, {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Authorization: `Bearer ${localStorage.getItem('token')}`
-//     },
-//     body: JSON.stringify({ action: 'reject' })
-//   })
-// }
-
-
-// const deleteRequest = async (id) => {
-//   await fetch(`http://localhost:8000/api/service-request/${id}/action/`, {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Authorization: `Bearer ${localStorage.getItem('token')}`
-//     },
-//     body: JSON.stringify({ action: 'delete' })
-//   })
-// }
-
 const acceptRequest = async (id) => {
   const result = await Swal.fire({
     title: 'Are you sure?',
@@ -143,7 +108,9 @@ const acceptRequest = async (id) => {
     icon: 'question',
     showCancelButton: true,
     confirmButtonText: 'Yes, accept it',
-    cancelButtonText: 'Cancel'
+    cancelButtonText: 'Cancel',
+    confirmButtonColor: '#06923E',
+    cancelButtonColor: '#FE4F2D'
   });
 
   if (result.isConfirmed) {
@@ -168,7 +135,9 @@ const rejectRequest = async (id) => {
     icon: 'warning',
     showCancelButton: true,
     confirmButtonText: 'Yes, reject it',
-    cancelButtonText: 'Cancel'
+    cancelButtonText: 'Cancel',
+    confirmButtonColor: '#06923E',
+    cancelButtonColor: '#FE4F2D'
   });
 
   if (result.isConfirmed) {
@@ -193,7 +162,9 @@ const deleteRequest = async (id) => {
     icon: 'error',
     showCancelButton: true,
     confirmButtonText: 'Yes, delete it',
-    cancelButtonText: 'Cancel'
+    cancelButtonText: 'Cancel',
+    confirmButtonColor: '#06923E',
+    cancelButtonColor: '#FE4F2D'
   });
 
   if (result.isConfirmed) {
@@ -413,3 +384,43 @@ onMounted(() => {
   z-index: 999;
 }
 </style>
+
+
+
+
+
+
+
+// const acceptRequest = async (id) => {
+//   await fetch(`http://localhost:8000/api/service-request/${id}/action/`, {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       Authorization: `Bearer ${localStorage.getItem('token')}`
+//     },
+//     body: JSON.stringify({ action: 'accept' })
+//   })
+// }
+
+// const rejectRequest = async (id)=> {
+//   await fetch(`http://localhost:8000/api/service-request/${id}/action/`, {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       Authorization: `Bearer ${localStorage.getItem('token')}`
+//     },
+//     body: JSON.stringify({ action: 'reject' })
+//   })
+// }
+
+
+// const deleteRequest = async (id) => {
+//   await fetch(`http://localhost:8000/api/service-request/${id}/action/`, {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       Authorization: `Bearer ${localStorage.getItem('token')}`
+//     },
+//     body: JSON.stringify({ action: 'delete' })
+//   })
+// }
