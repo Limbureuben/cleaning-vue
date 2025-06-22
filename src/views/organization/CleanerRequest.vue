@@ -5,13 +5,21 @@
       <h2 class="table-title">CLEANERS REQUESTS</h2>
 
       <!-- Search Input -->
-      <div class="search-container">
+      <div class="search-container" style="display: flex; align-items: center;">
         <input
           v-model="searchTerm"
           type="text"
           placeholder="Filter by name"
           class="search-field"
         />
+        <button 
+          class="btn btn-success ms-2"
+          @click="showForm = true"
+          title="Add Cleaner"
+          style="font-size: 20px; padding: 4px 10px; line-height: 1;"
+        >
+        <i class="fas fa-plus"></i>
+        </button>
       </div>
     </div>
 
@@ -59,6 +67,7 @@
             </tr>
         </tbody>
       </table>
+
           <div v-if="receivedRequests.length === 0" class="alert alert-info">No cleaner requests yet.</div>
 
           <div v-if="showRejectModal" class="modal-backdrop" @click.self="closeRejectModal">
@@ -86,6 +95,50 @@
           </div>
         </div>
     </div>
+
+         <div v-if="showForm" class="modal-backdrop" @click.self="showForm = false">
+          <div class="modal-content p-4 rounded bg-white shadow position-relative">
+            <button 
+              class="btn-close position-absolute top-2 end-2" 
+              aria-label="Close"
+              @click="showForm = false"
+              style="cursor:pointer;"
+            ></button>
+
+            <h5>ADD CLEANER</h5>
+            <form @submit.prevent="submitCleaner">
+              <div class="mb-3">
+                <input v-model="form.username" id="username" type="text" placeholder="Enter username" class="form-control" required />
+              </div>
+              <div class="mb-3">
+                <input v-model="form.email" id="email" type="email" placeholder="Enter cleaner email" class="form-control" required />
+              </div>
+              <div class="mb-3">
+                <input v-model="form.cleaner_location" id="cleaner_location" placeholder="Password" type="text" class="form-control" required />
+              </div>
+              <div class="mb-3">
+                <input v-model="form.organization_location" id="organization_location" placeholder="Confirm password" type="text" class="form-control" required />
+              </div>
+
+              <div class="mb-3">
+                  <select
+                    class="form-select"
+                    v-model="form.role"
+                    required
+                  >
+                    <option value="" disabled>Select Role</option>
+                    <option value="is_cleaner">Cleaner</option>
+                    <option value="user">Normal User</option>
+                  </select>
+                </div>
+
+              <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-secondary me-2" @click="showForm = false">Cancel</button>
+                <button type="submit" class="btn btn-success">Submit</button>
+              </div>
+            </form>
+          </div>
+      </div>
   </div>
 </template>
 
@@ -325,6 +378,7 @@ onMounted(() => {
 
 
 
+
 .report-form-popup {
   position: fixed;
   top: 50%;
@@ -484,16 +538,6 @@ onMounted(() => {
   z-index: 1050; /* high z-index to overlay other elements */
 }
 
-/* .modal-content {
-  max-width: 400px;
-  width: 90%;
-  background-color: white;
-  box-shadow: 0 0 15px rgba(0,0,0,0.3);
-  border-radius: 8px;
-  position: relative;
-  padding: 20px;
-} */
-
 .modal-content {
   max-width: 400px;
   width: 90%;
@@ -501,7 +545,8 @@ onMounted(() => {
   box-shadow: 0 0 15px rgba(0,0,0,0.3);
   border-radius: 8px;
   position: relative;
-  padding: 20px;
+  animation: popupFadeIn 0.3s ease forwards;
+  padding: 24px 32px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -581,19 +626,128 @@ button.btn {
   margin-bottom: 1rem !important;
 }
 
-/* Bootstrap 5 style close button */
-.btn-close {
-  width: 1.5rem;
-  height: 1.5rem;
-  background: transparent;
-  border: none;
-  font-size: 1.5rem;
-  line-height: 1;
-  opacity: 0.5;
-  transition: opacity 0.15s ease;
-}
+
 .btn-close:hover {
   opacity: 1;
   cursor: pointer;
 }
+
+
+@keyframes popupFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.btn-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #555;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #3a3a3a;
+  margin-bottom: 8px;
+  display: block;
+  font-size: 1rem;
+}
+
+/* Form inputs */
+input.form-control {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid #06923E;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: inherit;
+}
+
+input.form-control:focus {
+  outline: none;
+  border-color: #057a2a;
+  box-shadow: 0 0 8px rgba(6, 146, 62, 0.5);
+}
+
+/* Buttons */
+.btn-success {
+  background-color: #06923E;
+  border: none;
+  padding: 10px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-success:hover {
+  background-color: #057a2a;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border: none;
+  padding: 10px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #565e64;
+}
+
+
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-field {
+  width: 300px;
+  padding: 8px 12px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.search-field:focus {
+  outline: none;
+  border-color: #06923E;
+  box-shadow: 0 0 5px rgba(6, 146, 62, 0.5);
+}
+
+.btn-success.ms-2 {
+  font-size: 20px;
+  padding: 6px 12px;
+  line-height: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+}
+
+/* Plus icon inside button */
+.btn-success.ms-2 i {
+  pointer-events: none;
+  color: white;
+}
+
+
 </style>
