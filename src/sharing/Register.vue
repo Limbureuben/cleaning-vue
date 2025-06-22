@@ -1,6 +1,5 @@
 <template>
     <div class="bg-cover">
-     <BackButton />
   <div class="d-flex justify-content-center align-items-center full-screen">
 
     <div class="container position-relative z-1">
@@ -11,7 +10,7 @@
             class="col-12 col-md-8 col-lg-6 col-xl-5 bg-white p-5 rounded shadow"
             style="min-width: 450px;"
           >
-            <h4 class="mb-4 text-center fw-bold" style="color: #6A80B9;">REGISTRATION</h4>
+            <h4 class="mb-4 text-center fw-bold" style="color: #06923E;">REGISTRATION</h4>
             <form @submit.prevent="onSubmit">
               <div class="mb-4">
                 <input
@@ -52,14 +51,14 @@
                   required
                 />
               </div>
-              <button type="submit" class="btn w-100 fw-bold" style="background-color: #6A80B9; border-color: #6A80B9;">
+              <button type="submit" class="btn w-100 fw-bold" style="background-color: #06923E; border-color: #06923E;">
                 Register
               </button>
             </form>
 
             <p class="mt-3 text-center">
               Already have an account?
-              <router-link to="/login" class="fw-bold" style="color: #6A80B9;">Login</router-link>
+              <router-link to="/login" class="fw-bold" style="color: #06923E;">Login</router-link>
             </p>
           </div>
         </transition>
@@ -181,7 +180,8 @@ input.form-control:focus {
 }
 
 .bg-cover {
-  background-image: url('../assets/images/woman.png'); /* Replace with actual path */
+  /* background-image: url('../assets/images/woman.png'); */
+  background: linear-gradient(to right, #f0f4ff, #e8f0fe);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

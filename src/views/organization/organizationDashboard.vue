@@ -99,8 +99,14 @@ const cards = computed(() => [
 </script>
 
 <style scoped>
+.dashboard-wrapper {
+    background: linear-gradient(to right, #f0f4ff, #e8f0fe);
+  min-height: 87vh;
+    
+}
+
 .dashboard-wrapper .card {
-  border-radius: 6px;
+  border-radius: 2px;
   transition: all 0.3s ease;
   overflow: hidden;
   animation: cardAppear 0.5s ease-out;

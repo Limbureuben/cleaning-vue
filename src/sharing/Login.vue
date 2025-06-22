@@ -1,6 +1,6 @@
 <template>
+  <HeaderPage />
   <div class="bg-cover">
-  <BackButton />
     <div class="d-flex justify-content-center align-items-center full-screen">
       <div class="container position-relative z-1">
         <div class="row justify-content-center">
@@ -58,7 +58,7 @@
 import { reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Background from './Background.vue'
-import BackButton from './BackButton.vue'
+import HeaderPage from '../sharing/Header.vue'
 import swal from 'sweetalert2'
 import { useMutation } from '@vue/apollo-composable';
 import LoginUser from '@/graphql/loginUser.graphql'
@@ -176,12 +176,13 @@ input.form-control:focus {
 .bg-cover {
   /* background-image: url('../assets/images/woman.png'); Replace with actual path */
   background-size: cover;
+  background: linear-gradient(to right, #f0f4ff, #e8f0fe);
   background-position: center;
   background-repeat: no-repeat;
   height: 100vh;
   width: 100vw;
   position: fixed;
-  top: 0;
+  top: 10;
   left: 0;
   z-index: 0;
   opacity: 0.8;
