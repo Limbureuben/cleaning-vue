@@ -106,7 +106,7 @@
             ></button>
 
             <h5>ADD CLEANER</h5>
-            <form @submit.prevent="submitCleaner">
+            <form @submit.prevent="registerCleaner">
               <div class="mb-3">
                 <input v-model="form.username" id="username" type="text" placeholder="Enter username" class="form-control" required />
               </div>
@@ -114,10 +114,10 @@
                 <input v-model="form.email" id="email" type="email" placeholder="Enter cleaner email" class="form-control" required />
               </div>
               <div class="mb-3">
-                <input v-model="form.cleaner_location" id="cleaner_location" placeholder="Password" type="text" class="form-control" required />
+                <input v-model="form.password" id="cleaner_location" placeholder="Password" type="text" class="form-control" required />
               </div>
               <div class="mb-3">
-                <input v-model="form.organization_location" id="organization_location" placeholder="Confirm password" type="text" class="form-control" required />
+                <input v-model="form.passwordConfirm" id="organization_location" placeholder="Confirm password" type="text" class="form-control" required />
               </div>
 
               <div class="mb-3">
@@ -152,11 +152,12 @@ const showForm = ref(false)
 const showRejectModal = ref(false)
 const rejectRequest = ref(null)
 const rejectReason = ref('')
+const showAddCleanerForm = ref(false)
 const form = ref({
   username: '',
   email: '',
-  cleaner_location: '',
-  organization_location: ''
+  password: '',
+  passwordConfirm: ''
 })
 
 const fetchReceivedCleanerRequests = async () => {
@@ -271,34 +272,58 @@ const deleteRequest = async (id) => {
   }
 }
 
-const submitCleaner = async () => {
+
+
+const registerCleaner = async () => {
   try {
-    const response = await fetch('http://localhost:8000/api/cleaners/', {
+    const response = await fetch('http://localhost:8000/api/register-cleaner/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`
       },
-      body: JSON.stringify(form.value)
-    })
+      body: JSON.stringify({
+        username: form.value.username,
+        email: form.value.email,
+        password: form.value.password,
+        passwordConfirm: form.value.passwordConfirm,
+        role: form.value.role
+      })
+    });
 
-    if (!response.ok) throw new Error('Failed to register cleaner')
+    const data = await response.json();
 
-    // Reset form and close modal
-    form.value = {
-      username: '',
-      email: '',
-      cleaner_location: '',
-      organization_location: ''
+    if (response.ok) {
+      swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Registration successful",
+        showConfirmButton: false,
+        timer: 1500
+      });
+
+      form.value = {
+        username: '',
+        email: '',
+        password: '',
+        passwordConfirm: '',
+        role: ''
+      };
+    } else {
+      swal.fire({
+        icon: "error",
+        title: "Registration failed",
+        text: data.error || 'Something went wrong.'
+      });
     }
-    showForm.value = false
-
-    // Optionally refresh the list
-    fetchReceivedCleanerRequests()
   } catch (error) {
-    console.error('Error registering cleaner:', error)
+    swal.fire({
+      icon: "error",
+      title: "Network Error",
+      text: error.message
+    });
   }
-}
+};
 
 onMounted(() => {
   fetchReceivedCleanerRequests()
