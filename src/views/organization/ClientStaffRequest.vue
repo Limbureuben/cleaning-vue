@@ -101,39 +101,120 @@ const fetchCleanerRequests = async () => {
   }
 }
 
+
+// const acceptRequest = async (id) => {
+//   await fetch(`http://localhost:8000/api/service-request/${id}/action/`, {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       Authorization: `Bearer ${localStorage.getItem('token')}`
+//     },
+//     body: JSON.stringify({ action: 'accept' })
+//   })
+// }
+
+// const rejectRequest = async (id)=> {
+//   await fetch(`http://localhost:8000/api/service-request/${id}/action/`, {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       Authorization: `Bearer ${localStorage.getItem('token')}`
+//     },
+//     body: JSON.stringify({ action: 'reject' })
+//   })
+// }
+
+
+// const deleteRequest = async (id) => {
+//   await fetch(`http://localhost:8000/api/service-request/${id}/action/`, {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       Authorization: `Bearer ${localStorage.getItem('token')}`
+//     },
+//     body: JSON.stringify({ action: 'delete' })
+//   })
+// }
+
 const acceptRequest = async (id) => {
-  await fetch(`http://localhost:8000/api/service-request/${id}/action/`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    },
-    body: JSON.stringify({ action: 'accept' })
-  })
-}
+  const result = await Swal.fire({
+    title: 'Are you sure?',
+    text: 'You are about to accept this request.',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, accept it',
+    cancelButtonText: 'Cancel'
+  });
 
-const rejectRequest = async (id)=> {
-  await fetch(`http://localhost:8000/api/service-request/${id}/action/`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    },
-    body: JSON.stringify({ action: 'reject' })
-  })
-}
+  if (result.isConfirmed) {
+    const res = await fetch(`http://localhost:8000/api/service-request/${id}/action/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({ action: 'accept' })
+    });
 
+    const data = await res.json();
+    Swal.fire('Success', data.success || 'Request accepted', 'success');
+  }
+};
+
+const rejectRequest = async (id) => {
+  const result = await Swal.fire({
+    title: 'Reject Request?',
+    text: 'Are you sure you want to reject this request?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, reject it',
+    cancelButtonText: 'Cancel'
+  });
+
+  if (result.isConfirmed) {
+    const res = await fetch(`http://localhost:8000/api/service-request/${id}/action/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({ action: 'reject' })
+    });
+
+    const data = await res.json();
+    Swal.fire('Rejected', data.success || 'Request rejected', 'info');
+  }
+};
 
 const deleteRequest = async (id) => {
-  await fetch(`http://localhost:8000/api/service-request/${id}/action/`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    },
-    body: JSON.stringify({ action: 'delete' })
-  })
-}
+  const result = await Swal.fire({
+    title: 'Delete Request?',
+    text: 'This can only be done for accepted or rejected requests. Are you sure?',
+    icon: 'error',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, delete it',
+    cancelButtonText: 'Cancel'
+  });
+
+  if (result.isConfirmed) {
+    const res = await fetch(`http://localhost:8000/api/service-request/${id}/action/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({ action: 'delete' })
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      Swal.fire('Deleted', data.success || 'Request deleted', 'success');
+    } else {
+      Swal.fire('Error', data.error || 'Delete failed', 'error');
+    }
+  }
+};
+
 
 const formatDate = (dateStr) => {
   const d = new Date(dateStr)
