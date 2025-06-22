@@ -2,7 +2,7 @@
   <cleanerHeader />
   <div class="container mt-5">
     <div class="row">
-      <div v-for="sr in serviceRequests" :key="sr.id" class="col-md-6 col-lg-4 mb-4">
+      <div v-for="sr in paginatedOrganizations" :key="sr.id" class="col-md-6 col-lg-4 mb-4">
         <div class="card h-100 shadow-sm border-0">
           <!-- Clickable image -->
           <img
@@ -16,9 +16,27 @@
           <div class="card-body">
             <p class="mb-1"><strong>Location:</strong> {{ sr.organization_location }}</p>
             <p class="mb-1"><strong>start Date:</strong> {{ sr.start_date }}</p>
-            <p class="mb-1"><strong>status: </strong><span style="color: green;">{{ sr.status }}</span></p>
+
           </div>
         </div>
+      </div>
+
+      <div class="d-flex justify-content-center mt-2gap-2">
+        <button
+          class="btn btn-outline-primary"
+          @click="goToPage(currentPage - 1)"
+          :disabled="currentPage === 1"
+        >
+          Previous
+        </button>
+        <span class="align-self-center">Page {{ currentPage }} of {{ totalPages }}</span>
+        <button
+          class="btn btn-outline-primary"
+          @click="goToPage(currentPage + 1)"
+          :disabled="currentPage === totalPages"
+        >
+          Next
+        </button>
       </div>
     </div>
   </div>
@@ -26,12 +44,14 @@
 
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import swal from 'sweetalert2'
 
 import cleanerHeader from './cleaner-header.vue'
 
 const serviceRequests = ref([])
+const currentPage = ref(1)
+const perPage = 6
 
 const fetchApprovedOrganizations = async () => {
   try {
@@ -51,6 +71,24 @@ const fetchApprovedOrganizations = async () => {
     console.error('Error fetching organizations:', error);
   }
 }
+
+
+const paginatedOrganizations = computed(() => {
+  const start = (currentPage.value - 1) * perPage
+  return serviceRequests.value.slice(start, start + perPage)
+})
+
+const totalPages = computed(() => {
+  return Math.ceil(serviceRequests.value.length / perPage)
+})
+
+
+const goToPage = (page) => {
+  if (page >= 1 && page <= totalPages.value) {
+    currentPage.value = page
+  }
+}
+
 
 const showOrganizationDetails = (sr) => {
   const services = sr.services_list?.length

@@ -29,10 +29,10 @@
         <li v-for="n in notifications" :key="n.id">
           <p><strong>{{ n.title }}</strong></p>
           <p>{{ n.message }}</p>
-        </li>
-        <button class="delete-btn" @click="deleteNotification(n.id)">
+          <button class="delete-btn" @click="deleteNotification(n.id)">
             <i class="fas fa-trash-alt"></i>
           </button>
+        </li>
       </ul>
     </div>
   </div>
@@ -247,7 +247,7 @@ nav ul li a:hover {
 
 .notification-popup {
   position: fixed;
-  top: 30%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 600px;

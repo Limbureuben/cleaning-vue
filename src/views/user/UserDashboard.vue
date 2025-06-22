@@ -130,9 +130,9 @@ const showOrganizationDetails = (org) => {
     confirmButtonText: 'Request Service',
     cancelButtonText: 'Close',
     customClass: {
-      popup: 'custom-popup',
-      confirmButton: 'custom-confirm-button',
-      cancelButton: 'custom-cancel-button'
+    popup: 'custom-popup',
+    confirmButton: 'custom-confirm-button',
+    cancelButton: 'custom-cancel-button'
     },
   }).then((result) => {
     if (result.isConfirmed) {
