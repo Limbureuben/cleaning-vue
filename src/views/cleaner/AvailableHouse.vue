@@ -10,7 +10,7 @@
             :src="sr.organization_image"
             alt="Organization Logo"
             class="card-img-top rounded-top"
-            style="max-height: 180px; object-fit: cover; cursor: pointer"
+            style="max-height: 130px; object-fit: cover; cursor: pointer"
             @click="showOrganizationDetails(sr)"
           />
           <div class="card-body">
