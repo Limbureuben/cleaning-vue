@@ -2,7 +2,7 @@
     <OrganizationHeader/>
   <div class="table-container">
     <div class="header-container">
-      <h2 class="table-title">CLIENT REQUESTS</h2>
+      <h2 class="table-title">CLEANERS REQUESTS</h2>
 
       <!-- Search Input -->
       <div class="search-container">
@@ -23,6 +23,7 @@
             <th class="mat-header-cell">CLEANER NAME</th>
             <th class="mat-header-cell">EMAIL</th>
             <th class="mat-header-cell">LOCATION</th>
+            <th class="mat-header-cell">HOUSE LOCATION</th>
             <th class="mat-header-cell">REQUESTED TIME</th>
              <th class="mat-header-cell">STATUS</th>
             <th class="mat-header-cell">ACTIONS</th>
@@ -38,7 +39,10 @@
               <td class="mat-cell">{{ req.email }}</td>
               <td class="mat-cell">{{ req.cleaner_location }}</td>
               <td class="mat-cell">{{ req.organization_location }}</td>
-              <td class="mat-cell">{{ new Date(req.requested_at).toLocaleString() }}</td>
+              <td class="mat-cell">{{ formatDate(req.created_at) }}</td>
+              <td class="mat-cell">
+                <span :class="getStatusClass(req.status)">{{ req.status }}</span>
+              </td>
               <td class="mat-cell">
                 <button v-if="req.status === 'pending'" @click="acceptRequest(req.id)" class="btn btn-success btn-sm me-1">
               Accept
@@ -456,5 +460,140 @@ onMounted(() => {
 .status-pill.rejected {
   background-color: #ffe0e0;
   color: #dc3545;
+}
+
+
+
+
+.position-relative {
+  position: relative;
+}
+
+.modal-content {
+  max-width: 400px;
+  width: 100%;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5); /* translucent black */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050; /* high z-index to overlay other elements */
+}
+
+/* .modal-content {
+  max-width: 400px;
+  width: 90%;
+  background-color: white;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  border-radius: 8px;
+  position: relative;
+  padding: 20px;
+} */
+
+.modal-content {
+  max-width: 400px;
+  width: 90%;
+  background-color: white;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  border-radius: 8px;
+  position: relative;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+input.form-control,
+select.form-select,
+textarea.form-control {
+  border: 1.5px solid #06923E;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 14px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input.form-control:focus,
+select.form-select:focus,
+textarea.form-control:focus {
+  border-color: #06923E;
+  box-shadow: 0 0 8px rgba(74, 93, 187, 0.4);
+  outline: none;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #3a3a3a;
+  margin-bottom: 6px;
+  display: block;
+}
+
+button.btn-primary {
+  background-color: #06923E;
+  border-color: #06923E;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+button.btn-primary:hover {
+  background-color: #06923E;
+  border-color: #06923E;
+}
+
+button.btn-secondary {
+  background-color: #06923E;
+  border-color: #06923E;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+button.btn-secondary:hover {
+  background-color: #06923E;
+  border-color: #06923E;
+}
+
+/* Reject modal textarea */
+.modal-content textarea.form-control {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.modal-content h5 {
+  margin-bottom: 15px;
+  color: #2c3e50;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.modal-content .d-flex.justify-content-end {
+  margin-top: 15px;
+}
+
+/* Rounded corners for buttons */
+button.btn {
+  border-radius: 6px;
+}
+
+/* Add some spacing between form groups */
+.mb-3 {
+  margin-bottom: 1rem !important;
+}
+
+/* Bootstrap 5 style close button */
+.btn-close {
+  width: 1.5rem;
+  height: 1.5rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  opacity: 0.5;
+  transition: opacity 0.15s ease;
+}
+.btn-close:hover {
+  opacity: 1;
+  cursor: pointer;
 }
 </style>
