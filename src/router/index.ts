@@ -15,6 +15,7 @@ import AvailableHouse from '@/views/cleaner/AvailableHouse.vue'
 import MyRequest from '@/views/cleaner/my-request.vue'
 import CleanerRequest from '@/views/organization/CleanerRequest.vue'
 import AcceptedRequest from '@/views/cleaner/AcceptedRequest.vue'
+import ClientStaffRequest from '@/views/organization/ClientStaffRequest.vue'
 
 
 const routes = [
@@ -33,7 +34,8 @@ const routes = [
   { path: '/available-house', name: 'AvailableHouse', component: AvailableHouse },
   { path: '/cleaner-request', name: 'CleanerRequest', component: MyRequest},
   { path: '/from-cleaner', name: 'FromCleaner', component: CleanerRequest },
-  { path: '/approved-reqest', name: 'Approved', component: AcceptedRequest }
+  { path: '/approved-reqest', name: 'Approved', component: AcceptedRequest },
+  { path: '/request', name: 'Request', component: ClientStaffRequest}
   
 ]
 const router = createRouter({
