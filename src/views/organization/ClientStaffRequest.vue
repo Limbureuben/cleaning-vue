@@ -101,6 +101,40 @@ const fetchCleanerRequests = async () => {
   }
 }
 
+const acceptRequest = async (id) => {
+  await fetch(`http://localhost:8000/api/service-request/${id}/action/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    },
+    body: JSON.stringify({ action: 'accept' })
+  })
+}
+
+const rejectRequest = async (id)=> {
+  await fetch(`http://localhost:8000/api/service-request/${id}/action/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    },
+    body: JSON.stringify({ action: 'reject' })
+  })
+}
+
+
+const deleteRequest = async (id) => {
+  await fetch(`http://localhost:8000/api/service-request/${id}/action/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    },
+    body: JSON.stringify({ action: 'delete' })
+  })
+}
+
 const formatDate = (dateStr) => {
   const d = new Date(dateStr)
   return d.toLocaleString()
