@@ -30,6 +30,9 @@
           <p><strong>{{ n.title }}</strong></p>
           <p>{{ n.message }}</p>
         </li>
+        <button @click="deleteNotification(n.id)" class="delete-btn" title="Delete notification">
+          <i class="fas fa-trash"></i>
+        </button>
       </ul>
     </div>
   </div>
