@@ -2,7 +2,7 @@
     <OrganizationHeader/>
   <div class="table-container">
     <div class="header-container">
-      <h2 class="table-title">MY REQUEST</h2>
+      <h2 class="table-title">CLIENT REQUESTS</h2>
 
       <!-- Search Input -->
       <div class="search-container">
@@ -37,12 +37,6 @@
             <td class="mat-cell">{{ request.email }}</td>
             <td class="mat-cell">{{ request.phone }}</td>
             <td class="mat-cell">{{ new Date(request.requested_at).toLocaleString()}}</td>
-            <td class="mat-cell">
-              <span :class="getStatusClass(request.status)" class="badge">
-                {{ request.status }}
-              </span>
-            </td>
-            <td class="mat-cell">{{ formatDate(request.created_at) }}</td>
           </tr>
           <tr v-if="cleanerRequests.length === 0">
             <td class="mat-cell" colspan="5">No matching reports found.</td>
