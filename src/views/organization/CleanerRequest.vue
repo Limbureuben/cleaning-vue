@@ -281,7 +281,7 @@ const deleteRequest = async (id) => {
   })
   if (confirmed.isConfirmed) {
     try {
-      const res = await fetch(`http://localhost:8000/api/cleaner-requests/${id}/`, {
+      const res = await fetch(`http://localhost:8000/api/delete-cleaner-request/${id}/`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
