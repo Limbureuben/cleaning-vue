@@ -1,5 +1,5 @@
 <template>
-    <UserHeader/>
+  <UserHeader/>
   <div class="table-container">
     <div class="header-container">
       <h2 class="table-title">CLIENT REQUESTS</h2>
@@ -19,7 +19,7 @@
       <table class="custom-table">
         <thead>
           <tr class="mat-header-row">
-           <th class="mat-header-cell">#</th>
+            <th class="mat-header-cell">#</th>
             <th class="mat-header-cell">CLEANER</th>
             <th class="mat-header-cell">DESCRIPTIONS</th>
             <th class="mat-header-cell">COMPLETED AT</th>
@@ -28,20 +28,52 @@
           </tr>
         </thead>
         <tbody>
-          <tr
-              v-for="(report, index) in clientReports"
-              :key="report.id"
-            >
-              <td class="mat-cell">{{ index + 1 }}</td>
-              <td class="mat-cell">{{ report.cleaner }}</td>
-              <td class="mat-cell">{{ report.description }}</td>
-              <td class="mat-cell">{{ new Date(report.completed_at).toLocaleString() }}</td>
-            </tr>
+          <tr v-for="(report, index) in clientReports" :key="report.id">
+            <td class="mat-cell">{{ index + 1 }}</td>
+            <td class="mat-cell">{{ report.cleaner }}</td>
+            <td class="mat-cell">{{ report.description }}</td>
+            <td class="mat-cell">{{ new Date(report.completed_at).toLocaleString() }}</td>
+            <td class="mat-cell">
+              <span v-if="report.client_rating">{{ report.client_rating }}/5</span>
+              <span v-else class="text-muted">Not rated</span>
+            </td>
+            <td class="mat-cell">
+              <button
+                class="btn btn-sm btn-warning"
+                @click="openRatingPopup(report)"
+                v-if="!report.client_rating"
+              >
+                Rate
+              </button>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
+
+    <!-- Rating Popup -->
+    <div v-if="showRatingPopup" class="popup-overlay">
+      <div class="popup-card">
+        <h4>Rate Cleaner</h4>
+        <p><strong>{{ selectedReport?.cleaner }}</strong></p>
+        <div class="stars">
+          <span
+            v-for="star in 5"
+            :key="star"
+            class="star"
+            :class="{ active: star <= selectedRating }"
+            @click="selectedRating = star"
+          >★</span>
+        </div>
+        <div class="popup-actions">
+          <button class="btn btn-secondary btn-sm" @click="closePopup">Cancel</button>
+          <button class="btn btn-success btn-sm" @click="submitRating">Submit</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
+
 <script setup>
 import { ref, onMounted } from 'vue'
 import UserHeader from './UserHeader.vue'
@@ -50,6 +82,9 @@ import { useRouter } from 'vue-router'
 
 
 const clientReports = ref([])
+const selectedRating = ref(0)
+const selectedReport = ref(null)
+const showRatingPopup = ref(false)
 
 const fetchStaffReport = async () => {
   try {
@@ -68,53 +103,40 @@ const fetchStaffReport = async () => {
   }
 }
 
-const forwardReport = async (report) => {
-  try {
-    const res = await fetch(`http://localhost:8000/api/reports/${report.id}/forward/`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
-    })
-
-    if (!res.ok) throw new Error('Failed to forward report')
-
-    Swal.fire('Forwarded', 'Report has been forwarded to the client.', 'success')
-    report.forwarded = true;
-    fetchStaffReport()
-  } catch (err) {
-    Swal.fire('Error', err.message, 'error')
-  }
+const openRatingPopup = (report) => {
+  selectedReport.value = report
+  selectedRating.value = 0
+  showRatingPopup.value = true
 }
 
-const deleteReport = async (id) => {
-  const confirm = await Swal.fire({
-    title: 'Delete Report?',
-    text: 'This will remove the report permanently.',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonText: 'Yes, delete',
-    cancelButtonText: 'Cancel',
-    confirmButtonColor: '#06923E'
-  })
+const closePopup = () => {
+  showRatingPopup.value = false
+}
 
-  if (confirm.isConfirmed) {
-    try {
-      const res = await fetch(`http://localhost:8000/api/reports/${id}/`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      })
 
-      if (!res.ok) throw new Error('Failed to delete')
+const submitRating = async () => {
+  if (!selectedRating.value) {
+    Swal.fire('Please select a rating.', '', 'info')
+    return
+  }
 
-      Swal.fire('Deleted', 'Report deleted successfully.', 'success')
-      fetchStaffReport()
-    } catch (err) {
-      Swal.fire('Error', err.message, 'error')
-    }
+  try {
+    const res = await fetch(`http://localhost:8000/api/reports/${selectedReport.value.id}/rate/`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ client_rating: selectedRating.value })
+    })
+
+    if (!res.ok) throw new Error('Rating failed')
+
+    Swal.fire('Success', 'Rating submitted.', 'success')
+    showRatingPopup.value = false
+    fetchReports()
+  } catch (err) {
+    Swal.fire('Error', err.message, 'error')
   }
 }
 
@@ -124,6 +146,121 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px 36px;
+  width: 320px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  animation: popupFadeIn 0.3s ease forwards;
+}
+
+@keyframes popupFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.popup-card h4 {
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+  color: #222;
+  font-weight: 700;
+}
+
+.popup-card p {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.stars {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.star {
+  font-size: 2.8rem;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.2s ease;
+  user-select: none;
+}
+
+.star.active,
+.star:hover,
+.star:hover ~ .star {
+  color: #ffb400;
+  text-shadow: 0 0 8px #ffb400;
+  transform: scale(1.2);
+}
+
+.popup-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.btn {
+  flex: 1;
+  padding: 10px 0;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+.btn-secondary {
+  background-color: #e0e0e0;
+  color: #555;
+}
+
+.btn-secondary:hover {
+  background-color: #c7c7c7;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+}
+
+
+
+
+
+
+
+
+
+
 .table-container {
   margin: 20px;
   padding: 20px;
@@ -193,6 +330,9 @@ onMounted(() => {
 .confirmed-icon {
   color: green;
 }
+
+
+
 
 
 
