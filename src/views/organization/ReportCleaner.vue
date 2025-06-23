@@ -20,11 +20,12 @@
         <thead>
           <tr class="mat-header-row">
            <th class="mat-header-cell">#</th>
+            <th class="mat-header-cell">CLEANER</th>
             <th class="mat-header-cell">CLIENT</th>
-            <th class="mat-header-cell">EMAIL</th>
-            <th class="mat-header-cell">PHONE</th>
-            <th class="mat-header-cell">REQESTED ON</th>
-             <th class="mat-header-cell">STATUS</th>
+            <th class="mat-header-cell">DESCRIPTIONS</th>
+            <th class="mat-header-cell">COMPLETED AT</th>
+             <th class="mat-header-cell">ATTACHMENT</th>
+            <th class="mat-header-cell">CLIENT RATING</th>
             <th class="mat-header-cell">ACTIONS</th>
           </tr>
         </thead>
@@ -38,14 +39,31 @@
               <td class="mat-cell">{{ report.client }}</td>
               <td class="mat-cell">{{ report.description }}</td>
               <td class="mat-cell">{{ new Date(report.completed_at).toLocaleString() }}</td>
-              <td>
+              <td class="mat-cell">
              <a v-if="report.attachment" :href="report.attachment" target="_blank">View</a>
              <span v-else>No file</span>
              </td>
-             <td>
+             <td class="mat-cell">
                 <span v-if="report.client_rating">{{ report.client_rating }}/5</span>
                 <span v-else class="text-muted">Not rated</span>
              </td>
+             <td class="mat-cell">
+                <button
+                    class="btn btn-primary btn-sm me-2"
+                    @click="forwardReport(report)"
+                    v-if="!report.forwarded"
+                >
+                    Forward
+                </button>
+
+                <button
+                    class="btn btn-danger btn-sm"
+                    @click="deleteReport(report.id)"
+                    v-if="report.forwarded"
+                >
+                    Delete
+                </button>
+                </td>
             </tr>
         </tbody>
       </table>
@@ -78,7 +96,53 @@ const fetchStaffReport = async () => {
   }
 }
 
+const forwardReport = async (report) => {
+  try {
+    const res = await fetch(`http://localhost:8000/api/reports/${report.id}/forward/`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    })
 
+    if (!res.ok) throw new Error('Failed to forward report')
+
+    Swal.fire('Forwarded', 'Report has been forwarded to the client.', 'success')
+    fetchStaffReport()
+  } catch (err) {
+    Swal.fire('Error', err.message, 'error')
+  }
+}
+
+const deleteReport = async (id) => {
+  const confirm = await Swal.fire({
+    title: 'Delete Report?',
+    text: 'This will remove the report permanently.',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, delete',
+    cancelButtonText: 'Cancel'
+  })
+
+  if (confirm.isConfirmed) {
+    try {
+      const res = await fetch(`http://localhost:8000/api/reports/${id}/`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+
+      if (!res.ok) throw new Error('Failed to delete')
+
+      Swal.fire('Deleted', 'Report deleted successfully.', 'success')
+      fetchStaffReport()
+    } catch (err) {
+      Swal.fire('Error', err.message, 'error')
+    }
+  }
+}
 
 onMounted(() => {
   fetchStaffReport()
