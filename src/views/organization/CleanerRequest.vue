@@ -59,7 +59,7 @@
                 >
                   Reject
                 </button>
-                <button v-if="req.status === 'rejected'" @click="deleteRequest(req.id)" class="btn btn-danger btn-sm"
+                <button v-if="req.status === 'approved' || req.status === 'rejected'" @click="deleteRequest(req.id)" class="btn btn-danger btn-sm"
                 >
                   Delete
                 </button>
