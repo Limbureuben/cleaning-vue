@@ -30,10 +30,10 @@
         </thead>
         <tbody>
           <tr
-              v-for="(request, index) in cleanerRequests"
+              v-for="(request, index) in paginatedRequests"
               :key="request.id"
             >
-              <td class="mat-cell">{{ index + 1 }}</td>
+              <td class="mat-cell">{{ index + 1 + (currentPage - 1) * itemsPerPage }}</td>
               <td class="mat-cell">{{ request.username }}</td>
               <td class="mat-cell">{{ request.email }}</td>
               <td class="mat-cell">{{ request.phone }}</td>
@@ -76,12 +76,34 @@
             </tr>
         </tbody>
       </table>
+
+      <div class="pagination-controls mt-3 d-flex justify-content-center align-items-center" v-if="totalPages > 1">
+          <button 
+            class="btn btn-outline-primary me-2"
+            :disabled="currentPage === 1"
+            @click="currentPage--"
+          >
+            Previous
+          </button>
+
+          <span class="page-indicator">
+            Page {{ currentPage }} of {{ totalPages }}
+          </span>
+
+          <button 
+            class="btn btn-outline-primary ms-2"
+            :disabled="currentPage === totalPages"
+            @click="currentPage++"
+          >
+            Next
+          </button>
+        </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import OrganizationHeader from './OrganizationHeader.vue'
 import Swal from 'sweetalert2'
 import { useRouter } from 'vue-router'
@@ -209,6 +231,39 @@ const statusClass = (status) => {
   }
 };
 
+
+const searchTerm = ref('');
+const currentPage = ref(1);
+const itemsPerPage = ref(6);
+
+
+const paginatedRequests = computed(() => {
+  let filtered = cleanerRequests.value;
+
+  if (searchTerm.value) {
+    filtered = filtered.filter(req =>
+      req.username.toLowerCase().includes(searchTerm.value.toLowerCase())
+    );
+  }
+
+  const start = (currentPage.value - 1) * itemsPerPage.value;
+  const end = start + itemsPerPage.value;
+  return filtered.slice(start, end);
+});
+
+const totalPages = computed(() => {
+  let count = cleanerRequests.value.length;
+  if (searchTerm.value) {
+    count = cleanerRequests.value.filter(req =>
+      req.username.toLowerCase().includes(searchTerm.value.toLowerCase())
+    ).length;
+  }
+  return Math.ceil(count / itemsPerPage.value);
+});
+
+watch(searchTerm, () => {
+  currentPage.value = 1;
+});
 
 
 onMounted(() => {
