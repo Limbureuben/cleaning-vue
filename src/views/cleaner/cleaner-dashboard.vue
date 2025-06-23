@@ -2,73 +2,111 @@
   <cleanerHeader />
   <div class="dashboard">
     <div class="dashboard-grid">
-      <div class="card upcoming-jobs">
-        <h2>Available Jobs</h2>
-        <ul>
-          <li v-for="job in upcomingJobs" :key="job.id">
-            <span class="job-date">{{ job.date }}</span>
-            <span class="job-location">{{ job.location }}</span>
-          </li>
-        </ul>
-      </div>
-      <div class="card performance">
-        <h2>Performance Metrics</h2>
-        <div class="metric">
-          <span>Job Completion Rate:</span>
-          <span class="metric-value">{{ performanceMetrics.completionRate }}%</span>
-        </div>
-        <div class="metric">
-          <span>On-Time Rate:</span>
-          <span class="metric-value">{{ performanceMetrics.onTimeRate }}%</span>
-        </div>
-      </div>
-      <div class="card earnings">
-        <h2>Earnings</h2>
-        <div class="metric">
-          <span>This Month:</span>
-          <span class="metric-value">${{ earnings.thisMonth }}</span>
-        </div>
-        <div class="metric">
-          <span>Last Month:</span>
-          <span class="metric-value">${{ earnings.lastMonth }}</span>
-        </div>
-      </div>
+    <router-link to="available-house" class="card stats-icon-card" style="text-decoration: none;">
+      <i class="fas fa-briefcase icon"></i>
+      <p class="count-label">Available Jobs</p>
+      <p class="count-number">{{ availableJobsCount }}</p>
+    </router-link>
+      <router-link to="cleaner-request" div class="card stats-icon-card" style="text-decoration: none">
+        <i class="fas fa-paper-plane icon"></i>
+        <p class="count-label">Total Requests</p>
+        <p class="count-number">{{ totalRequestsCount }}</p>
+      </router-link>
+      <router-link to="approved-reqest" div class="card stats-icon-card" style="text-decoration: none">
+         <i class="fas fa-history icon"></i>
+        <p class="count-label">Approved Request</p>
+        <p class="count-number">{{ approvedRequestsCount }}</p>
+      </router-link>
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import cleanerHeader from './cleaner-header.vue';
 export default {
     components: {
         cleanerHeader,
     },
   name: 'CleanerDashboard',
-  data() {
+  setup() {
+    const availableJobsCount = ref(0)
+    const totalRequestsCount = ref(0)
+    const approvedRequestsCount = ref(0)
+
+    const fetchDashboardStats = async () => {
+      try {
+        const res = await fetch('http://localhost:8000/api/cleaner/dashboard-stats/', {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        })
+
+        if (!res.ok) throw new Error('Failed to fetch stats')
+
+        const data = await res.json()
+        availableJobsCount.value = data.available_jobs_count
+        totalRequestsCount.value = data.total_cleaner_requests_count
+        approvedRequestsCount.value = data.approved_cleaner_requests_count
+      } catch (error) {
+        console.error('Error loading stats:', error)
+      }
+    }
+
+    onMounted(() => {
+      fetchDashboardStats()
+    })
+
     return {
-      upcomingJobs: [
-        { id: 1, date: '2025-06-20', location: '123 Main St' },
-        { id: 2, date: '2025-06-22', location: '456 Elm St' },
-      ],
-      performanceMetrics: {
-        completionRate: 98,
-        onTimeRate: 95,
-      },
-      earnings: {
-        thisMonth: 2500,
-        lastMonth: 2300,
-      },
-      recentReviews: [
-        { id: 1, rating: 5, comment: 'Excellent service!' },
-        { id: 2, rating: 4, comment: 'Very good, but a bit late.' },
-      ],
-    };
-  },
+      availableJobsCount,
+      totalRequestsCount,
+      approvedRequestsCount
+    }
+  }
 };
 </script>
 
 <style scoped>
+
+.stats-icon-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 20px;
+  background-color: #f0f4f8;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.stats-icon-card:hover {
+  transform: translateY(-5px);
+}
+
+.stats-icon-card .icon {
+  font-size: 2rem;
+  color: #06923E;
+  margin-bottom: 10px;
+}
+
+.count-label {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.count-number {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #06923E;
+}
+
+
+
+
+
 .dashboard {
   font-family: 'Arial', sans-serif;
   max-width: 1200px;
