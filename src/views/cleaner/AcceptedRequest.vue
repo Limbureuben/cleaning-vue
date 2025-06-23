@@ -61,15 +61,24 @@
                 <i class="fas fa-trash"></i>
               </button>
 
-              <!-- Report if approved -->
-              <button 
-                v-if="request.status === 'approved'"
-                @click="openReportForm(request.id)"
-                class="btn btn-success btn-sm ms-2"
-                title="Submit Cleaning Report"
-              >
-                <i class="fas fa-file-alt"></i> Report
-              </button>
+                            <!-- Report if approved -->
+              <div v-if="request.status === 'approved'">
+                <button
+                  @click="openReportForm(request.id)"
+                  class="btn btn-success btn-sm me-2"
+                  title="Submit Cleaning Report"
+                >
+                  <i class="fas fa-file-alt"></i> Report
+                </button>
+                <button
+                  v-if="request.status === 'approved'"
+                  @click="deleteRequest(request.id)"
+                  class="btn btn-outline-danger btn-sm"
+                  title="Delete Request"
+                >
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
             </td>
 
           </tr>
@@ -260,7 +269,7 @@ const deleteRequest = async (requestId) => {
 
   if (confirm.isConfirmed) {
     try {
-      const response = await fetch(`http://localhost:8000/api/delete-cleaner-request/${requestId}/`, {
+      const response = await fetch(`http://localhost:8000/api/cleaner-delete-request/${requestId}/`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
