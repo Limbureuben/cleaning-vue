@@ -109,6 +109,7 @@ const forwardReport = async (report) => {
     if (!res.ok) throw new Error('Failed to forward report')
 
     Swal.fire('Forwarded', 'Report has been forwarded to the client.', 'success')
+    report.forwarded = true;
     fetchStaffReport()
   } catch (err) {
     Swal.fire('Error', err.message, 'error')
@@ -122,7 +123,8 @@ const deleteReport = async (id) => {
     icon: 'warning',
     showCancelButton: true,
     confirmButtonText: 'Yes, delete',
-    cancelButtonText: 'Cancel'
+    cancelButtonText: 'Cancel',
+    confirmButtonColor: '#06923E'
   })
 
   if (confirm.isConfirmed) {

@@ -5,6 +5,7 @@
       <nav>
         <ul>
           <li><router-link to="/user-dashboard">Dashboard</router-link></li>
+           <li><router-link to="/rating">Reports</router-link></li>
           <li>
             <span class="notification-icon" @click="toggleNotificationPopup">
               <i class="fas fa-bell"></i>
