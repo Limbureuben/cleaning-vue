@@ -30,14 +30,22 @@
         </thead>
         <tbody>
           <tr
-              v-for="(request, index) in cleanerRequests"
-              :key="request.id"
+              v-for="(report, index) in StaffReports"
+              :key="report.id"
             >
               <td class="mat-cell">{{ index + 1 }}</td>
-              <td class="mat-cell">{{ request.username }}</td>
-              <td class="mat-cell">{{ request.email }}</td>
-              <td class="mat-cell">{{ request.phone }}</td>
-              <td class="mat-cell">{{ new Date(request.requested_at).toLocaleString() }}</td>
+              <td class="mat-cell">{{ report.cleaner }}</td>
+              <td class="mat-cell">{{ report.client }}</td>
+              <td class="mat-cell">{{ report.description }}</td>
+              <td class="mat-cell">{{ new Date(report.completed_at).toLocaleString() }}</td>
+              <td>
+             <a v-if="report.attachment" :href="report.attachment" target="_blank">View</a>
+             <span v-else>No file</span>
+             </td>
+             <td>
+                <span v-if="report.client_rating">{{ report.client_rating }}/5</span>
+                <span v-else class="text-muted">Not rated</span>
+             </td>
             </tr>
         </tbody>
       </table>
@@ -53,7 +61,7 @@ import { useRouter } from 'vue-router'
 
 const StaffReports = ref([])
 
-const fetchCleanerRequests = async () => {
+const fetchStaffReport = async () => {
   try {
     const res = await fetch('http://localhost:8000/api/reports/staff/', {
       headers: {
@@ -73,7 +81,7 @@ const fetchCleanerRequests = async () => {
 
 
 onMounted(() => {
-  fetchCleanerRequests()
+  fetchStaffReport()
 })
 </script>
 
