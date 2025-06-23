@@ -86,7 +86,7 @@ const selectedRating = ref(0)
 const selectedReport = ref(null)
 const showRatingPopup = ref(false)
 
-const fetchStaffReport = async () => {
+const fetchClientReport = async () => {
   try {
     const res = await fetch('http://localhost:8000/api/reports/client/forwarded/', {
       headers: {
@@ -134,14 +134,15 @@ const submitRating = async () => {
 
     Swal.fire('Success', 'Rating submitted.', 'success')
     showRatingPopup.value = false
-    fetchReports()
+    await fetchClientReport()
   } catch (err) {
     Swal.fire('Error', err.message, 'error')
   }
 }
 
+
 onMounted(() => {
-  fetchStaffReport()
+  fetchClientReport()
 })
 </script>
 
@@ -225,7 +226,7 @@ onMounted(() => {
 
 .btn {
   flex: 1;
-  padding: 10px 0;
+  padding: 8px 15px;
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
@@ -251,15 +252,6 @@ onMounted(() => {
 .btn-success:hover {
   background-color: #218838;
 }
-
-
-
-
-
-
-
-
-
 
 .table-container {
   margin: 20px;
