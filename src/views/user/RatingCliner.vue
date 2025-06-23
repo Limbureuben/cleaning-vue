@@ -127,18 +127,55 @@ const submitRating = async () => {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ client_rating: selectedRating.value })
-    })
+      body: JSON.stringify({ rating: selectedRating.value })
+    });
 
-    if (!res.ok) throw new Error('Rating failed')
+    const data = await res.json();
 
-    Swal.fire('Success', 'Rating submitted.', 'success')
-    showRatingPopup.value = false
-    await fetchClientReport()
+    if (!res.ok) {
+      if (data.detail === 'You have already rated this service') {
+        Swal.fire('Oops!', data.detail, 'info');
+      } else {
+        throw new Error(data.detail || 'Rating failed');
+      }
+      return;
+    }
+
+    Swal.fire('Success', 'Rating submitted.', 'success');
+    showRatingPopup.value = false;
+    await fetchClientReport();
   } catch (err) {
-    Swal.fire('Error', err.message, 'error')
+    Swal.fire('Error', err.message, 'error');
   }
-}
+};
+
+
+
+// const submitRating = async () => {
+//   if (!selectedRating.value) {
+//     Swal.fire('Please select a rating.', '', 'info')
+//     return
+//   }
+
+//   try {
+//     const res = await fetch(`http://localhost:8000/api/reports/${selectedReport.value.id}/rate/`, {
+//       method: 'PATCH',
+//       headers: {
+//         Authorization: `Bearer ${localStorage.getItem('token')}`,
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify({ client_rating: selectedRating.value })
+//     })
+
+//     if (!res.ok) throw new Error('Rating failed')
+
+//     Swal.fire('Success', 'Rating submitted.', 'success')
+//     showRatingPopup.value = false
+//     await fetchClientReport()
+//   } catch (err) {
+//     Swal.fire('Error', err.message, 'error')
+//   }
+// }
 
 
 onMounted(() => {
