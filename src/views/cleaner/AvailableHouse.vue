@@ -92,7 +92,7 @@ const goToPage = (page) => {
 
 const showOrganizationDetails = (sr) => {
   const services = sr.services_list?.length
-    ? `<ul style="padding-left: 20px; margin: 0; list-style-type: disc; color: #4a90e2;">${sr.services_list.map(s => `<li style="margin-bottom: 4px;">${s}</li>`).join('')}</ul>`
+    ? `<ul style="padding-left: 20px; margin: 0; list-style-type: disc; color: #06923E;">${sr.services_list.map(s => `<li style="margin-bottom: 4px;">${s}</li>`).join('')}</ul>`
     : '<em style="color: #999;">No services listed</em>';
 
   const content = `
@@ -191,7 +191,7 @@ const requestService = async (sr) => {
           box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
         }
         .swal-form-container input:focus {
-          border-color: #4a90e2;
+          border-color: #06923E;
           outline: none;
           box-shadow: 0 0 8px rgba(74, 144, 226, 0.6);
         }
@@ -306,12 +306,12 @@ const getFullImageUrl = (path) => {
 }
 
 .btn {
-  background-color: #6A80B9;
+  background-color: #06923E;
   border: none;
 }
 
 .btn:hover {
-  background-color: #5c72aa;
+  background-color: #06923E;
 }
 
 

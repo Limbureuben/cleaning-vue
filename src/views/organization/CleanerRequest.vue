@@ -712,10 +712,10 @@ input.form-control:focus {
 .btn-success {
   background-color: #06923E;
   border: none;
-  padding: 10px 24px;
+  padding: 4px 10px;
   font-size: 1rem;
-  font-weight: 600;
-  border-radius: 8px;
+  font-weight: 200;
+  border-radius: 2px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
