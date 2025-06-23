@@ -14,6 +14,7 @@ import MyRequest from '@/views/cleaner/my-request.vue'
 import CleanerRequest from '@/views/organization/CleanerRequest.vue'
 import AcceptedRequest from '@/views/cleaner/AcceptedRequest.vue'
 import ClientStaffRequest from '@/views/organization/ClientStaffRequest.vue'
+import ReportCliner from '@/views/organization/ReportCleaner.vue'
 
 
 const routes = [
@@ -31,7 +32,8 @@ const routes = [
   { path: '/cleaner-request', name: 'CleanerRequest', component: MyRequest},
   { path: '/from-cleaner', name: 'FromCleaner', component: CleanerRequest },
   { path: '/approved-reqest', name: 'Approved', component: AcceptedRequest },
-  { path: '/request', name: 'Request', component: ClientStaffRequest}
+  { path: '/request', name: 'Request', component: ClientStaffRequest},
+  { path: '/cleaner-report', name: 'Reports', component: ReportCliner }
   
 ]
 const router = createRouter({
