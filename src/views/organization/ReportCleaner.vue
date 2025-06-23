@@ -50,11 +50,12 @@ import OrganizationHeader from './OrganizationHeader.vue'
 import Swal from 'sweetalert2'
 import { useRouter } from 'vue-router'
 
-const cleanerRequests = ref([])
+
+const StaffReports = ref([])
 
 const fetchCleanerRequests = async () => {
   try {
-    const res = await fetch('http://localhost:8000/api/my-organization-requests/', {
+    const res = await fetch('http://localhost:8000/api/reports/staff/', {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -63,7 +64,7 @@ const fetchCleanerRequests = async () => {
 
     if (!res.ok) throw new Error('Failed to fetch');
 
-    cleanerRequests.value = await res.json();
+    StaffReports.value = await res.json();
   } catch (error) {
     console.error('Error fetching cleaner requests:', error)
   }
