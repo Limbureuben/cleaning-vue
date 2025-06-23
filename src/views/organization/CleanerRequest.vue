@@ -39,10 +39,10 @@
         </thead>
         <tbody>
           <tr
-              v-for="(req, index) in receivedRequests"
+              v-for="(req, index) in paginatedRequests"
               :key="req.id"
             >
-              <td class="mat-cell">{{ index + 1 }}</td>
+              <td class="mat-cell">{{ index + 1 + (currentPage - 1) * itemsPerPage }}</td>
               <td class="mat-cell">{{ req.username }}</td>
               <td class="mat-cell">{{ req.email }}</td>
               <td class="mat-cell">{{ req.cleaner_location }}</td>
@@ -67,6 +67,30 @@
             </tr>
         </tbody>
       </table>
+
+
+      <div class="pagination-controls mt-3 d-flex justify-content-center align-items-center">
+            <button 
+              class="btn btn-outline-primary me-2"
+              :disabled="currentPage === 1"
+              @click="currentPage--"
+            >
+              Previous
+            </button>
+
+            <span class="page-indicator">
+              Page {{ currentPage }} of {{ totalPages }}
+            </span>
+
+            <button 
+              class="btn btn-outline-primary ms-2"
+              :disabled="currentPage === totalPages"
+              @click="currentPage++"
+            >
+              Next
+            </button>
+          </div>
+
 
           <div v-if="receivedRequests.length === 0" class="alert alert-info">No cleaner requests yet.</div>
 
@@ -143,7 +167,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import OrganizationHeader from './OrganizationHeader.vue'
 import swal from 'sweetalert2'
 
@@ -325,7 +349,38 @@ const registerCleaner = async () => {
       text: error.message
     });
   }
+
+
 };
+
+// Pagination and search state
+const searchTerm = ref('');
+const currentPage = ref(1);
+const itemsPerPage = ref(6);
+
+const paginatedRequests = computed(() => {
+  let filtered = receivedRequests.value;
+
+  if (searchTerm.value) {
+    filtered = filtered.filter(req =>
+      req.username.toLowerCase().includes(searchTerm.value.toLowerCase())
+    );
+  }
+
+  const start = (currentPage.value - 1) * itemsPerPage.value;
+  const end = start + itemsPerPage.value;
+  return filtered.slice(start, end);
+});
+
+const totalPages = computed(() => {
+  let count = receivedRequests.value.length;
+  if (searchTerm.value) {
+    count = receivedRequests.value.filter(req =>
+      req.username.toLowerCase().includes(searchTerm.value.toLowerCase())
+    ).length;
+  }
+  return Math.ceil(count / itemsPerPage.value);
+});
 
 onMounted(() => {
   fetchReceivedCleanerRequests()
@@ -775,6 +830,13 @@ input.form-control:focus {
   pointer-events: none;
   color: white;
 }
+
+
+.page-indicator {
+  font-weight: bold;
+  margin: 0 10px;
+}
+
 
 
 </style>
