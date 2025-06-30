@@ -383,4 +383,82 @@ onMounted(() => {
   background-color: #ffe0e0;
   color: #dc3545;
 }
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-container {
+  position: relative;
+  background: white;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  z-index: 10;
+  transition: color 0.2s;
+}
+
+.modal-close:hover {
+  color: #333;
+}
+
+.modal-content {
+  padding: 40px 20px 20px;
+  height: 100%;
+}
+
+.file-viewer {
+  width: 100%;
+  height: 70vh;
+  border: none;
+}
+
+
+.unsupported-file {
+  text-align: center;
+  padding: 40px;
+}
+
+.unsupported-file a {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 8px 16px;
+  background: #06923E;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+a[onclick] {
+  color: #06923E;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+a[onclick]:hover {
+  text-decoration: none;
+}
 </style>
