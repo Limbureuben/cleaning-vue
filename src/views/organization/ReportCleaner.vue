@@ -101,6 +101,27 @@ import { useRouter } from 'vue-router'
 
 
 const StaffReports = ref([])
+const showModal = ref(false);
+const currentAttachment = ref('');
+
+const openAttachment = (attachmentUrl) => {
+  currentAttachment.value = attachmentUrl;
+  showModal.value = true;
+};
+
+const closeModal = () => {
+  showModal.value = false;
+  currentAttachment.value = '';
+};
+
+const isPdf = (url) => {
+  return url.toLowerCase().endsWith('.pdf');
+};
+
+const isImage = (url) => {
+  const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+  return imageExtensions.some(ext => url.toLowerCase().endsWith(ext));
+};
 
 const fetchStaffReport = async () => {
   try {
