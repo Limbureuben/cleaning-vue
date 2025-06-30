@@ -415,6 +415,9 @@ onMounted(() => {
   color: #dc3545;
 }
 
+
+
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -432,9 +435,9 @@ onMounted(() => {
   position: relative;
   background: white;
   border-radius: 8px;
-  width: 80%;
+  width: 40%;
   max-width: 900px;
-  max-height: 90vh;
+  max-height: 80vh;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
