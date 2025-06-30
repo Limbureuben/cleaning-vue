@@ -111,10 +111,11 @@ const closeModal = () => {
 
 // Attachment file type checkers
 const isPdf = (url) => url.toLowerCase().endsWith('.pdf')
-const isImage = (url) =>
-  ['.jpg', '.jpeg', '.png', '.gif', '.webp'].some(ext =>
-    url.toLowerCase().endsWith(ext)
-  )
+const isImage = (url) => {
+  const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+  return imageExtensions.some(ext => url.toLowerCase().includes(ext));
+};
+
 
 // Fetch reports from backend
 const fetchStaffReport = async () => {
