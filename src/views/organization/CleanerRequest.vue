@@ -218,7 +218,7 @@ const acceptRequest = async (id) => {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('approved')}`
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     })
     if (!res.ok) throw new Error('Failed to accept request')
