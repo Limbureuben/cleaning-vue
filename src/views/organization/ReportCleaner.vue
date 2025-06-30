@@ -2,7 +2,7 @@
     <OrganizationHeader/>
   <div class="table-container">
     <div class="header-container">
-      <h2 class="table-title">CLIENT REQUESTS</h2>
+      <h2 class="table-title">CLEANER REPORTS</h2>
 
       <!-- Search Input -->
       <div class="search-container">
