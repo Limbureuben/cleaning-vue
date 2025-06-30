@@ -67,17 +67,17 @@
         <div class="modal-container">
           <button class="modal-close" @click="closeModal">×</button>
           <div class="modal-content">
-            <iframe
-              v-if="isPdf(currentAttachment)"
-              :src="currentAttachment"
-              class="file-viewer"
-            ></iframe>
-            <img
-              v-else-if="isImage(currentAttachment)"
-              :src="currentAttachment"
-              class="file-viewer"
-              alt="Attachment"
-            />
+            <iframe 
+                v-if="isPdf(currentAttachment)" 
+                :src="currentAttachment" 
+                class="file-viewer"
+              ></iframe>
+              <img 
+                v-else-if="isImage(currentAttachment)" 
+                :src="currentAttachment" 
+                class="file-viewer"
+                alt="Attachment"
+              />
             <div v-else class="unsupported-file">
               <p>File type not supported for preview</p>
               <a :href="currentAttachment" download>Download File</a>
