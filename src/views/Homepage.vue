@@ -96,7 +96,7 @@ const goToSignup = () => {
 }
 
 .custom-btn {
-  background-color: #6A80B9;
+  background-color: #06923E;
   border-radius: 8px;
   border: none;
   cursor: pointer;
@@ -107,7 +107,7 @@ const goToSignup = () => {
 }
 
 .custom-btn:hover {
-  background-color: #6A80B9;
+  background-color: #06923E;
   transform: scale(1.05);
 }
 

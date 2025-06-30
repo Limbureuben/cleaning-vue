@@ -222,7 +222,7 @@ const acceptRequest = async (id) => {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`
+        Authorization: `Bearer ${localStorage.getItem('approved')}`
       }
     })
     if (!res.ok) throw new Error('Failed to accept request')
@@ -289,7 +289,7 @@ const deleteRequest = async (id) => {
       })
       if (!res.ok) throw new Error('Failed to delete request')
       swal.fire('Deleted', 'Request deleted successfully', 'success')
-      fetchRequests()
+      fetchReceivedCleanerRequests()
     } catch (error) {
       swal.fire('Error', error.message, 'error')
     }
