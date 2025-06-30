@@ -39,11 +39,7 @@
             <td class="mat-cell">{{ report.description }}</td>
             <td class="mat-cell">{{ new Date(report.completed_at).toLocaleDateString() }}</td>
             <td class="mat-cell">
-              <a
-                v-if="report.attachment"
-                @click="openAttachment(report.attachment)"
-                style="cursor: pointer"
-              >View</a>
+              <a v-if="report.attachment" @click="openAttachment(report.attachment)">View</a>
               <span v-else>No file</span>
             </td>
             <td class="mat-cell">
