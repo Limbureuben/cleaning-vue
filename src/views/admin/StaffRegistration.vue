@@ -10,7 +10,7 @@
               style="min-width: 450px;"
               v-show="showForm"
             >
-              <h4 class="mb-4 text-center fw-bold" style="color: #6A80B9;">Register New Staff</h4>
+              <h4 class="mb-4 text-center fw-bold" style="color: #06923E;">Register New Staff</h4>
 
               <form @submit.prevent="registerCleaner">
                 <!-- Full Name -->
@@ -67,7 +67,7 @@
                     <option value="user">Normal User</option>
                   </select>
                 </div>
-                <button type="submit" class="btn w-100 fw-bold text-white" style="background-color: #6A80B9;">
+                <button type="submit" class="btn w-100 fw-bold text-white" style="background-color: #06923E;">
                   Register User
                 </button>
               </form>

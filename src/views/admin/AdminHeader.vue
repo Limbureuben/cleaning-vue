@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow" style="background-color: #6A80B9;">
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow" style="background-color: #06923E;">
     <div class="container-fluid">
       <!-- Brand -->
       <router-link to="/" class="navbar-brand fw-bold">Admin Dashboard</router-link>
@@ -13,13 +13,7 @@
       <div :class="['collapse navbar-collapse', { show: isMenuOpen }]">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <router-link to="/admin-dashboard" class="nav-link">Dashboard</router-link>
-          </li>
-          <li class="nav-item">
             <router-link to="/register-staff" class="nav-link">RegisterStaff</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/available-organization" class="nav-link">Organizations</router-link>
           </li>
         </ul>
 
@@ -117,7 +111,7 @@ const logout = () => {
 }
 
 .dropdown-menu {
-  background-color: #6A80B9;
+  background-color: #06923E;
   border: none;
 }
 
@@ -127,7 +121,7 @@ const logout = () => {
 }
 
 .dropdown-item:hover {
-  background-color: #6A80B9;
+  background-color: #06923E;
 }
 
 .dropdown-divider {

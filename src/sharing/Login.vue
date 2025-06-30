@@ -97,7 +97,7 @@ const submitForm = async () => {
       const user = result.user;
 
       if (user.isSuperuser === true) {
-      router.push('/admin-dashboard');
+      router.push('/register-staff');
         } else if (user.isStaff === true && user.isCleaner !== true) {
           router.push('/organization');
         } else if (user.isCleaner === true) {
@@ -105,16 +105,6 @@ const submitForm = async () => {
         } else {
           router.push('/user-dashboard');
         }
-
-        // if (user.isSuperuser === true) {
-        //   router.push('/admin-dashboard');
-        // } else if (user.isStaff === true && user.isCleaner !== true) {
-        //   router.push('/organization');
-        // } else if (user.isCleaner === true) {
-        //   router.push('/availablebooking');
-        // } else {
-        //   router.push('/available-organization');
-        // }
       });
     } else {
       swal.fire({

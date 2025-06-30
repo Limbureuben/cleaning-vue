@@ -2,7 +2,7 @@
   <UserHeader/>
   <div class="table-container">
     <div class="header-container">
-      <h2 class="table-title">CLIENT REQUESTS</h2>
+      <h2 class="table-title">RATE CLEANER</h2>
 
       <!-- Search Input -->
       <div class="search-container">
