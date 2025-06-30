@@ -25,7 +25,6 @@
             <th class="mat-header-cell">DESCRIPTIONS</th>
             <th class="mat-header-cell">COMPLETED AT</th>
              <th class="mat-header-cell">ATTACHMENT</th>
-            <th class="mat-header-cell">CLIENT RATING</th>
             <th class="mat-header-cell">ACTIONS</th>
           </tr>
         </thead>
@@ -43,10 +42,6 @@
               <a v-if="report.attachment" @click="openAttachment(report.attachment)">View</a>
               <span v-else>No file</span>
               </td>
-             <td class="mat-cell">
-                <span v-if="report.client_rating">{{ report.client_rating }}/5</span>
-                <span v-else class="text-muted">Not rated</span>
-             </td>
              <td class="mat-cell">
                 <button
                     class="btn btn-primary btn-sm me-2"
@@ -471,6 +466,12 @@ onMounted(() => {
   color: white;
   text-decoration: none;
   border-radius: 4px;
+}
+a {
+  cursor: pointer;
+  background-color: #06923E;
+  padding: 6px 15px;
+  border-radius: 2px;
 }
 
 a[onclick] {
