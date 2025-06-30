@@ -31,7 +31,6 @@
             <th class="mat-header-cell">CLEANER NAME</th>
             <th class="mat-header-cell">EMAIL</th>
             <th class="mat-header-cell">LOCATION</th>
-            <th class="mat-header-cell">HOUSE LOCATION</th>
             <th class="mat-header-cell">REQUESTED TIME</th>
              <th class="mat-header-cell">STATUS</th>
             <th class="mat-header-cell">ACTIONS</th>
@@ -46,7 +45,6 @@
               <td class="mat-cell">{{ req.username }}</td>
               <td class="mat-cell">{{ req.email }}</td>
               <td class="mat-cell">{{ req.cleaner_location }}</td>
-              <td class="mat-cell">{{ req.organization_location }}</td>
               <td class="mat-cell">{{ formatDate(req.created_at) }}</td>
               <td class="mat-cell">
                 <span :class="getStatusClass(req.status)">{{ req.status }}</span>
