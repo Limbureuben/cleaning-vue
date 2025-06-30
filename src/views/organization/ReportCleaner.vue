@@ -1,5 +1,5 @@
 <template>
-    <OrganizationHeader/>
+  <OrganizationHeader />
   <div class="table-container">
     <div class="header-container">
       <h2 class="table-title">CLEANER REPORTS</h2>
@@ -9,7 +9,7 @@
         <input
           v-model="searchTerm"
           type="text"
-          placeholder="Filter by name"
+          placeholder="Filter by cleaner name"
           class="search-field"
         />
       </div>
@@ -19,142 +19,143 @@
       <table class="custom-table">
         <thead>
           <tr class="mat-header-row">
-           <th class="mat-header-cell">#</th>
+            <th class="mat-header-cell">#</th>
             <th class="mat-header-cell">CLEANER</th>
             <th class="mat-header-cell">CLIENT</th>
             <th class="mat-header-cell">DESCRIPTIONS</th>
             <th class="mat-header-cell">COMPLETED AT</th>
-             <th class="mat-header-cell">ATTACHMENT</th>
+            <th class="mat-header-cell">ATTACHMENT</th>
             <th class="mat-header-cell">ACTIONS</th>
           </tr>
         </thead>
         <tbody>
           <tr
-              v-for="(report, index) in StaffReports"
-              :key="report.id"
-            >
-              <td class="mat-cell">{{ index + 1 }}</td>
-              <td class="mat-cell">{{ report.cleaner }}</td>
-              <td class="mat-cell">{{ report.client }}</td>
-              <td class="mat-cell">{{ report.description }}</td>
-              <td class="mat-cell">{{ new Date(report.completed_at).toLocaleString() }}</td>
-              <td class="mat-cell">
-              <a v-if="report.attachment" @click="openAttachment(report.attachment)">View</a>
+            v-for="(report, index) in filteredReports"
+            :key="report.id"
+          >
+            <td class="mat-cell">{{ index + 1 }}</td>
+            <td class="mat-cell">{{ report.cleaner }}</td>
+            <td class="mat-cell">{{ report.client }}</td>
+            <td class="mat-cell">{{ report.description }}</td>
+            <td class="mat-cell">{{ new Date(report.completed_at).toLocaleDateString() }}</td>
+            <td class="mat-cell">
+              <a
+                v-if="report.attachment"
+                @click="openAttachment(report.attachment)"
+                style="cursor: pointer"
+              >View</a>
               <span v-else>No file</span>
-              </td>
-             <td class="mat-cell">
-                <button
-                    class="btn btn-primary btn-sm me-2"
-                    @click="forwardReport(report)"
-                    v-if="!report.forwarded"
-                >
-                    Forward
-                </button>
-
-                <button
-                    class="btn btn-danger btn-sm"
-                    @click="deleteReport(report.id)"
-                    v-if="report.forwarded"
-                >
-                    Delete
-                </button>
-                </td>
-            </tr>
+            </td>
+            <td class="mat-cell">
+              <button
+                class="btn btn-primary btn-sm me-2"
+                @click="forwardReport(report)"
+                v-if="!report.forwarded"
+              >
+                Forward
+              </button>
+              <button
+                class="btn btn-danger btn-sm"
+                @click="deleteReport(report.id)"
+                v-if="report.forwarded"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
         </tbody>
       </table>
 
+      <!-- Modal Preview -->
       <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
-    <div class="modal-container">
-      <button class="modal-close" @click="closeModal">×</button>
-      <div class="modal-content">
-        <iframe 
-          v-if="isPdf(currentAttachment)" 
-          :src="currentAttachment" 
-          class="file-viewer"
-        ></iframe>
-        <img 
-          v-else-if="isImage(currentAttachment)" 
-          :src="currentAttachment" 
-          class="file-viewer"
-          alt="Attachment"
-        >
-        <div v-else class="unsupported-file">
-          <p>File type not supported for preview</p>
-          <a :href="currentAttachment" download>Download File</a>
+        <div class="modal-container">
+          <button class="modal-close" @click="closeModal">×</button>
+          <div class="modal-content">
+            <iframe
+              v-if="isPdf(currentAttachment)"
+              :src="currentAttachment"
+              class="file-viewer"
+            ></iframe>
+            <img
+              v-else-if="isImage(currentAttachment)"
+              :src="currentAttachment"
+              class="file-viewer"
+              alt="Attachment"
+            />
+            <div v-else class="unsupported-file">
+              <p>File type not supported for preview</p>
+              <a :href="currentAttachment" download>Download File</a>
+            </div>
+          </div>
         </div>
-      </div>
-      </div>
       </div>
     </div>
   </div>
 </template>
+
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import OrganizationHeader from './OrganizationHeader.vue'
 import Swal from 'sweetalert2'
-import { useRouter } from 'vue-router'
-
 
 const StaffReports = ref([])
-const showModal = ref(false);
-const currentAttachment = ref('');
+const searchTerm = ref('')
+const showModal = ref(false)
+const currentAttachment = ref('')
 
-const openAttachment = (attachmentUrl) => {
-  currentAttachment.value = attachmentUrl;
-  showModal.value = true;
-};
-
+// Open and close modal
+const openAttachment = (url) => {
+  currentAttachment.value = url
+  showModal.value = true
+}
 const closeModal = () => {
-  showModal.value = false;
-  currentAttachment.value = '';
-};
+  showModal.value = false
+  currentAttachment.value = ''
+}
 
-const isPdf = (url) => {
-  return url.toLowerCase().endsWith('.pdf');
-};
+// Attachment file type checkers
+const isPdf = (url) => url.toLowerCase().endsWith('.pdf')
+const isImage = (url) =>
+  ['.jpg', '.jpeg', '.png', '.gif', '.webp'].some(ext =>
+    url.toLowerCase().endsWith(ext)
+  )
 
-const isImage = (url) => {
-  const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
-  return imageExtensions.some(ext => url.toLowerCase().endsWith(ext));
-};
-
+// Fetch reports from backend
 const fetchStaffReport = async () => {
   try {
-    const res = await fetch('http://localhost:8000/api/reports/staff/', {
+    const res = await fetch('http://localhost:8000/api/staff-cleaning-reports/', {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
-    });
-
-    if (!res.ok) throw new Error('Failed to fetch');
-
-    StaffReports.value = await res.json();
-  } catch (error) {
-    console.error('Error fetching cleaner requests:', error)
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+    if (!res.ok) throw new Error('Failed to fetch reports')
+    StaffReports.value = await res.json()
+  } catch (err) {
+    console.error(err)
+    Swal.fire('Error', 'Could not fetch reports.', 'error')
   }
 }
 
+// Forward a report
 const forwardReport = async (report) => {
   try {
     const res = await fetch(`http://localhost:8000/api/reports/${report.id}/forward/`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
     })
-
     if (!res.ok) throw new Error('Failed to forward report')
-
     Swal.fire('Forwarded', 'Report has been forwarded to the client.', 'success')
-    report.forwarded = true;
     fetchStaffReport()
   } catch (err) {
     Swal.fire('Error', err.message, 'error')
   }
 }
 
+// Delete a forwarded report
 const deleteReport = async (id) => {
   const confirm = await Swal.fire({
     title: 'Delete Report?',
@@ -163,20 +164,21 @@ const deleteReport = async (id) => {
     showCancelButton: true,
     confirmButtonText: 'Yes, delete',
     cancelButtonText: 'Cancel',
-    confirmButtonColor: '#06923E'
+    confirmButtonColor: '#d33',
   })
 
   if (confirm.isConfirmed) {
     try {
-      const res = await fetch(`http://localhost:8000/api/reports/${id}/`, {
+      const res = await fetch(`http://localhost:8000/api/staff-cleaning-reports/${id}/`, {
         method: 'DELETE',
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
       })
-
-      if (!res.ok) throw new Error('Failed to delete')
-
+      if (!res.ok) {
+        const errData = await res.json()
+        throw new Error(errData.detail || 'Failed to delete')
+      }
       Swal.fire('Deleted', 'Report deleted successfully.', 'success')
       fetchStaffReport()
     } catch (err) {
@@ -185,10 +187,20 @@ const deleteReport = async (id) => {
   }
 }
 
+// Computed: filtered reports by cleaner name
+const filteredReports = computed(() => {
+  if (!searchTerm.value) return StaffReports.value
+  return StaffReports.value.filter(report =>
+    report.cleaner.toLowerCase().includes(searchTerm.value.toLowerCase())
+  )
+})
+
+// Load reports on mount
 onMounted(() => {
   fetchStaffReport()
 })
 </script>
+
 
 <style scoped>
 .table-container {
