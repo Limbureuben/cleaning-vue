@@ -65,8 +65,6 @@
             </tr>
         </tbody>
       </table>
-
-
       <div class="pagination-controls mt-3 d-flex justify-content-center align-items-center">
             <button 
               class="btn btn-outline-primary me-2"
