@@ -39,10 +39,7 @@
               <td class="mat-cell">{{ report.client }}</td>
               <td class="mat-cell">{{ report.description }}</td>
               <td class="mat-cell">{{ new Date(report.completed_at).toLocaleString() }}</td>
-              <td class="mat-cell">
-             <a v-if="report.attachment" :href="report.attachment" target="_blank">View</a>
-             <span v-else>No file</span>
-             </td>
+              
              <td class="mat-cell">
                 <span v-if="report.client_rating">{{ report.client_rating }}/5</span>
                 <span v-else class="text-muted">Not rated</span>
