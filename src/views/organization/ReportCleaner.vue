@@ -39,7 +39,10 @@
               <td class="mat-cell">{{ report.client }}</td>
               <td class="mat-cell">{{ report.description }}</td>
               <td class="mat-cell">{{ new Date(report.completed_at).toLocaleString() }}</td>
-              
+              <td class="mat-cell">
+              <a v-if="report.attachment" @click="openAttachment(report.attachment)">View</a>
+              <span v-else>No file</span>
+              </td>
              <td class="mat-cell">
                 <span v-if="report.client_rating">{{ report.client_rating }}/5</span>
                 <span v-else class="text-muted">Not rated</span>
@@ -64,6 +67,29 @@
             </tr>
         </tbody>
       </table>
+
+      <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
+    <div class="modal-container">
+      <button class="modal-close" @click="closeModal">×</button>
+      <div class="modal-content">
+        <iframe 
+          v-if="isPdf(currentAttachment)" 
+          :src="currentAttachment" 
+          class="file-viewer"
+        ></iframe>
+        <img 
+          v-else-if="isImage(currentAttachment)" 
+          :src="currentAttachment" 
+          class="file-viewer"
+          alt="Attachment"
+        >
+        <div v-else class="unsupported-file">
+          <p>File type not supported for preview</p>
+          <a :href="currentAttachment" download>Download File</a>
+        </div>
+      </div>
+      </div>
+      </div>
     </div>
   </div>
 </template>
