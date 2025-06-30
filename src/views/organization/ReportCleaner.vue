@@ -101,9 +101,15 @@ const currentAttachment = ref('')
 
 // Open and close modal
 const openAttachment = (url) => {
-  currentAttachment.value = url
-  showModal.value = true
-}
+  if (url.startsWith('/media/')) {
+    currentAttachment.value = `http://localhost:8000${url}`; // prepend backend URL
+  } else {
+    currentAttachment.value = url;
+  }
+  showModal.value = true;
+};
+
+
 const closeModal = () => {
   showModal.value = false
   currentAttachment.value = ''
