@@ -11,7 +11,6 @@
               v-show="showForm"
             >
               <h4 class="mb-4 text-center fw-bold" style="color: #06923E;">Register New Staff</h4>
-
               <form @submit.prevent="registerCleaner">
                 <!-- Full Name -->
                 <div class="mb-3">

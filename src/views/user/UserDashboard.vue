@@ -90,7 +90,7 @@ const goToPage = (page) => {
 
 const showOrganizationDetails = (org) => {
   const services = org.services_list?.length
-    ? `<ul style="padding-left: 20px; margin: 0; list-style-type: disc; color: #4a90e2;">${org.services_list.map(s => `<li style="margin-bottom: 4px;">${s}</li>`).join('')}</ul>`
+    ? `<ul style="padding-left: 20px; margin: 0; list-style-type: disc; color: #06923E;">${org.services_list.map(s => `<li style="margin-bottom: 4px;">${s}</li>`).join('')}</ul>`
     : '<em style="color: #999;">No services listed</em>';
 
   const content = `
@@ -129,6 +129,7 @@ const showOrganizationDetails = (org) => {
     showCancelButton: true,
     confirmButtonText: 'Request Service',
     cancelButtonText: 'Close',
+    confirmButtonColor: '#06923E',
     customClass: {
     popup: 'custom-popup',
     confirmButton: 'custom-confirm-button',
@@ -232,6 +233,7 @@ const requestService = async (org) => {
     focusConfirm: false,
     showCancelButton: true,
     confirmButtonText: "Submit Request",
+    confirmButtonColor: '#06923E',
     preConfirm: () => {
       const phone = document.getElementById('swal-phone').value;
       const start_date = document.getElementById('swal-start-date').value;
@@ -316,12 +318,12 @@ onMounted(() => {
 }
 
 .btn {
-  background-color: #6A80B9;
+  background-color: #06923E;
   border: none;
 }
 
 .btn:hover {
-  background-color: #5c72aa;
+  background-color: #06923E;
 }
 
 
